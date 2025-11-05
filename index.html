@@ -7174,47 +7174,56 @@ print(v1 + v2)  # Vector(4, 6)</pre>
             }
         });
         
-        // 电脑端：鼠标悬浮也显示卡片
+        // 电脑端：鼠标悬浮也显示卡片（带防抖延迟的智能关闭）
         let hoverTimeout;
-        document.addEventListener('mouseover', function(e) {
+        let closeTimeout;
+        let currentHoverElement = null;
+        
+        // 鼠标进入关键字
+        document.addEventListener('mouseenter', function(e) {
             const target = e.target.closest('.term, .explain');
             if (target && window.matchMedia('(hover: hover)').matches) {
+                currentHoverElement = target;
                 clearTimeout(hoverTimeout);
+                clearTimeout(closeTimeout); // 取消关闭
+                
                 hoverTimeout = setTimeout(() => {
                     showMobileTooltip(target);
                 }, 300); // 延迟300ms，避免快速划过时频繁弹出
             }
-        });
+        }, true);
         
-        document.addEventListener('mouseout', function(e) {
-            const target = e.target.closest('.term, .explain');
-            if (target && window.matchMedia('(hover: hover)').matches) {
-                clearTimeout(hoverTimeout);
-                // 延迟关闭，允许鼠标移动到卡片上
-                hoverTimeout = setTimeout(() => {
-                    const card = document.getElementById('mobileTooltipCard');
-                    const overlay = document.getElementById('mobileOverlay');
-                    // 如果鼠标不在卡片上，则关闭
-                    if (!card.matches(':hover')) {
-                        closeMobileTooltip();
-                    }
-                }, 200);
+        // 全局鼠标移动监听 - 带防抖延迟
+        document.addEventListener('mousemove', function(e) {
+            if (!window.matchMedia('(hover: hover)').matches) return;
+            
+            const card = document.getElementById('mobileTooltipCard');
+            if (!card.classList.contains('show')) return;
+            
+            // 检查鼠标是否在关键字或卡片上
+            const onTerm = e.target.closest('.term, .explain');
+            const onCard = e.target.closest('#mobileTooltipCard');
+            
+            // 清除之前的关闭计时器
+            clearTimeout(closeTimeout);
+            
+            // 如果鼠标在有效区域内，不做任何操作
+            if (onTerm || onCard) {
+                return;
             }
-        });
-        
-        // 卡片本身的hover逻辑
-        document.getElementById('mobileTooltipCard').addEventListener('mouseover', function() {
-            if (window.matchMedia('(hover: hover)').matches) {
-                clearTimeout(hoverTimeout);
-            }
-        });
-        
-        document.getElementById('mobileTooltipCard').addEventListener('mouseout', function() {
-            if (window.matchMedia('(hover: hover)').matches) {
-                hoverTimeout = setTimeout(() => {
+            
+            // 如果鼠标离开有效区域，延迟250ms后关闭
+            closeTimeout = setTimeout(() => {
+                // 再次检查，防止延迟期间鼠标又回到了有效区域
+                const card = document.getElementById('mobileTooltipCard');
+                const stillOnCard = card.matches(':hover');
+                const stillOnTerm = currentHoverElement?.matches(':hover');
+                
+                if (!stillOnCard && !stillOnTerm) {
                     closeMobileTooltip();
-                }, 200);
-            }
+                    currentHoverElement = null;
+                }
+            }, 250); // 250ms的容错时间
         });
     </script>
 
