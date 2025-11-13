@@ -1713,6 +1713,7 @@
             <button class="nav-tab" onclick="switchTab(5)">🐍 Python基础</button>
             <button class="nav-tab" onclick="switchTab(6)">💼 项目介绍</button>
             <button class="nav-tab" onclick="switchTab(7)">🎯 应对策略</button>
+            <button class="nav-tab" onclick="switchTab(8)">🛡️ 面试专项应对（聊城国企）</button>
         </div>
 
         <!-- 内容区域将在后续步骤中添加 -->
@@ -5576,7 +5577,7 @@ print(v1 + v2)  # Vector(4, 6)</pre>
         </div>
 
         <!-- 应对策略 -->
-        <div class="content" id="content6">
+        <div class="content" id="content7">
             <h2>🎯 面试应对策略</h2>
 
             <p class="warning-box">
@@ -6339,6 +6340,331 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                 </div>
             </div>
         </div>
+        <!-- 面试专项应对（聊城国企） -->
+        <div class="content" id="content8">
+            <h2>🛡️ 面试专项应对（聊城国企）</h2>
+
+            <p class="warning-box"><strong>说明：</strong>仅聚焦 AI 岗位要求，答案以“原理清晰 + 适度细节”呈现；关键术语可点击查看提示，遇到深入追问也能接住。</p>
+
+            <div class="highlight-box">
+                <h4>速记卡片（面试前 2 分钟）</h4>
+                <ul>
+                    <li><strong>结构</strong>：背景 → 方案 → 结果（S-A-R），每点带数据或示例</li>
+                    <li><strong>参数</strong>：说范围不说精确值（TopK 20-30，切片 500-1000）</li>
+                    <li><strong>上线</strong>：API 网关 + 灰度/回滚/限流 + 监控告警</li>
+                    <li><strong>RAG</strong>：混合召回 + 重排序 + 引用来源</li>
+                    <li><strong>安全</strong>：脱敏/权限/审计/Prompt 注入防护</li>
+                    <li><strong>兜底</strong>：没实操 → 讲思路/取舍/风险控制 + 可观察性</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>术语速查（点击术语弹出解释）</h4>
+                <p><strong>Agent/Workflow</strong>：
+                    <span class="explain" data-explain="LangChain 表达式语言，用于把 Prompt/模型/工具/解析器组合">LCEL<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="可组合单元：Sequence/Parallel/Lambda 等">Runnable<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="把模型输出解析成结构化对象（JSON/枚举/Schema）">OutputParser<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="模型按函数签名返回参数，由代码执行">Tool Calling<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="链路打点与追踪，用于观测与调试">Tracing<span class="explain-icon">❓</span></span>
+                </p>
+                <p><strong>RAG</strong>：
+                    <span class="explain" data-explain="关键词检索算法，基于倒排索引与词频权重">BM25<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="近似最近邻图索引，查询快、召回稳">HNSW<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="倒排文件聚类索引，配合PQ降低内存">IVF/PQ<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="多路结果按倒数名次加权融合">RRF<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="平衡相关性与多样性，降低冗余">MMR<span class="explain-icon">❓</span></span>
+                </p>
+                <p><strong>知识库</strong>：
+                    <span class="explain" data-explain="固定大小滑窗切分文本，保留上下文">Sliding Window<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="相似度哈希，检测近重复文本">MinHash<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="布隆过滤器，快速判断是否出现过（有误判、无漏判）">Bloom Filter<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="变更数据捕获，做增量更新">CDC<span class="explain-icon">❓</span></span>
+                </p>
+                <p><strong>多智能体</strong>：
+                    <span class="explain" data-explain="按消息内容路由到最合适的Agent">Message Router<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="让Agent对自身输出做反思与修正">Self-Reflection<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="为Agent设置可用工具/资源的边界">权限边界<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="限制会话轮次避免死循环">回合上限<span class="explain-icon">❓</span></span>
+                </p>
+                <p><strong>部署与推理</strong>：
+                    <span class="explain" data-explain="把KV缓存分页管理，提高显存利用与并发">PagedAttention<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="把多个请求合并计算以提升吞吐">连续批处理<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="小模型先草拟，大模型校验，加速生成">推测解码<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="每秒生成的Token数，衡量吞吐">Tokens/s<span class="explain-icon">❓</span></span>
+                </p>
+                <p><strong>安全合规</strong>：
+                    <span class="explain" data-explain="个人敏感信息，如身份证/手机号，需检测与脱敏">PII<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="基于角色/属性的访问控制，实现最小权限">RBAC/ABAC<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="请求唯一键确保同一任务只执行一次">Idempotency-Key<span class="explain-icon">❓</span></span> ·
+                    <span class="explain" data-explain="失败消息隔离等待处理">死信队列<span class="explain-icon">❓</span></span>
+                </p>
+            </div>
+
+            <button class="collapsible">开场自我陈述模板（30 秒）</button>
+            <div class="collapsible-content">
+                <div class="example-box">
+                    <p>“我擅长基于 <span class="term" data-pronunciation="朗撑">LangChain<span class="pronun-icon">🔊</span></span> / <span class="term" data-pronunciation="第fai">Dify<span class="pronun-icon">🔊</span></span> 快速搭建企业级 <span class="explain" data-explain="Agent = 带有目标、可调用工具的智能体，能根据上下文自主决策">Agent<span class="explain-icon">❓</span></span> 工作流，结合 <span class="explain" data-explain="RAG：检索增强生成，先查知识库再让大模型回答，减少瞎编">RAG<span class="explain-icon">❓</span></span> 提升准确率；理解 <span class="term" data-pronunciation="克儒诶爱">CrewAI<span class="pronun-icon">🔊</span></span> / <span class="term" data-pronunciation="奥托根">AutoGen<span class="pronun-icon">🔊</span></span> 多智能体的协作思路（角色拆分、回合协作）。我更注重工程落地：知识库构建、检索优化、指标监控、安全合规。”</p>
+                </div>
+            </div>
+
+            <button class="collapsible">1) LangChain / Dify / Flowise：如何搭一个企业级 AI 工作流？</button>
+            <div class="collapsible-content">
+                <div class="answer-box">
+                    <h4>核心回答模板</h4>
+                    <ol>
+                        <li><strong>输入</strong>：表单/接口 → 结构化成 <span class="explain" data-explain="统一的上下文对象，包含用户问题、历史对话、会话ID、用户权限等">上下文<span class="explain-icon">❓</span></span></li>
+                        <li><strong>检索</strong>：按需走 <span class="explain" data-explain="向量检索 + 关键词检索（BM25）混合召回，召回更全面">混合检索<span class="explain-icon">❓</span></span>；必要时 <span class="explain" data-explain="根据用户问题改写多个提问版本，提高召回率">Query 改写<span class="explain-icon">❓</span></span></li>
+                        <li><strong>规划</strong>：<span class="explain" data-explain="Chain：固定步骤的流水线；Agent：会根据目标选择工具">Chain vs Agent<span class="explain-icon">❓</span></span>；复杂任务走 Agent + <span class="explain" data-explain="Tool：外部能力，如检索/数据库/HTTP调用">Tool<span class="explain-icon">❓</span></span></li>
+                        <li><strong>执行</strong>：调用 <span class="explain" data-explain="如：检索、数据库、调用内网系统的HTTP接口">工具链<span class="explain-icon">❓</span></span>；设置 <span class="explain" data-explain="失败重试、超时、降级，保证稳定">鲁棒性<span class="explain-icon">❓</span></span></li>
+                        <li><strong>安全</strong>：<span class="explain" data-explain="敏感词过滤、越权拦截、Prompt 注入防护、数据脱敏">Guardrails<span class="explain-icon">❓</span></span>；记录 <span class="explain" data-explain="完整链路日志：输入、检索结果、模型输出、工具调用、时间消耗">可观测性<span class="explain-icon">❓</span></span></li>
+                        <li><strong>输出</strong>：结构化结果（含引用来源/SQL/命中文档），便于审计与追溯</li>
+                    </ol>
+                </div>
+                <div class="answer-box">
+                    <h4>可能追问细节（点开可讲）</h4>
+                    <ul>
+                        <li><span class="explain" data-explain="记忆会话历史，提升多轮对话连贯性。短期记忆：窗口内上下文；长期记忆：写入向量库，基于用户ID检索">Memory 设计<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="在关键步骤上报事件（开始/结束/异常），用于指标统计和问题定位">Callbacks 回调<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="Dify 适合低代码落地，内置数据集、工作流、权限；LangChain 适合可控性强的工程化">Dify vs LangChain<span class="explain-icon">❓</span></span></li>
+                    </ul>
+                    <p><strong>不会被问启动命令时的说法：</strong>“上线一般接 <span class="term" data-pronunciation="诶皮艾">API<span class="pronun-icon">🔊</span></span> 网关或用 Dify 托管，内部通过 <span class="explain" data-explain="灰度：小范围逐步放量；回滚：出现问题快速恢复旧版本">灰度/回滚<span class="explain-icon">❓</span></span> 控制风险。”</p>
+                </div>
+                <div class="answer-box">
+                    <h4>LangChain 深入要点</h4>
+                    <ul>
+                        <li><strong><span class="explain" data-explain="LangChain Expression Language，可组合的流水线表达式，像搭积木一样把Prompt、模型、工具、解析器串起来">LCEL<span class="explain-icon">❓</span></span></strong>：用表达式把 Prompt → LLM → Parser → 调用链串联，便于复用与测试</li>
+                        <li><strong>Agent 类型</strong>：
+                            <ul>
+                                <li><span class="explain" data-explain="Reason+Act：先思考(Reason)，再调用工具(Act)，再观察结果(Observe)，循环迭代">ReAct<span class="explain-icon">❓</span></span>（通用、可解释）</li>
+                                <li><span class="explain" data-explain="先规划一个步骤清单，再逐步执行每步">Plan-and-Execute<span class="explain-icon">❓</span></span>（复杂长链路）</li>
+                                <li><span class="explain" data-explain="OpenAI Function/Tool Calling，让模型按函数签名返回结构化参数，再由代码执行">Function Calling<span class="explain-icon">❓</span></span>（结构化强）</li>
+                            </ul>
+                        </li>
+                        <li><strong>Memory</strong>：Buffer/Window（最近对话）、Summary（摘要）、<span class="explain" data-explain="向量库做长期记忆，按用户ID检索历史片段">VectorStore<span class="explain-icon">❓</span></span></li>
+                        <li><strong>Callbacks/Tracing</strong>：全链路打点（输入、工具调用、耗时、错误），便于复盘</li>
+                        <li><strong>Prompt 模板与版本化</strong>：<span class="term" data-pronunciation="恰特prompt">ChatPromptTemplate<span class="pronun-icon">🔊</span></span>，为不同业务/版本打标签，支持回滚</li>
+                    </ul>
+                </div>
+                <div class="answer-box">
+                    <h4>Dify/Flowise 落地经验</h4>
+                    <ul>
+                        <li><strong>Dify</strong>：可视化工作流、内置 <span class="explain" data-explain="企业文档/FAQ等语料管理与索引">Dataset<span class="explain-icon">❓</span></span>、权限/配额、观测面板、对话历史、运营数据</li>
+                        <li><strong>Flowise</strong>：节点式编排，适合快速 PoC；复杂控制流建议回到代码工程</li>
+                        <li><strong>工程要点</strong>：Prompt 版本管理、敏感信息管理（KMS/环境变量）、输入校验、<span class="explain" data-explain="相同请求只处理一次，避免重复扣费或重复执行">幂等键<span class="explain-icon">❓</span></span></li>
+                        <li><strong>局限</strong>：复杂流程的可测试性/可维护性弱，版本/审计能力有限，插件质量参差</li>
+                        <li><strong>迁移路径</strong>：抽离 Prompt 与工具接口 → 用 LCEL 重构链路 → 加单测/Tracing → Flowise 保留用于演示/原型</li>
+                    </ul>
+                </div>
+                <div class="answer-box">
+                    <h4>术语补充（LangChain）</h4>
+                    <ul>
+                        <li><span class="explain" data-explain="链式组合：按步骤顺序执行的可运行单元">RunnableSequence<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="并行运行多个分支再合并">RunnableParallel<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="强约束结构化输出，自动校验并重试">StructuredOutputParser<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="把文本解析成特定结构（正则/JSON/自定义Schema）">OutputParser<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="对多个检索器加权融合，如向量+BM25">EnsembleRetriever<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="先检父文档再取子块，兼顾召回与粒度">ParentDocumentRetriever<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="内置模型调用缓存，可接入Redis等，降低重复调用成本">LLM Cache<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="把外部HTTP/DB等封装为可调用工具，便于审计与权限控制">Tool<span class="explain-icon">❓</span></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="collapsible">2) 多智能体协作：CrewAI / AutoGen 怎么设计？</button>
+            <div class="collapsible-content">
+                <div class="answer-box">
+                    <h4>核心回答模板</h4>
+                    <ol>
+                        <li><strong>角色划分</strong>：<span class="explain" data-explain="Manager：定目标；Planner：拆任务；Worker：执行工具；Reviewer：校对与纠错">Manager/Planner/Worker/Reviewer<span class="explain-icon">❓</span></span></li>
+                        <li><strong>协作方式</strong>：<span class="explain" data-explain="按回合协作，像会议纪要一样逐步收敛">对话回合<span class="explain-icon">❓</span></span> + <span class="explain" data-explain="共享记忆：公共向量库；共享黑板：统一状态；消息总线：事件广播">共享记忆/消息总线<span class="explain-icon">❓</span></span></li>
+                        <li><strong>终止条件</strong>：达到目标/超时/回合数上限 → 输出结果与引用</li>
+                        <li><strong>工程要点</strong>：日志回放、<span class="explain" data-explain="防止死循环，设置最大回合数（如3-5）">回合上限<span class="explain-icon">❓</span></span>、失败重试、可视化编排</li>
+                    </ol>
+                </div>
+                <div class="answer-box">
+                    <h4>可能追问细节</h4>
+                    <ul>
+                        <li><span class="explain" data-explain="一致性=所有Agent对状态认识一致；通过事务/最终一致消息完成">一致性问题<span class="explain-icon">❓</span></span> 与 <span class="explain" data-explain="多个Agent同时写资源，采用队列/乐观锁避免冲突">并发写入<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="给每个Agent明确边界：能用哪些工具、能改哪些资源，避免越权">权限边界<span class="explain-icon">❓</span></span></li>
+                    </ul>
+                </div>
+                <div class="answer-box">
+                    <h4>AutoGen 深入（面试可讲的关键点）</h4>
+                    <ul>
+                        <li><strong><span class="term" data-pronunciation="康佛赛伯儿诶正特">ConversableAgent<span class="pronun-icon">🔊</span></span></strong>：可对话 Agent 基类，支持 <span class="explain" data-explain="通过函数签名暴露工具，模型按结构化参数调用">Tool/Function 调用<span class="explain-icon">❓</span></span></li>
+                        <li><strong>UserProxy/Assistant</strong>：<span class="explain" data-explain="UserProxy代理人：代表用户或外部系统，可插入人工确认或执行代码">UserProxy<span class="explain-icon">❓</span></span> 与 <span class="explain" data-explain="Assistant：由大模型驱动的助手Agent">Assistant<span class="explain-icon">❓</span></span> 角色分工清晰</li>
+                        <li><strong>GroupChat/MessageRouter</strong>：<span class="explain" data-explain="多Agent轮流对话，像会议轮次；可配置谁先说、何时结束">组内回合协作<span class="explain-icon">❓</span></span>，支持按消息内容路由</li>
+                        <li><strong>终止条件</strong>：<span class="explain" data-explain="超出最大回合或满足is_termination_msg即可结束，防止死循环">max_round/is_termination_msg<span class="explain-icon">❓</span></span></li>
+                        <li><strong>代码执行</strong>：可接入沙箱执行器（如 Python 执行），<span class="explain" data-explain="默认建议关闭直接执行，需白名单与审计">安全白名单<span class="explain-icon">❓</span></span></li>
+                        <li><strong>日志回放</strong>：整个对话轮次可复盘，便于问题定位与合规审计</li>
+                    </ul>
+                    <p><strong>对比 CrewAI：</strong>AutoGen 偏“对话驱动+代码执行”，CrewAI 偏“任务/角色显式编排”。复杂对话协作选 AutoGen，流程化任务选 CrewAI。</p>
+                </div>
+                <div class="answer-box">
+                    <h4>术语补充（多智能体）</h4>
+                    <ul>
+                        <li><span class="explain" data-explain="集中协调者按计划分配任务">Coordinator<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="按规则路由消息到最合适Agent">Router<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="在关键节点插入人工确认，降低风险">Human-in-the-loop<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="由评审Agent对结果进行打分与纠错">Critic/Verifier<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="对指令注入、越权调用进行识别与阻断">Prompt 注入防护<span class="explain-icon">❓</span></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="collapsible">3) RAG 全流程：怎么保证“又准又快”？</button>
+            <div class="collapsible-content">
+                <div class="answer-box">
+                    <h4>核心回答模板</h4>
+                    <ol>
+                        <li><strong>数据处理</strong>：清洗 → 切片（<span class="explain" data-explain="常用 500-1000 字，重叠 50-100 字；表格转结构化再描述化">500-1000/50-100<span class="explain-icon">❓</span></span>）→ 去重</li>
+                        <li><strong>向量化</strong>：中文选 <span class="term" data-pronunciation="B-G-E">BGE<span class="pronun-icon">🔊</span></span> 系列；入库 <span class="term" data-pronunciation="米尔乌斯">Milvus<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>检索</strong>：<span class="explain" data-explain="向量TopK（20-30）+ BM25（20-30）合并去重，覆盖更全面">混合召回<span class="explain-icon">❓</span></span> → <span class="explain" data-explain="Cross-Encoder 精排，选出Top3-5，高质小集合">重排序<span class="explain-icon">❓</span></span></li>
+                        <li><strong>组装</strong>：构造含“问题+Top文档+格式要求”的 <span class="term" data-pronunciation="撇破母特">Prompt<span class="pronun-icon">🔊</span></span>，返回附引用</li>
+                        <li><strong>指标</strong>：首字延迟/端到端时延/命中率；离线评测 <span class="explain" data-explain="给一批带标准答案的问题，比较不同配置的准确率（召回/精排/切片大小等）">A/B 测试<span class="explain-icon">❓</span></span></li>
+                    </ol>
+                </div>
+                <div class="answer-box">
+                    <h4>常被追问的参数（给范围不要死记）</h4>
+                    <ul>
+                        <li><strong>切片大小</strong>：500-1000 字；<strong>重叠</strong>：50-100 字</li>
+                        <li><strong>TopK</strong>：粗排 20-30 → 精排取 3-5</li>
+                        <li><strong>相似度阈值</strong>：余弦 > 0.8-0.9 作为参考</li>
+                    </ul>
+                </div>
+                <div class="answer-box">
+                    <h4>检索优化策略（可展开讲）</h4>
+                    <ul>
+                        <li><strong>混合融合</strong>：向量 + BM25 结果用 <span class="explain" data-explain="Reciprocal Rank Fusion，多路结果按倒数名次融合，稳健提升召回">RRF 融合<span class="explain-icon">❓</span></span>；去重后再精排</li>
+                        <li><strong>多样性</strong>：<span class="explain" data-explain="Maximal Marginal Relevance，在相关性与多样性间平衡，避免相似片段挤占名额">MMR<span class="explain-icon">❓</span></span> 选取上下文，减少冗余</li>
+                        <li><strong>Query 增强</strong>：<span class="explain" data-explain="用大模型把问题改写出多个等价问法，提高召回覆盖">Query 改写<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="为文档生成潜在查询语句来增强索引">Doc2Query<span class="explain-icon">❓</span></span></li>
+                        <li><strong>过滤</strong>：利用 <span class="explain" data-explain="如文档类型、部门、时间范围、保密级别等元数据条件">元数据过滤<span class="explain-icon">❓</span></span>，并对时间敏感问题加入时间衰减</li>
+                        <li><strong>多向量</strong>：每段生成多个向量（标题/正文/摘要），提升定位能力</li>
+                    </ul>
+                </div>
+                <div class="answer-box">
+                    <h4>评测与诊断（实践必备）</h4>
+                    <ul>
+                        <li><strong>线下评测</strong>：<span class="explain" data-explain="常用RAG评测框架，提供faithfulness/answer_relevancy/context_precision等指标">Ragas<span class="explain-icon">❓</span></span>，基准集用真实业务问答</li>
+                        <li><strong>线上观测</strong>：记录命中文档ID、相似度、用时；按主题/部门统计命中率</li>
+                        <li><strong>问题定位</strong>：看“召回为空/精排丢失/上下文超长被截断”分别处理</li>
+                    </ul>
+                    <p><strong>长上下文管理：</strong>按 Token 预算挑选 Top 段；必要时对段落做 <span class="explain" data-explain="对召回片段做压缩，保留关键信息，减少Token占用">压缩摘要<span class="explain-icon">❓</span></span> 再拼装。</p>
+                </div>
+                <div class="answer-box">
+                    <h4>术语补充（RAG）</h4>
+                    <ul>
+                        <li><span class="explain" data-explain="倒排索引词项权重算法，适合精确关键词匹配">BM25<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="近似最近邻索引结构（HNSW/IVF），权衡速度与精度">ANN 索引<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="召回率@K/平均倒数排名，评估检索质量">Recall@K / MRR<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="分段生成摘要用于压缩上下文，降低Token开销">段落压缩<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="用多个向量描述段落不同视图（标题/摘要）">多向量索引<span class="explain-icon">❓</span></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="collapsible">4) 知识库构建与数据处理（AI 视角）</button>
+            <div class="collapsible-content">
+                <div class="answer-box">
+                    <h4>关键要点</h4>
+                    <ul>
+                        <li><strong>格式统一</strong>：PDF/Word/网页 → 纯文本 + 结构化（表格转 JSON/Markdown）</li>
+                        <li><strong>去噪去重</strong>：去页眉页脚/目录/水印；相似度去重（>0.95 合并）</li>
+                        <li><strong>分段规则</strong>：按标题层级/语义分段；保留上下文锚点（章节名、文档ID）</li>
+                        <li><strong>权限隔离</strong>：文档级/段落级标签，检索时按用户权限过滤</li>
+                        <li><strong>增量更新</strong>：变更检测 → 只重向量化变更部分；版本标记可回溯</li>
+                    </ul>
+                </div>
+                <div class="answer-box">
+                    <h4>生产级知识库流水线（可讲思路）</h4>
+                    <ul>
+                        <li><strong>解析</strong>：<span class="explain" data-explain="文本抽取框架，支持Office/PDF/HTML等">Unstructured<span class="explain-icon">❓</span></span>/OCR → 段落/表格/图片分离；表格转结构化</li>
+                        <li><strong>清洗</strong>：页眉页脚/目录/噪声规则移除；重复检测（指纹/MinHash）</li>
+                        <li><strong>分块</strong>：标题感知 + 语义相邻合并；保留文档ID/章节/页码元数据</li>
+                        <li><strong>入库</strong>：向量库（<span class="term" data-pronunciation="米尔乌斯">Milvus<span class="pronun-icon">🔊</span></span>/Qdrant）+ 文档存储（对象存储/ES）</li>
+                        <li><strong>调度</strong>：定时器/队列（如 Kafka）驱动增量处理，失败任务重试与死信队列</li>
+                        <li><strong>合规</strong>：<span class="explain" data-explain="PII：个人敏感信息，如身份证/手机号。入库前做检测与打码">PII 检测/脱敏<span class="explain-icon">❓</span></span>，按权限生成多份索引</li>
+                    </ul>
+                </div>
+                <div class="answer-box">
+                    <h4>术语补充（知识库）</h4>
+                    <ul>
+                        <li><span class="explain" data-explain="版面结构识别，把表格/图片与文本分离">版面分析<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="按文档结构（H1/H2）切分，保留层级上下文">层级切分<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="基于指纹/特征比对做近重复检测，避免冗余">近重复检测<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="在入库前对敏感字段做掩码或脱敏">数据脱敏<span class="explain-icon">❓</span></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="collapsible">5) Agent 调度与监控（平台视角）</button>
+            <div class="collapsible-content">
+                <div class="answer-box">
+                    <h4>平台功能要点</h4>
+                    <ul>
+                        <li><strong>注册与目录</strong>：<span class="explain" data-explain="Agent 元数据：职责、可用工具、权限范围、负责人">Agent Registry<span class="explain-icon">❓</span></span></li>
+                        <li><strong>任务编排</strong>：可视化/DSL；支持 <span class="explain" data-explain="定时任务、事件触发、人工触发">触发器<span class="explain-icon">❓</span></span> 与 <span class="explain" data-explain="重试（退避）、超时、中止">运行策略<span class="explain-icon">❓</span></span></li>
+                        <li><strong>可观测性</strong>：链路追踪、结构化日志、指标（QPS、时延、成功率）</li>
+                        <li><strong>审计合规</strong>：操作留痕、数据脱敏、敏感词拦截</li>
+                    </ul>
+                </div>
+                <div class="warning-box">
+                    <h4>追问时的安全说法</h4>
+                    <p>“我们优先保证稳定和安全，<span class="explain" data-explain="灰度发布：逐步放量；回滚：快速恢复旧版本；限流：保护下游">灰度/回滚/限流<span class="explain-icon">❓</span></span> 都是标配，关键链路全量打点可回放。”</p>
+                </div>
+                <div class="answer-box">
+                    <h4>调度与可靠性工程</h4>
+                    <ul>
+                        <li><strong>编排</strong>：可视化编排 + DSL 双轨；关键任务支持人工确认节点</li>
+                        <li><strong>幂等与重试</strong>：请求 <span class="explain" data-explain="唯一键确保同一任务只执行一次，便于去重与恢复">Idempotency-Key<span class="explain-icon">❓</span></span>、退避重试、<span class="explain" data-explain="失败消息暂存等待人工/自动处理">死信队列<span class="explain-icon">❓</span></span></li>
+                        <li><strong>熔断/限流</strong>：保护下游服务，避免级联故障</li>
+                        <li><strong>SLA/指标</strong>：P95延迟、成功率、召回命中率、单位成本（Token/调用）</li>
+                    </ul>
+                </div>
+                <div class="answer-box">
+                    <h4>安全与合规清单</h4>
+                    <ul>
+                        <li><strong>Prompt 注入防护</strong>：工具调用白名单、系统指令隔离、拒绝执行未授权输出</li>
+                        <li><strong>最小权限/隔离</strong>：RBAC/ABAC、多租户隔离、跨租户检索拦截</li>
+                        <li><strong>数据合规</strong>：PII 检测与脱敏、数据出境审查、加密存储与传输</li>
+                        <li><strong>审计留痕</strong>：全链路日志（输入/检索/模型/工具）、签名与保留周期、可回放</li>
+                        <li><strong>输出过滤</strong>：敏感词/涉密信息过滤，内容水印</li>
+                        <li><strong>变更控制</strong>：灰度发布/回滚、配置与密钥（KMS）分环境管理、密钥轮换</li>
+                        <li><strong>安全测试</strong>：红队 Prompt 攻击演练、越权与注入测试</li>
+                    </ul>
+                </div>
+                <div class="answer-box">
+                    <h4>术语补充（平台与调度）</h4>
+                    <ul>
+                        <li><span class="explain" data-explain="失败任务记录在本地Outbox表，异步可靠投递">Outbox Pattern<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="跨服务事务的补偿式方案，保证最终一致">Saga<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="请求频率限制，保护下游与成本">Rate Limiting<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="检测异常自动断路并快速失败，等待恢复">Circuit Breaker<span class="explain-icon">❓</span></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="collapsible">6) 部署与性能：不会时怎么说更专业？</button>
+            <div class="collapsible-content">
+                <div class="answer-box">
+                    <h4>标准说法（云 API / 托管优先）</h4>
+                    <ul>
+                        <li>优先用 <span class="explain" data-explain="统一通过 API 网关接入，便于鉴权、限流、监控">云厂商 API / 网关<span class="explain-icon">❓</span></span>，降低自运维成本</li>
+                        <li>自建推理选 <span class="term" data-pronunciation="v-艾哦艾姆">vLLM<span class="pronun-icon">🔊</span></span> / <span class="term" data-pronunciation="奥拉嘛">Ollama<span class="pronun-icon">🔊</span></span>（<span class="explain" data-explain="PagedAttention：像操作系统分页一样管理KV缓存，提升显存利用">PagedAttention<span class="explain-icon">❓</span></span>）</li>
+                        <li>关注指标：首字延迟、QPS、显存占用、错误率；通过 <span class="explain" data-explain="批量请求一起算；但会增加首字延迟">Batching<span class="explain-icon">❓</span></span> 做吞吐与延迟的平衡</li>
+                    </ul>
+                    <p><strong>被问“怎么启动大模型”时的简洁步骤：</strong>“拉取镜像 → 配置模型路径/显存参数 → 暴露 <span class="term" data-pronunciation="艾屁艾">API<span class="pronun-icon">🔊</span></span> 端口 → 接 API 网关 + 鉴权 + 监控告警。”</p>
+                </div>
+                <div class="answer-box">
+                    <h4>vLLM 与推理优化（可讲思路，不背参数）</h4>
+                    <ul>
+                        <li><strong>PagedAttention</strong>：KV Cache 分页管理，<span class="explain" data-explain="把KV缓存切成小块按需加载，提升显存利用率与并发">显存利用率提升<span class="explain-icon">❓</span></span>；配合 <span class="explain" data-explain="把多请求合并计算，提升吞吐">连续批处理<span class="explain-icon">❓</span></span></li>
+                        <li><strong>Prompt/Output 缓存</strong>：相同上下文多次调用直接命中缓存</li>
+                        <li><strong>量化/LoRA</strong>：以 <span class="explain" data-explain="低秩适配，少量额外参数微调，不改原模型权重">LoRA<span class="explain-icon">❓</span></span> 或 8bit/4bit 量化换取吞吐与成本</li>
+                        <li><strong>流式输出</strong>：SSE/WebSocket 推送，结合 <span class="explain" data-explain="当下游处理不过来时，控制发送速率或缓存，防止拥塞">背压<span class="explain-icon">❓</span></span> 提升交互体验</li>
+                        <li><strong>容量规划</strong>：按 <span class="explain" data-explain="并发连接×平均生成速率≈所需吞吐；结合显存预算与上下文长度估算">并发×速率×上下文预算<span class="explain-icon">❓</span></span> 做预估，留 2-3 倍冗余</li>
+                        <li><strong>监控</strong>：GPU 显存/利用率、Tokens/s、首字/总时延、错误率，异常自动降级</li>
+                    </ul>
+                </div>
+                <div class="answer-box">
+                    <h4>术语补充（部署与性能）</h4>
+                    <ul>
+                        <li><span class="explain" data-explain="用小模型预测下一个词，大模型验证，加速生成">Speculative Decoding<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="把相同前缀的请求共享KV缓存，减少重复计算">前缀共享<span class="explain-icon">❓</span></span></li>
+                        <li><span class="explain" data-explain="按上下文长度与并发对GPU/内存进行预算">容量规划<span class="explain-icon">❓</span></span> / <span class="explain" data-explain="容器镜像缓存/权重加载缓存，缩短首次响应">冷启动优化<span class="explain-icon">❓</span></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <button class="back-to-top" onclick="scrollToTop()">↑</button>
@@ -6395,15 +6721,28 @@ print(v1 + v2)  # Vector(4, 6)</pre>
         <div class="quick-nav-section">
             <h4>面试应对策略</h4>
             <ul class="quick-nav-items">
-                <li><a href="#" onclick="navigateTo(4, 0)" class="important">银行业务场景</a></li>
-                <li><a href="#" onclick="navigateTo(4, 1)" class="important">大数据量处理</a></li>
-                <li><a href="#" onclick="navigateTo(4, 2)" class="important">AI 技术应对</a></li>
-                <li><a href="#" onclick="navigateTo(4, 3)">国产化适配</a></li>
-                <li><a href="#" onclick="navigateTo(4, 4)">昇腾 910B 适配</a></li>
-                <li><a href="#" onclick="navigateTo(4, 5)">技术选型原因</a></li>
-                <li><a href="#" onclick="navigateTo(4, 6)">项目难点问题</a></li>
-                <li><a href="#" onclick="navigateTo(4, 7)">跨部门协作</a></li>
-                <li><a href="#" onclick="navigateTo(4, 8)">通用面试技巧</a></li>
+                <li><a href="#" onclick="navigateTo(7, 0)" class="important">银行业务场景</a></li>
+                <li><a href="#" onclick="navigateTo(7, 1)" class="important">大数据量处理</a></li>
+                <li><a href="#" onclick="navigateTo(7, 2)" class="important">AI 技术应对</a></li>
+                <li><a href="#" onclick="navigateTo(7, 3)">国产化适配</a></li>
+                <li><a href="#" onclick="navigateTo(7, 4)">昇腾 910B 适配</a></li>
+                <li><a href="#" onclick="navigateTo(7, 5)">技术选型原因</a></li>
+                <li><a href="#" onclick="navigateTo(7, 6)">项目难点问题</a></li>
+                <li><a href="#" onclick="navigateTo(7, 7)">跨部门协作</a></li>
+                <li><a href="#" onclick="navigateTo(7, 8)">通用面试技巧</a></li>
+            </ul>
+        </div>
+        
+        <div class="quick-nav-section">
+            <h4>面试专项应对（聊城国企）</h4>
+            <ul class="quick-nav-items">
+                <li><a href="#" onclick="navigateTo(8, 0)" class="important">开场陈述模板</a></li>
+                <li><a href="#" onclick="navigateTo(8, 1)">LangChain/Dify 工作流</a></li>
+                <li><a href="#" onclick="navigateTo(8, 2)">多智能体协作</a></li>
+                <li><a href="#" onclick="navigateTo(8, 3)" class="important">RAG 全流程</a></li>
+                <li><a href="#" onclick="navigateTo(8, 4)">知识库构建</a></li>
+                <li><a href="#" onclick="navigateTo(8, 5)">Agent 调度与监控</a></li>
+                <li><a href="#" onclick="navigateTo(8, 6)">部署与性能</a></li>
             </ul>
         </div>
     </div>
