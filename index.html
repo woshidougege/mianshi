@@ -2399,6 +2399,12 @@
                     <h4>性能指标</h4>
                     <p>首字延迟 < 500ms，吞吐量 50+ 并发，系统响应延迟 < 3秒</p>
                 </div>
+
+                <div class="example-box">
+                    <h4>应对面试官追问：为什么不用 GPT-4？</h4>
+                    <p>"我们项目是给军工企业做的，部署在完全隔离的内网环境，出于数据安全考虑不能连接外网，所以无法使用 GPT-4、Claude 等云服务。</p>
+                    <p>我们选择了 Qwen3、DeepSeek-V3 等开源大模型进行本地化部署。这些模型可以完全离线运行，模型权重下载后部署在本地服务器（华为昇腾 910B GPU）上。虽然整体能力略低于 GPT-4，但中文能力很强，而且可以针对具体业务场景进行微调和优化，数据完全掌控在客户手中，符合军工企业的安全要求。"</p>
+                </div>
             </div>
 
             <button class="collapsible">项目二：企业智能问答与数据分析平台 | 2024.09-2025.11</button>
@@ -2909,8 +2915,14 @@
 
                 <div class="example-box">
                     <h4>面试这么说</h4>
-                    <p>"我们的智能问答平台基于 <span class="term" data-pronunciation="拉格">RAG<span class="pronun-icon">🔊</span></span> 架构。文本向量化是通过 <span class="term" data-pronunciation="传思佛摸">Transformer<span class="pronun-icon">🔊</span></span> 神经网络实现的，具体是 <span class="term" data-pronunciation="B-G-E M-3">BGE-M3<span class="pronun-icon">🔊</span></span> 模型，输出 1024 维向量。向量之间的相似度用余弦相似度衡量，范围是 -1 到 1，越接近 1 说明越相似。</p>
+                    <p>"我们的智能问答平台基于 <span class="term" data-pronunciation="拉格">RAG<span class="pronun-icon">🔊</span></span> 架构，部署在军工企业内网环境。向量模型选择的是 <span class="term" data-pronunciation="B-G-E M-3">BGE-M3<span class="pronun-icon">🔊</span></span>，虽然阿里的 text-embedding-v4 效果更好，但它是闭源的云服务，内网环境无法使用。BGE-M3 是智源开源的模型，可以完全本地化部署，输出 1024 维向量，支持最长 8192 token 的长文本。向量之间的相似度用余弦相似度衡量，范围是 -1 到 1，越接近 1 说明越相似。</p>
                     <p>为了实现百万级文档的毫秒级检索，我们用了 HNSW 索引算法，这是一种多层图结构，可以快速定位最相似的向量。整个检索过程包括向量检索 + BM25 关键词检索的混合召回，然后用 gte-Qwen2-7B 重排序模型精排，最终选出最相关的 3-5 篇文档给大模型生成答案。检索延迟控制在 50ms 以内。"</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>应对面试官追问：为什么不用更好的向量模型？</h4>
+                    <p>"我们项目部署在军工企业内网，与外网物理隔离。阿里的 text-embedding-v4、OpenAI 的 text-embedding-3 这些模型效果确实更好，但它们都是闭源的 API 服务，必须通过互联网调用，内网环境根本用不了。</p>
+                    <p>所以我们选择了开源可本地部署的 BGE-M3 和 gte-Qwen2-7B。虽然效果略低（检索准确率差 2-3%），但在内网环境下这是最优选择。而且开源模型的好处是我们可以根据业务数据进行微调，长期来看反而更适合特定领域。"</p>
                 </div>
             </div>
 
@@ -3047,6 +3059,16 @@
                     <h4>向量模型</h4>
                     <p><strong>BGE-M3</strong>（智源开源）：把文本转成 1024 维向量，支持中英文长文本（最长 8192 token）</p>
                     <p><strong>gte-Qwen2-7B</strong>：重排序模型，对检索结果进行精排</p>
+                    
+                    <h4>为什么选择开源模型而不是更好的闭源模型？</h4>
+                    <p><strong>背景：</strong>军工企业<span class="term" data-pronunciation="内网">内网<span class="pronun-icon">🔊</span></span>环境，物理隔离、不能连接互联网</p>
+                    <p><strong>问题：</strong>更好的闭源向量模型（如阿里 <span class="term" data-pronunciation="特克斯特印贝丁V4">text-embedding-v4<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="欧噗恩诶爱">OpenAI<span class="pronun-icon">🔊</span></span> text-embedding-3）需要通过 <span class="term" data-pronunciation="诶批爱">API<span class="pronun-icon">🔊</span></span> 调用云服务，内网环境无法使用</p>
+                    <p><strong>解决方案：</strong>选择开源可本地部署的模型：</p>
+                    <ul>
+                        <li><strong>BGE-M3</strong>：智源开源，模型权重可下载，支持离线部署</li>
+                        <li><strong>gte-Qwen2-7B</strong>：阿里开源，可本地化部署，无需外网</li>
+                        <li><strong>效果对比</strong>：虽然效果略低于闭源模型（约 2-3% 准确率差距），但在内网环境下是最优选择</li>
+                    </ul>
                 </div>
 
                 <div class="answer-box">
@@ -3083,6 +3105,25 @@
             <button class="collapsible">大模型系列</button>
             <div class="collapsible-content">
                 <div class="tech-box">
+                    <h4>为什么选择开源大模型而不是 GPT-4/Claude？</h4>
+                    <p><strong>核心原因：军工内网部署环境的限制</strong></p>
+                    <ul>
+                        <li><strong>安全要求</strong>：军工企业对数据安全要求极高，不允许数据传输到外部云服务</li>
+                        <li><strong>物理隔离</strong>：内网环境与互联网物理隔离，无法调用 <span class="term" data-pronunciation="欧噗恩诶爱">OpenAI<span class="pronun-icon">🔊</span></span> API、<span class="term" data-pronunciation="克劳德">Claude<span class="pronun-icon">🔊</span></span> API</li>
+                        <li><strong>自主可控</strong>：开源模型可以完全掌控，支持定制化微调和优化</li>
+                        <li><strong>成本考虑</strong>：本地部署无需按 Token 付费，长期成本更低</li>
+                    </ul>
+                    
+                    <p><strong>开源模型的优势：</strong></p>
+                    <ul>
+                        <li>可本地化部署，无需外网</li>
+                        <li>模型权重完全开放，可定制微调</li>
+                        <li>中文能力强（Qwen 系列专门针对中文优化）</li>
+                        <li>推理速度可控（通过 vLLM、量化等技术优化）</li>
+                    </ul>
+                </div>
+
+                <div class="tech-box">
                     <h4>Qwen（通义千问）- 阿里开源</h4>
                     <ul>
                         <li><strong>Qwen2.5 / Qwen3</strong>：通用对话模型，中文能力强</li>
@@ -3105,8 +3146,9 @@
 
                 <div class="answer-box">
                     <h4>面试这么说</h4>
-                    <p>"我们项目里根据任务类型选择不同模型。通用对话用 Qwen3-14B，代码生成和 SQL 生成用 Qwen3-Coder-7B，复杂推理用 DeepSeek-V3。</p>
-                    <p>而且经历过几次模型升级，比如 2025 年 5 月从 <span class="term" data-pronunciation="Q问2.5">Qwen2.5<span class="pronun-icon">🔊</span></span> 升级到 <span class="term" data-pronunciation="Q问3">Qwen3<span class="pronun-icon">🔊</span></span>，任务准确性明显提升。升级过程包括模型权重转换、<span class="term" data-pronunciation="撇破母特">Prompt<span class="pronun-icon">🔊</span></span> 模板适配、推理参数调优（temperature、top_p 等）。"</p>
+                    <p>"我们项目部署在军工企业内网环境，与互联网物理隔离，所以无法使用 GPT-4、Claude 这些闭源商业模型的 API。我们选择了开源大模型进行本地化部署。</p>
+                    <p>具体来说，根据任务类型选择不同模型：通用对话用 Qwen3-14B，代码生成和 SQL 生成用 Qwen3-Coder-7B，复杂推理用 DeepSeek-V3。这些模型虽然整体能力略低于 GPT-4，但中文能力很强，而且可以完全掌控，支持定制化优化。</p>
+                    <p>我们经历过几次模型升级，比如 2025 年 5 月从 <span class="term" data-pronunciation="Q问2.5">Qwen2.5<span class="pronun-icon">🔊</span></span> 升级到 <span class="term" data-pronunciation="Q问3">Qwen3<span class="pronun-icon">🔊</span></span>，任务准确性明显提升。升级过程包括模型权重转换、<span class="term" data-pronunciation="撇破母特">Prompt<span class="pronun-icon">🔊</span></span> 模板适配、推理参数调优（temperature、top_p 等）。"</p>
                 </div>
             </div>
 
