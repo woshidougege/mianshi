@@ -2903,25 +2903,25 @@
                 <div class="answer-box">
                     <h4>完整 RAG 流程</h4>
                     <ol>
-                        <li><strong>文档解析</strong>：支持 PDF、Word、Excel、Markdown，用 <span class="term" data-pronunciation="P-D-F普拉母">PDFPlumber<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="安斯茶克吃的">Unstructured<span class="pronun-icon">🔊</span></span></li>
-                        <li><strong><span class="explain" data-explain="为什么要切片？文档太长（几十页），一次全给模型：1.超token限制 2.无关信息太多影响准确率。切成小段，只给相关的几段">智能切片<span class="explain-icon">❓</span></span></strong>：按语义分段，每段 500-1000 字，<span class="explain" data-explain="为什么要overlap？比如一句话'Flink...性能好'被切成两段，overlap保证完整性，不会把重要信息切断">相邻段有 50 token overlap<span class="explain-icon">❓</span></span></li>
+                        <li><strong>文档解析</strong>：支持 <span class="term" data-pronunciation="P-D-F">PDF<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="沃德">Word<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="艾克塞尔">Excel<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="马克当">Markdown<span class="pronun-icon">🔊</span></span>，用 <span class="term" data-pronunciation="P-D-F普拉母">PDFPlumber<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="安斯茶克吃的">Unstructured<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong><span class="explain" data-explain="为什么要切片？文档太长（几十页），一次全给模型：1.超token限制 2.无关信息太多影响准确率。切成小段，只给相关的几段">智能切片<span class="explain-icon">❓</span></span></strong>：按语义分段，每段 500-1000 字，<span class="explain" data-explain="为什么要overlap？比如一句话'Flink...性能好'被切成两段，overlap保证完整性，不会把重要信息切断">相邻段有 50 <span class="term" data-pronunciation="投肯">token<span class="pronun-icon">🔊</span></span> overlap<span class="explain-icon">❓</span></span></li>
                         <li><strong>向量化</strong>：使用 BGE-M3 模型（1024 维向量）</li>
-                        <li><strong>向量存储</strong>：存入 Milvus，建立 HNSW 索引</li>
+                        <li><strong>向量存储</strong>：存入 <span class="term" data-pronunciation="米尔河斯">Milvus<span class="pronun-icon">🔊</span></span>，建立 <span class="term" data-pronunciation="H-N-S-W">HNSW<span class="pronun-icon">🔊</span></span> 索引</li>
                         <li><strong><span class="explain" data-explain="为什么混合检索？向量检索：语义相似但可能漏关键词。BM25：精确匹配关键词但不懂语义。两个一起用，召回更全面">混合检索<span class="explain-icon">❓</span></span></strong>：向量检索 + BM25 关键词检索</li>
-                        <li><strong><span class="explain" data-explain="为什么要重排序？粗排（向量检索）速度快但不够准，可能把不太相关的也召回了。重排序用更精准的模型再打分，选出真正最相关的">重排序<span class="explain-icon">❓</span></span></strong>：用 gte-Qwen2-7B 精排，选出最相关的 3-5 篇</li>
+                        <li><strong><span class="explain" data-explain="为什么要重排序？粗排（向量检索）速度快但不够准，可能把不太相关的也召回了。重排序用更精准的模型再打分，选出真正最相关的">重排序<span class="explain-icon">❓</span></span></strong>：用 <span class="term" data-pronunciation="GTE-Q问２-7B">gte-Qwen2-7B<span class="pronun-icon">🔊</span></span> 精排，选出最相关的 3-5 篇</li>
                         <li><strong>生成答案</strong>：把文档和问题给大模型，生成答案并标注来源</li>
                     </ol>
                 </div>
 
                 <div class="example-box">
                     <h4>面试这么说</h4>
-                    <p>"我们的智能问答平台基于 <span class="term" data-pronunciation="拉格">RAG<span class="pronun-icon">🔊</span></span> 架构，部署在军工企业内网环境。向量模型选择的是 <span class="term" data-pronunciation="B-G-E M-3">BGE-M3<span class="pronun-icon">🔊</span></span>，虽然阿里的 text-embedding-v4 效果更好，但它是闭源的云服务，内网环境无法使用。BGE-M3 是智源开源的模型，可以完全本地化部署，输出 1024 维向量，支持最长 8192 token 的长文本。向量之间的相似度用余弦相似度衡量，范围是 -1 到 1，越接近 1 说明越相似。</p>
-                    <p>为了实现百万级文档的毫秒级检索，我们用了 HNSW 索引算法，这是一种多层图结构，可以快速定位最相似的向量。整个检索过程包括向量检索 + BM25 关键词检索的混合召回，然后用 gte-Qwen2-7B 重排序模型精排，最终选出最相关的 3-5 篇文档给大模型生成答案。检索延迟控制在 50ms 以内。"</p>
+                    <p>"我们的智能问答平台基于 <span class="term" data-pronunciation="拉格">RAG<span class="pronun-icon">🔊</span></span> 架构，部署在军工企业内网环境。向量模型选择的是 <span class="term" data-pronunciation="B-G-E M-3">BGE-M3<span class="pronun-icon">🔊</span></span>，虽然阿里的 text-embedding-v4 效果更好，但它是闭源的云服务，内网环境无法使用。BGE-M3 是智源开源的模型，可以完全本地化部署，输出 1024 维向量，支持最长 8192 <span class="term" data-pronunciation="投肯">token<span class="pronun-icon">🔊</span></span> 的长文本。向量之间的相似度用余弦相似度衡量，范围是 -1 到 1，越接近 1 说明越相似。</p>
+                    <p>为了实现百万级文档的毫秒级检索，我们用了 <span class="term" data-pronunciation="H-N-S-W">HNSW<span class="pronun-icon">🔊</span></span> 索引算法，这是一种多层图结构，可以快速定位最相似的向量。整个检索过程包括向量检索 + BM25 关键词检索的混合召回，然后用 <span class="term" data-pronunciation="GTE-Q问２-7B">gte-Qwen2-7B<span class="pronun-icon">🔊</span></span> 重排序模型精排，最终选出最相关的 3-5 篇文档给大模型生成答案。检索延迟控制在 50ms 以内。"</p>
                 </div>
 
                 <div class="example-box">
                     <h4>应对面试官追问：为什么不用更好的向量模型？</h4>
-                    <p>"我们项目部署在军工企业内网，与外网物理隔离。阿里的 text-embedding-v4、OpenAI 的 text-embedding-3 这些模型效果确实更好，但它们都是闭源的 API 服务，必须通过互联网调用，内网环境根本用不了。</p>
+                    <p>"我们项目部署在军工企业内网，与外网物理隔离。阿里的 <span class="term" data-pronunciation="特克斯特-印贝丁-V4">text-embedding-v4<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="欧噗恩诶爱">OpenAI<span class="pronun-icon">🔊</span></span> 的 <span class="term" data-pronunciation="特克斯特-印贝丁-3">text-embedding-3<span class="pronun-icon">🔊</span></span> 这些模型效果确实更好，但它们都是闭源的 <span class="term" data-pronunciation="诶批爱">API<span class="pronun-icon">🔊</span></span> 服务，必须通过互联网调用，内网环境根本用不了。</p>
                     <p>所以我们选择了开源可本地部署的 BGE-M3 和 gte-Qwen2-7B。虽然效果略低（检索准确率差 2-3%），但在内网环境下这是最优选择。而且开源模型的好处是我们可以根据业务数据进行微调，长期来看反而更适合特定领域。"</p>
                 </div>
             </div>
@@ -2930,19 +2930,19 @@
             <div class="collapsible-content">
                 <div class="tech-box">
                     <h4>是什么</h4>
-                    <p>用户说人话，系统自动生成 SQL 查询数据库</p>
+                    <p>用户说人话，系统自动生成 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span> 查询数据库</p>
                     
                     <h4>使用模型</h4>
-                    <p>Qwen2.5-Coder-7B（专门针对代码优化）</p>
+                    <p><span class="term" data-pronunciation="Q问2.5-扣的-7B">Qwen2.5-Coder-7B<span class="pronun-icon">🔊</span></span>（专门针对代码优化）</p>
                 </div>
 
                 <div class="answer-box">
                     <h4>实现方案（面试重点）</h4>
                     <ol>
                         <li><strong><span class="term" data-pronunciation="斯key马">Schema<span class="pronun-icon">🔊</span></span> 向量化</strong>：让模型知道数据库有哪些表、哪些字段</li>
-                        <li><strong>Few-shot 示例</strong>：给几个示例，教模型怎么写 SQL</li>
-                        <li><strong>Chain-of-Thought</strong>：让模型一步步推理生成 SQL</li>
-                        <li><strong>安全校验</strong>：禁止 DROP、DELETE 等危险操作，自动加 LIMIT</li>
+                        <li><strong><span class="term" data-pronunciation="few秀特">Few-shot<span class="pronun-icon">🔊</span></span> 示例</strong>：给几个示例，教模型怎么写 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong><span class="term" data-pronunciation="chen-of-扫特">Chain-of-Thought<span class="pronun-icon">🔊</span></span></strong>：让模型一步步推理生成 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>安全校验</strong>：禁止 <span class="term" data-pronunciation="拽破">DROP<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="滴利特">DELETE<span class="pronun-icon">🔊</span></span> 等危险操作，自动加 <span class="term" data-pronunciation="立米特">LIMIT<span class="pronun-icon">🔊</span></span></li>
                     </ol>
 
                     <h4>准确率</h4>
@@ -2956,15 +2956,15 @@
                     <h4>应对面试官追问：处理什么数据格式？</h4>
                     <p><strong>输入数据格式：</strong></p>
                     <ul>
-                        <li>数据库表结构（JSON 格式）：包含表名、字段名、字段类型、字段说明</li>
+                        <li>数据库表结构（<span class="term" data-pronunciation="杰森">JSON<span class="pronun-icon">🔊</span></span> 格式）：包含表名、字段名、字段类型、字段说明</li>
                         <li>用户自然语言查询</li>
-                        <li>Few-shot 示例（相似问题的 SQL）</li>
+                        <li><span class="term" data-pronunciation="few秀特">Few-shot<span class="pronun-icon">🔊</span></span> 示例（相似问题的 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span>）</li>
                     </ul>
 
                     <p><strong>输出数据格式：</strong></p>
                     <ul>
-                        <li>标准 SQL 语句（支持 MySQL、PostgreSQL、Oracle 等方言）</li>
-                        <li>执行结果（JSON/表格）</li>
+                        <li>标准 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span> 语句（支持 <span class="term" data-pronunciation="麦思Q偶">MySQL<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="剖斯特-格瑞思Q偶">PostgreSQL<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="欧若扣">Oracle<span class="pronun-icon">🔊</span></span> 等方言）</li>
+                        <li>执行结果（<span class="term" data-pronunciation="杰森">JSON<span class="pronun-icon">🔊</span></span>/表格）</li>
                         <li>可视化图表数据</li>
                     </ul>
 
@@ -2972,16 +2972,16 @@
                     <pre>1. <span class="term" data-pronunciation="斯key马">Schema<span class="pronun-icon">🔊</span></span> 预处理：
    - 提取表结构 → 转成自然语言描述 → 向量化
    
-2. Query 理解：
+2. <span class="term" data-pronunciation="亏瑞">Query<span class="pronun-icon">🔊</span></span> 理解：
    - 意图识别（查询/统计/分析）
    - 实体抽取（表名、字段名、条件值）
    
 3. SQL 生成：
-   - 模型推理 → 生成 SQL
+   - 模型推理 → 生成 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span>
    - 语法校验 → 安全检查
    
 4. 执行与优化：
-   - 执行 SQL → 获取结果
+   - 执行 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span> → 获取结果
    - 结果聚合 → 生成图表</pre>
                 </div>
             </div>
@@ -2994,8 +2994,8 @@
                     
                     <h4>核心技术</h4>
                     <ul>
-                        <li><strong>PagedAttention</strong>：像操作系统管理内存一样管理显存，显存利用率提升</li>
-                        <li><strong>Continuous Batching</strong>：动态合并多个请求一起处理，吞吐量提升 2-3 倍</li>
+                        <li><strong><span class="term" data-pronunciation="佩吉的-阿腾神">PagedAttention<span class="pronun-icon">🔊</span></span></strong>：像操作系统管理内存一样管理显存，显存利用率提升</li>
+                        <li><strong><span class="term" data-pronunciation="肯听扭丝-巴qi">Continuous Batching<span class="pronun-icon">🔊</span></span></strong>：动态合并多个请求一起处理，吞吐量提升 2-3 倍</li>
                     </ul>
                 </div>
 
@@ -3026,8 +3026,8 @@
                     <h4>部署架构</h4>
                     <ul>
                         <li><strong>单机多卡</strong>：一个 vLLM 实例管理一台服务器的多个 GPU（比如 8 卡）</li>
-                        <li><strong>多机扩展</strong>：每台服务器独立运行一个 vLLM 实例，外部用 K8s Service 做负载均衡</li>
-                        <li><strong>部署方式</strong>：Docker 容器化部署，K8s 编排</li>
+                        <li><strong>多机扩展</strong>：每台服务器独立运行一个 <span class="term" data-pronunciation="v-艾偶-艾偶-艾姆">vLLM<span class="pronun-icon">🔊</span></span> 实例，外部用 <span class="term" data-pronunciation="K8斯">K8s<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="萨维斯">Service<span class="pronun-icon">🔊</span></span> 做负载均衡</li>
+                        <li><strong>部署方式</strong>：<span class="term" data-pronunciation="多克">Docker<span class="pronun-icon">🔊</span></span> 容器化部署，<span class="term" data-pronunciation="K8斯">K8s<span class="pronun-icon">🔊</span></span> 编排</li>
                     </ul>
                 </div>
             </div>
@@ -3036,7 +3036,7 @@
             <div class="collapsible-content">
                 <div class="tech-box">
                     <h4>是什么</h4>
-                    <p>NVIDIA 开源的统一 AI 模型推理服务器</p>
+                    <p><span class="term" data-pronunciation="恩维迪亚">NVIDIA<span class="pronun-icon">🔊</span></span> 开源的统一 <span class="term" data-pronunciation="诶爱">AI<span class="pronun-icon">🔊</span></span> 模型推理服务器</p>
                     
                     <h4>核心特点</h4>
                     <ul>
@@ -3048,8 +3048,8 @@
 
                 <div class="answer-box">
                     <h4>面试这么说</h4>
-                    <p>"我们用 Triton 构建了统一推理平台。把 vLLM 引擎（跑 Qwen3 大模型）、TensorRT 引擎（跑 BGE-M3 向量模型）都集成在 Triton 里，对外就是一个统一的接口。</p>
-                    <p>这样做的好处是 GPU 资源可以统一调度，比如对话模型不忙的时候，显存就可以给向量模型用，资源利用率更高。我们通过 K8s 部署了多个 Triton 实例，每个实例管理一台服务器的 GPU，K8s Service 做负载均衡实现集群化服务。"</p>
+                    <p>"我们用 Triton 构建了统一推理平台。把 <span class="term" data-pronunciation="v-艾偶-艾偶-艾姆">vLLM<span class="pronun-icon">🔊</span></span> 引擎（跑 <span class="term" data-pronunciation="Q问3">Qwen3<span class="pronun-icon">🔊</span></span> 大模型）、<span class="term" data-pronunciation="腾色-阿-踢">TensorRT<span class="pronun-icon">🔊</span></span> 引擎（跑 <span class="term" data-pronunciation="B-G-E M-3">BGE-M3<span class="pronun-icon">🔊</span></span> 向量模型）都集成在 Triton 里，对外就是一个统一的接口。</p>
+                    <p>这样做的好处是 <span class="term" data-pronunciation="G-P-U">GPU<span class="pronun-icon">🔊</span></span> 资源可以统一调度，比如对话模型不忙的时候，显存就可以给向量模型用，资源利用率更高。我们通过 K8s 部署了多个 Triton 实例，每个实例管理一台服务器的 <span class="term" data-pronunciation="G-P-U">GPU<span class="pronun-icon">🔊</span></span>，K8s Service 做负载均衡实现集群化服务。"</p>
                 </div>
             </div>
 
@@ -3057,7 +3057,7 @@
             <div class="collapsible-content">
                 <div class="tech-box">
                     <h4>向量模型</h4>
-                    <p><strong>BGE-M3</strong>（智源开源）：把文本转成 1024 维向量，支持中英文长文本（最长 8192 token）</p>
+                    <p><strong>BGE-M3</strong>（智源开源）：把文本转成 1024 维向量，支持中英文长文本（最长 8192 <span class="term" data-pronunciation="投肯">token<span class="pronun-icon">🔊</span></span>）</p>
                     <p><strong>gte-Qwen2-7B</strong>：重排序模型，对检索结果进行精排</p>
                     
                     <h4>为什么选择开源模型而不是更好的闭源模型？</h4>
@@ -3109,9 +3109,9 @@
                     <p><strong>核心原因：军工内网部署环境的限制</strong></p>
                     <ul>
                         <li><strong>安全要求</strong>：军工企业对数据安全要求极高，不允许数据传输到外部云服务</li>
-                        <li><strong>物理隔离</strong>：内网环境与互联网物理隔离，无法调用 <span class="term" data-pronunciation="欧噗恩诶爱">OpenAI<span class="pronun-icon">🔊</span></span> API、<span class="term" data-pronunciation="克劳德">Claude<span class="pronun-icon">🔊</span></span> API</li>
+                        <li><strong>物理隔离</strong>：内网环境与互联网物理隔离，无法调用 <span class="term" data-pronunciation="欧噗恩诶爱">OpenAI<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="诶批爱">API<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="克劳德">Claude<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="诶批爱">API<span class="pronun-icon">🔊</span></span></li>
                         <li><strong>自主可控</strong>：开源模型可以完全掌控，支持定制化微调和优化</li>
-                        <li><strong>成本考虑</strong>：本地部署无需按 Token 付费，长期成本更低</li>
+                        <li><strong>成本考虑</strong>：本地部署无需按 <span class="term" data-pronunciation="投肯">Token<span class="pronun-icon">🔊</span></span> 付费，长期成本更低</li>
                     </ul>
                     
                     <p><strong>开源模型的优势：</strong></p>
@@ -3119,27 +3119,27 @@
                         <li>可本地化部署，无需外网</li>
                         <li>模型权重完全开放，可定制微调</li>
                         <li>中文能力强（Qwen 系列专门针对中文优化）</li>
-                        <li>推理速度可控（通过 vLLM、量化等技术优化）</li>
+                        <li>推理速度可控（通过 <span class="term" data-pronunciation="v-艾偶-艾偶-艾姆">vLLM<span class="pronun-icon">🔊</span></span>、量化等技术优化）</li>
                     </ul>
                 </div>
 
                 <div class="tech-box">
-                    <h4>Qwen（通义千问）- 阿里开源</h4>
+                    <h4><span class="term" data-pronunciation="Q问">Qwen<span class="pronun-icon">🔊</span></span>（通义千问）- 阿里开源</h4>
                     <ul>
-                        <li><strong>Qwen2.5 / Qwen3</strong>：通用对话模型，中文能力强</li>
-                        <li><strong>Qwen-Coder</strong>：专门针对代码优化，生成代码、SQL 特别准</li>
+                        <li><strong><span class="term" data-pronunciation="Q问2.5">Qwen2.5<span class="pronun-icon">🔊</span></span> / <span class="term" data-pronunciation="Q问3">Qwen3<span class="pronun-icon">🔊</span></span></strong>：通用对话模型，中文能力强</li>
+                        <li><strong><span class="term" data-pronunciation="Q问-扣的">Qwen-Coder<span class="pronun-icon">🔊</span></span></strong>：专门针对代码优化，生成代码、SQL 特别准</li>
                         <li><strong>特点</strong>：开源、商用友好、中文好、推理速度快</li>
                     </ul>
 
-                    <h4>DeepSeek（深度求索）- 开源</h4>
+                    <h4><span class="term" data-pronunciation="地破-席克">DeepSeek<span class="pronun-icon">🔊</span></span>（深度求索）- 开源</h4>
                     <ul>
-                        <li><strong>DeepSeek-V2 / V3</strong>：性能很强的开源模型，推理能力强</li>
+                        <li><strong><span class="term" data-pronunciation="地破席克-V2">DeepSeek-V2<span class="pronun-icon">🔊</span></span> / <span class="term" data-pronunciation="地破席克-V3">V3<span class="pronun-icon">🔊</span></span></strong>：性能很强的开源模型，推理能力强</li>
                         <li><strong>特点</strong>：MoE 架构（混合专家模型），成本低、效果好</li>
                     </ul>
 
-                    <h4>ChatGLM（智谱 AI）- 开源</h4>
+                    <h4><span class="term" data-pronunciation="查特-G-L-M">ChatGLM<span class="pronun-icon">🔊</span></span>（智谱 <span class="term" data-pronunciation="诶爱">AI<span class="pronun-icon">🔊</span></span>）- 开源</h4>
                     <ul>
-                        <li><strong>ChatGLM3 / 4</strong>：中文对话模型，比较轻量</li>
+                        <li><strong><span class="term" data-pronunciation="查特G-L-M-3">ChatGLM3<span class="pronun-icon">🔊</span></span> / <span class="term" data-pronunciation="查特G-L-M-4">4<span class="pronun-icon">🔊</span></span></strong>：中文对话模型，比较轻量</li>
                         <li><strong>特点</strong>：可以本地部署，显存占用相对小</li>
                     </ul>
                 </div>
@@ -3945,37 +3945,37 @@
             <button class="collapsible">其他大数据技术</button>
             <div class="collapsible-content">
                 <div class="tech-box">
-                    <h4>HDFS - 分布式文件系统</h4>
+                    <h4><span class="term" data-pronunciation="H-D-F-S">HDFS<span class="pronun-icon">🔊</span></span> - 分布式文件系统</h4>
                     <p>存海量数据的分布式存储，数据分块存储在多台机器上，有副本保证可靠性（3 副本）。</p>
 
-                    <h4>Hive - 数据仓库</h4>
-                    <p>基于 Hadoop 的数据仓库，用 SQL 查询 HDFS 数据。底层会转成 MapReduce 或 Spark 作业去执行。</p>
+                    <h4><span class="term" data-pronunciation="哈伊夫">Hive<span class="pronun-icon">🔊</span></span> - 数据仓库</h4>
+                    <p>基于 <span class="term" data-pronunciation="哈杜普">Hadoop<span class="pronun-icon">🔊</span></span> 的数据仓库，用 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span> 查询 <span class="term" data-pronunciation="H-D-F-S">HDFS<span class="pronun-icon">🔊</span></span> 数据。底层会转成 <span class="term" data-pronunciation="马普瑞杜斯">MapReduce<span class="pronun-icon">🔊</span></span> 或 <span class="term" data-pronunciation="斯帕克">Spark<span class="pronun-icon">🔊</span></span> 作业去执行。</p>
 
-                    <h4>Spark - 分布式计算引擎</h4>
-                    <p>MapReduce 的升级版，基于内存计算，速度快 10-100 倍。可以用 Spark SQL 写 SQL，也可以用 Spark Streaming 做准实时计算。</p>
+                    <h4><span class="term" data-pronunciation="斯帕克">Spark<span class="pronun-icon">🔊</span></span> - 分布式计算引擎</h4>
+                    <p><span class="term" data-pronunciation="马普瑞杜斯">MapReduce<span class="pronun-icon">🔊</span></span> 的升级版，基于内存计算，速度快 10-100 倍。可以用 <span class="term" data-pronunciation="斯帕克-SQL">Spark SQL<span class="pronun-icon">🔊</span></span> 写 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span>，也可以用 Spark Streaming 做准实时计算。</p>
 
-                    <h4>HBase - 分布式 NoSQL 数据库</h4>
+                    <h4><span class="term" data-pronunciation="H-贝斯">HBase<span class="pronun-icon">🔊</span></span> - 分布式 <span class="term" data-pronunciation="No-SQL">NoSQL<span class="pronun-icon">🔊</span></span> 数据库</h4>
                     <p>存大量结构化数据，支持随机读写，毫秒级查询。适合存时序数据、日志、历史明细等。</p>
                     <p><strong><span class="explain" data-explain="为什么地域+时间戳反转？只用时间戳：数据都写到一个Region（热点）。时间戳反转：把最新数据分散到不同Region（避免热点）。加地域前缀：按地域查询只扫对应Region（快）">RowKey 优化<span class="explain-icon">❓</span></span>：</strong>用地域 + 时间戳反转的复合 RowKey，避免热点，查询性能提升 3 倍。</p>
 
-                    <h4>RocksDB - 嵌入式 KV 存储</h4>
-                    <p>Flink 用来存状态数据的。支持增量 Checkpoint，适合大状态场景。</p>
+                    <h4><span class="term" data-pronunciation="罗克斯-D-B">RocksDB<span class="pronun-icon">🔊</span></span> - 嵌入式 <span class="term" data-pronunciation="K-V">KV<span class="pronun-icon">🔊</span></span> 存储</h4>
+                    <p><span class="term" data-pronunciation="弗林克">Flink<span class="pronun-icon">🔊</span></span> 用来存状态数据的。支持增量 Checkpoint，适合大状态场景。</p>
                 </div>
             </div>
 
             <hr>
 
-            <h3>Java 技术栈</h3>
+            <h3><span class="term" data-pronunciation="家哇">Java<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> 技术栈</h3>
 
             <div class="tech-box">
-                <h4>Spring Boot</h4>
-                <p>Java 微服务开发框架，开箱即用，自动配置。</p>
+                <h4><span class="term" data-pronunciation="斯普林布特">Spring Boot<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span></h4>
+                <p><span class="term" data-pronunciation="家哇">Java<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> 微服务开发框架，开箱即用，自动配置。</p>
 
-                <h4>Dubbo</h4>
+                <h4><span class="term" data-pronunciation="杜博">Dubbo<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span></h4>
                 <p>阿里开源的微服务 RPC 框架，提供高性能的远程调用能力。</p>
 
-                <h4>MyBatis-Plus / MyBatis-Flex</h4>
-                <p>数据库 ORM 框架，不用写 SQL（或者少写 SQL），通过 Java 对象操作数据库。</p>
+                <h4><span class="term" data-pronunciation="麦百蒂斯-普拉斯">MyBatis-Plus<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> / <span class="term" data-pronunciation="麦百蒂斯-弗莱克斯">MyBatis-Flex<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span></h4>
+                <p>数据库 ORM 框架，不用写 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span>（或者少写 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span>），通过 <span class="term" data-pronunciation="家哇">Java<span class="pronun-icon">🔊</span></span> 对象操作数据库。</p>
 
                 <h4>Sentinel</h4>
                 <p>阿里开源的限流降级框架，防止系统被打垮。</p>
@@ -3986,20 +3986,20 @@
             <h3>数据库技术</h3>
 
             <div class="tech-box">
-                <h4>MySQL / PostgreSQL</h4>
-                <p>关系型数据库。MySQL 简单稳定，PostgreSQL 功能更强大。</p>
+                <h4><span class="term" data-pronunciation="麦思Q偶">MySQL<span class="pronun-icon">🔊</span></span> / <span class="term" data-pronunciation="剖斯特-格瑞-SQL">PostgreSQL<span class="pronun-icon">🔊</span></span></h4>
+                <p>关系型数据库。<span class="term" data-pronunciation="麦思Q偶">MySQL<span class="pronun-icon">🔊</span></span> 简单稳定，<span class="term" data-pronunciation="剖斯特-格瑞-SQL">PostgreSQL<span class="pronun-icon">🔊</span></span> 功能更强大。</p>
 
-                <h4>ClickHouse</h4>
-                <p>列式存储 OLAP 数据库，查询特别快。特别适合大宽表、海量数据的统计分析。</p>
+                <h4><span class="term" data-pronunciation="克里克豪斯">ClickHouse<span class="pronun-icon">🔊</span></span></h4>
+                <p>列式存储 <span class="term" data-pronunciation="O-L-A-P">OLAP<span class="pronun-icon">🔊</span></span> 数据库，查询特别快。特别适合大宽表、海量数据的统计分析。</p>
 
-                <h4>Redis</h4>
-                <p>内存 KV 数据库，缓存必备。用来做缓存、分布式锁、Session 存储。</p>
+                <h4><span class="term" data-pronunciation="瑞迪斯">Redis<span class="pronun-icon">🔊</span></span></h4>
+                <p>内存 <span class="term" data-pronunciation="K-V">KV<span class="pronun-icon">🔊</span></span> 数据库，缓存必备。用来做缓存、分布式锁、<span class="term" data-pronunciation="塞神">Session<span class="pronun-icon">🔊</span></span> 存储。</p>
 
-                <h4>Elasticsearch（ES）</h4>
-                <p>搜索引擎，也能当 NoSQL 数据库。用来做日志存储和全文搜索。</p>
+                <h4><span class="term" data-pronunciation="伊拉斯提克搜索">Elasticsearch<span class="pronun-icon">🔊</span></span>（<span class="term" data-pronunciation="E-S">ES<span class="pronun-icon">🔊</span></span>）</h4>
+                <p>搜索引擎，也能当 <span class="term" data-pronunciation="No-SQL">NoSQL<span class="pronun-icon">🔊</span></span> 数据库。用来做日志存储和全文搜索。</p>
 
                 <h4>Milvus</h4>
-                <p>专门的向量数据库，查询性能比 ES 好。用 HNSW 索引算法，支持百万级文档毫秒级检索。</p>
+                <p>专门的向量数据库，查询性能比 <span class="term" data-pronunciation="E-S">ES<span class="pronun-icon">🔊</span></span> 好。用 HNSW 索引算法，支持百万级文档毫秒级检索。</p>
 
                 <h4>达梦数据库（DM）</h4>
                 <p>国产商业数据库。我做过 Hive 和 Ranger 的达梦适配，包括 DDL 语法、数据类型映射、字符集兼容等。</p>
@@ -4010,14 +4010,14 @@
             <h3>监控运维</h3>
 
             <div class="tech-box">
-                <h4>Prometheus + Grafana</h4>
-                <p><strong>Prometheus</strong>：采集指标数据（CPU、内存、QPS、延迟等）</p>
-                <p><strong>Grafana</strong>：可视化展示，做漂亮的监控大屏</p>
+                <h4><span class="term" data-pronunciation="普罗米修斯">Prometheus<span class="pronun-icon">🔊</span></span> + <span class="term" data-pronunciation="格拉芬娜">Grafana<span class="pronun-icon">🔊</span></span></h4>
+                <p><strong><span class="term" data-pronunciation="普罗米修斯">Prometheus<span class="pronun-icon">🔊</span></span></strong>：采集指标数据（<span class="term" data-pronunciation="C-P-U">CPU<span class="pronun-icon">🔊</span></span>、内存、QPS、延迟等）</p>
+                <p><strong><span class="term" data-pronunciation="格拉芬娜">Grafana<span class="pronun-icon">🔊</span></span></strong>：可视化展示，做漂亮的监控大屏</p>
 
-                <h4>Ranger</h4>
-                <p>Hadoop 生态的权限管理系统，可以控制谁能访问哪些 HDFS 路径、哪些 Hive 表。</p>
+                <h4><span class="term" data-pronunciation="伦吉">Ranger<span class="pronun-icon">🔊</span></span></h4>
+                <p><span class="term" data-pronunciation="哈杜普">Hadoop<span class="pronun-icon">🔊</span></span> 生态的权限管理系统，可以控制谁能访问哪些 HDFS 路径、哪些 <span class="term" data-pronunciation="哈伊夫">Hive<span class="pronun-icon">🔊</span></span> 表。</p>
 
-                <h4>Kerberos</h4>
+                <h4><span class="term" data-pronunciation="柯柏洛斯">Kerberos<span class="pronun-icon">🔊</span></span></h4>
                 <p>身份认证协议，Hadoop 集群的安全认证机制。</p>
             </div>
         </div>
@@ -4030,7 +4030,7 @@
                 <strong>💡 重要提示：</strong>Java后端是很多公司的必考点，尤其是Spring Boot、集合框架、并发、JVM。这里整理了高频面试题和标准答案。
             </p>
             
-            <button class="collapsible">⭐ Spring Boot - 核心原理与面试要点</button>
+            <button class="collapsible">⭐ <span class="term" data-pronunciation="斯普林布特">Spring Boot<span class="pronun-icon">🔊</span></span> - 核心原理与面试要点</button>
             <div class="collapsible-content">
                 <div class="tech-box">
                     <h4>自动配置原理（高频考点）</h4>
@@ -4614,7 +4614,7 @@ unit - 时间单位
                 <strong>💡 定位说明：</strong>前端占比较低，掌握基础知识能应付全栈岗位面试即可。重点是Vue/React基本概念和常见面试题。
             </p>
 
-            <button class="collapsible">⭐ Vue.js - 核心概念（高频）</button>
+            <button class="collapsible">⭐ <span class="term" data-pronunciation="弗朱">Vue<span class="pronun-icon">🔊</span></span>.js - 核心概念（高频）</button>
             <div class="collapsible-content">
                 <div class="tech-box">
                     <h4>Vue2 vs Vue3 核心区别</h4>
