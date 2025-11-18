@@ -1156,14 +1156,17 @@
         .collapsible-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            padding: 0 15px;  /* 水平padding保持不变 */
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
             background: #f9f9f9;
             border-radius: 0 0 5px 5px;
         }
 
         .collapsible-content.active {
-            padding: 15px;
+            max-height: 50000px;  /* 使用一个足够大的值确保内容完全展开 */
+            padding: 15px;  /* 展开时添加垂直padding */
             overflow: visible;  /* 允许tooltip卡片显示在容器外 */
+            transition: max-height 0.5s ease-in, padding 0.5s ease-in;
         }
 
         /* 返回顶部按钮 */
@@ -5363,7 +5366,8 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                     <p>"</p>
                 </div>
 
-                <h4>关键技术点（面试深问时）</h4>
+                <button class="collapsible">📌 关键技术点（面试深问时）</button>
+                <div class="collapsible-content">
                 <div class="answer-box">
                     <h4>1. 多智能体协作与开发</h4>
                     <p><strong>我负责的工作：</strong></p>
@@ -5450,8 +5454,10 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                         <li>调试困难：昇腾的调试工具不如 NVIDIA 的 CUDA-GDB 和 Nsight 好用</li>
                     </ul>
                 </div>
+                </div>
 
-                <h4>常见追问</h4>
+                <button class="collapsible">💬 常见追问</button>
+                <div class="collapsible-content">
                 <div class="warning-box">
                     <p><strong>Q：为什么选 vLLM？</strong></p>
                     <p>A：vLLM 的核心优势是推理性能。它用了 PagedAttention 技术，把 KV Cache 像操作系统分页内存一样管理，显存利用率高。还有 Continuous Batching，动态合并请求，吞吐量能提升 2-3 倍。</p>
@@ -5471,6 +5477,7 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                     <p><strong>Q：代码执行智能体的安全性怎么保证？</strong></p>
                     <p>A：安全性是核心问题。我们用 Docker 容器做沙箱隔离，每个代码执行任务都在独立容器里运行，容器配置了严格的资源限制和安全策略：CPU 限制 1 核、内存限制 512MB、超时时间 30 秒、禁止网络访问（no network）、只读文件系统、禁止特权操作。代码执行前会做静态检查，过滤危险函数（如 os.system、eval、exec、subprocess 等），只允许白名单内的库（Pandas、NumPy、Matplotlib 等）。执行结果只返回标准输出和图表，不返回文件系统内容。这样即使代码有恶意操作，也被容器隔离了，不会影响宿主机。</p>
                 </div>
+                </div>
             </div>
 
             <button class="collapsible">⭐ 项目二：企业智能问答与数据分析平台</button>
@@ -5488,7 +5495,8 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                     <p>"</p>
                 </div>
 
-                <h4>关键技术点</h4>
+                <button class="collapsible">📌 关键技术点</button>
+                <div class="collapsible-content">
                 <div class="answer-box">
                     <h4>1. RAG 文档问答</h4>
                     <p><strong>核心流程：</strong>文档解析 → 切片 → 向量化 → 检索 → 生成答案</p>
@@ -5515,14 +5523,17 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                         <li>流式输出：SSE/WebSocket，首字延迟 500ms 以内</li>
                     </ul>
                 </div>
+                </div>
 
-                <h4>常见追问</h4>
+                <button class="collapsible">💬 常见追问</button>
+                <div class="collapsible-content">
                 <div class="warning-box">
                     <p><strong>Q：RAG 怎么保证答案准确？</strong></p>
                     <p>A：主要靠检索质量。我们做了多路召回（向量 + 关键词），然后二阶段重排序，保证检索到的文档真的相关。另外模型生成答案时要求严格基于给定文档回答，不能瞎编，而且必须标注引用来源。</p>
                     
                     <p><strong>Q：Text2SQL 准确率怎么样？</strong></p>
                     <p>A：经过优化后，简单查询准确率能到 95%+，复杂查询也能达到 80%+。主要优化手段是 Few-shot 示例库，我们收集了几百个典型问题和对应的 SQL，根据用户问题找最相似的示例给模型参考。</p>
+                </div>
                 </div>
             </div>
 
@@ -5542,7 +5553,8 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                     <p>"</p>
                 </div>
 
-                <h4>关键技术点</h4>
+                <button class="collapsible">📌 关键技术点</button>
+                <div class="collapsible-content">
                 <div class="answer-box">
                     <h4>1. Flink 实时计算</h4>
                     <ul>
@@ -5569,14 +5581,17 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                         <li><strong>元数据同步</strong>：Hudi 自动同步到 Hive Metastore</li>
                     </ul>
                 </div>
+                </div>
 
-                <h4>常见追问</h4>
+                <button class="collapsible">💬 常见追问</button>
+                <div class="collapsible-content">
                 <div class="warning-box">
                     <p><strong>Q：TB 级状态怎么管理的？</strong></p>
                     <p>A：主要靠 RocksDB 增量 Checkpoint。RocksDB 是 LSM Tree 结构，每次 Checkpoint 只保存变化的数据（增量），不用全量保存，大大减少了 Checkpoint 时间和存储开销。</p>
                     
                     <p><strong>Q：遇到过什么故障？</strong></p>
                     <p>A：印象深刻的是有一次 HDFS NameNode 主备切换，导致 Flink Checkpoint 失败，作业大量重启。我们排查后发现是 Checkpoint 超时时间设置得太短，后来把超时时间从 10 分钟调到 15 分钟，而且配置了 Checkpoint 失败容忍次数，允许连续失败 3 次，避免偶发故障导致作业频繁重启。"</p>
+                </div>
                 </div>
             </div>
 
@@ -5594,7 +5609,8 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                     <p>"</p>
                 </div>
 
-                <h4>关键技术点</h4>
+                <button class="collapsible">📌 关键技术点</button>
+                <div class="collapsible-content">
                 <div class="answer-box">
                     <ul>
                         <li><strong>组件一键化管理</strong>：Kibana、Kyuubi、Tez、Zeppelin、Phoenix、Doris、StarRocks 等组件的安装、配置、监控</li>
@@ -5602,6 +5618,7 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                         <li><strong>安全治理</strong>：Kerberos 全链路接入、Ranger 权限管理、达梦数据库适配</li>
                         <li><strong>实时日志</strong>：SSE 推送安装和运行日志，过程可视化</li>
                     </ul>
+                </div>
                 </div>
             </div>
 
@@ -5618,7 +5635,8 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                     <p>"</p>
                 </div>
 
-                <h4>关键技术点</h4>
+                <button class="collapsible">📌 关键技术点</button>
+                <div class="collapsible-content">
                 <div class="answer-box">
                     <ul>
                         <li><strong>ARM 架构适配</strong>：x86 到 ARM 的跨架构编译，JVM 调优</li>
@@ -5626,6 +5644,7 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                         <li><strong>高版本组件集成</strong>：集成 Flink 1.15+、Kudu、Alluxio、MinIO</li>
                         <li><strong>国产 OS 兼容</strong>：麒麟 V10、中标麒麟等国产操作系统适配</li>
                     </ul>
+                </div>
                 </div>
             </div>
 
@@ -5643,7 +5662,8 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                     <p>"</p>
                 </div>
 
-                <h4>关键技术点</h4>
+                <button class="collapsible">📌 关键技术点</button>
+                <div class="collapsible-content">
                 <div class="answer-box">
                     <ul>
                         <li><strong>技术升级</strong>：Storm → Flink 迁移，延迟降低、稳定性从 99.5% 提升到 99.9%</li>
@@ -5652,6 +5672,7 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                         <li><strong>NLP 处理</strong>：jieba 分词、SnowNLP 情感分析、TextRank 关键词提取</li>
                         <li><strong>实时预警</strong>：邮件、短信、弹窗推送，响应时间 < 30秒</li>
                     </ul>
+                </div>
                 </div>
             </div>
 
@@ -6927,14 +6948,7 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                 collapsible.addEventListener('click', function() {
                     this.classList.toggle('active');
                     const content = this.nextElementSibling;
-                    
-                    if (content.classList.contains('active')) {
-                        content.classList.remove('active');
-                        content.style.maxHeight = null;
-                    } else {
-                        content.classList.add('active');
-                        content.style.maxHeight = content.scrollHeight + "px";
-                    }
+                    content.classList.toggle('active');
                 });
             });
         });
