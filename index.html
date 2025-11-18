@@ -5353,7 +5353,8 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                 <div class="example-box">
                     <p>"最近在做的是一个通用智能体平台，叫 SuperAgent。这个项目是给军工企业用的，因为是内网环境，数据不能出去，所以我们用的都是开源大模型本地部署。</p>
                     <p>这个平台的核心思路是这样的：用户说一句话，比如'帮我生成一份项目汇报 PPT'，我们有个决策智能体会把这个需求拆解成多个子任务，然后调度不同的专业智能体去完成。它们之间通过 Google 的 A2A 协议互相配合工作。</p>
-                    <p>整个执行过程对用户是透明可见的，用户能看到每一步在干什么，哪个智能体在工作。而且我们提供了语音交互，用户可以直接说话，系统实时识别转成文字。"</p>
+                    <p>整个执行过程对用户是透明可见的，用户能看到每一步在干什么，哪个智能体在工作。而且我们提供了语音交互，用户可以直接说话，系统实时识别转成文字。</p>
+                    <p><strong>我在项目中主要负责三块：</strong>一是大模型的本地化部署和推理优化，我们用的是华为昇腾 910B 显卡，我做了 vLLM 的昇腾适配和模型量化，把推理性能提升了 3-4 倍；二是多智能体协作框架的搭建，基于 Google A2A 协议实现任务拆解和智能体调度；三是整体系统的性能优化，包括流式输出、并发控制、容器化隔离这些。最终把系统首字延迟控制在 500ms 以内，支持 50+ 并发。"</p>
                 </div>
 
                 <h4>关键技术点（面试深问时）</h4>
@@ -5374,11 +5375,42 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                     </ul>
 
                     <h4>3. 国产显卡适配（面试加分项）</h4>
+                    <p><strong>我负责的核心工作：</strong></p>
                     <ul>
-                        <li>vLLM 昇腾适配：替换 CUDA 调用为 CANN 接口</li>
-                        <li>算子优化：针对 Attention、LayerNorm、SoftMax 等关键算子</li>
-                        <li>显存管理：优化显存分配策略，充分利用 64G 显存</li>
-                        <li>兼容性测试：模型输出精度误差 < 0.1%</li>
+                        <li><strong>CUDA → CANN 接口替换</strong>：
+                            <ul>
+                                <li>替换底层算子调用：将 vLLM 中的 CUDA Kernel（cudaMalloc、cudaMemcpy、cudaLaunchKernel 等）替换为 CANN 的 acl 接口（aclrtMalloc、aclrtMemcpy、aclrtLaunchKernel）</li>
+                                <li>修改编译配置：改造 CMakeLists.txt 和 setup.py，从依赖 CUDA Toolkit 改为依赖 CANN 开发包（Ascend-cann-toolkit）</li>
+                                <li>处理兼容性问题：CUDA 和 CANN 的显存管理、流同步、事件机制有差异，需要逐一适配</li>
+                            </ul>
+                        </li>
+                        <li><strong>关键算子优化</strong>：
+                            <ul>
+                                <li>PagedAttention：这是 vLLM 的核心算子，需要重写 CUDA Kernel 为 CANN 算子，涉及复杂的显存寻址和矩阵运算</li>
+                                <li>LayerNorm/SoftMax：调用华为 CANN 提供的高性能算子库（ACLNN），性能比自己写快 20%+</li>
+                                <li>矩阵乘法：使用昇腾的 Cube 单元（专用矩阵计算硬件），FP16 性能接近理论峰值</li>
+                            </ul>
+                        </li>
+                        <li><strong>显存管理优化</strong>：
+                            <ul>
+                                <li>昇腾 910B 每张卡 64GB HBM，比 A100（80GB）略小，需要优化 KV Cache 分配策略</li>
+                                <li>实现显存池复用机制，减少频繁分配释放的开销</li>
+                                <li>动态调整 batch size 和 max_tokens，在显存和吞吐量之间找平衡</li>
+                            </ul>
+                        </li>
+                        <li><strong>性能调优与验证</strong>：
+                            <ul>
+                                <li>对比测试：同等条件下昇腾版 vLLM 推理速度达到 NVIDIA 版的 85-90%</li>
+                                <li>精度验证：跑了 1000+ 个测试样本，输出精度误差 < 0.1%，符合生产要求</li>
+                                <li>稳定性测试：7x24 小时压测，无内存泄漏、无 Kernel 崩溃</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p><strong>遇到的主要问题：</strong></p>
+                    <ul>
+                        <li>CANN 文档不完善，很多接口需要读源码或者找华为技术支持</li>
+                        <li>算子性能差异：部分算子 CANN 实现比 CUDA 慢，需要手工优化或使用 ACLNN 高性能库</li>
+                        <li>调试困难：昇腾的调试工具不如 NVIDIA 的 CUDA-GDB 和 Nsight 好用</li>
                     </ul>
                 </div>
 
@@ -5389,6 +5421,9 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                     
                     <p><strong>Q：模型升级怎么做的？</strong></p>
                     <p>A：从 <span class="term" data-pronunciation="Q问2.5">Qwen2.5<span class="pronun-icon">🔊</span></span> 升级到 <span class="term" data-pronunciation="Q问3">Qwen3<span class="pronun-icon">🔊</span></span> 主要做了三件事：一是模型权重转换，二是 <span class="term" data-pronunciation="撇破母特">Prompt<span class="pronun-icon">🔊</span></span> 模板适配，三是推理参数调优（temperature、top_p 等）。升级后任务拆解的准确性明显提升。</p>
+                    
+                    <p><strong>Q：CUDA 到 CANN 适配最大的挑战是什么？</strong></p>
+                    <p>A：最大的挑战是 PagedAttention 算子的重写。这个算子是 vLLM 的核心，涉及复杂的显存分页管理和 Attention 计算。CUDA 版本是高度优化的 Kernel，我们需要用 CANN 的 AscendC 语言重写，同时保证性能和精度。具体来说：一是要理解原始 CUDA Kernel 的实现逻辑（涉及 shared memory、warp 级操作等）；二是要熟悉昇腾的硬件架构（AI Core、Cube 单元、向量计算单元的分工）；三是反复调优，通过 Profiling 工具找性能瓶颈。最终我们把这个算子的性能优化到了 CUDA 版的 90% 左右，精度误差控制在 0.1% 以内。</p>
                 </div>
             </div>
 
@@ -5396,8 +5431,9 @@ print(v1 + v2)  # Vector(4, 6)</pre>
             <div class="collapsible-content">
                 <h4>基础版（1分钟）</h4>
                 <div class="example-box">
-                    <p>"在这之前做的项目也是 AI 相关的，是个企业智能问答平台，也是给军工企业用的。这个平台整合了企业内部的文档、数据库、业务系统等多源数据，用户可以用自然语言提问，系统自动回答或者查数据。</p>
-                    <p>比如用户问'2024 年第一季度销售额是多少'，如果知识库里有相关文档，就用 RAG（检索增强生成）的方式回答；如果需要查数据库，系统会自动生成 SQL 去查，然后把结果用图表展示出来。"</p>
+                    <p>"在这之前做的项目也是 AI 相关的，是个企业智能问答平台，也是给军工企业用的。这个平台整合了企业内部的文档、数据库、业务系统等多源数据，用户可以用自然语言提问,系统自动回答或者查数据。</p>
+                    <p>比如用户问'2024 年第一季度销售额是多少'，如果知识库里有相关文档，就用 RAG（检索增强生成）的方式回答；如果需要查数据库，系统会自动生成 SQL 去查，然后把结果用图表展示出来。</p>
+                    <p><strong>我主要负责两部分：</strong>一是 RAG 文档问答，从文档解析、向量化到检索优化，我做了混合检索和二阶段重排序，检索准确率提升了 30%；二是 Text2SQL 功能，我优化了 Few-shot 示例库和 Schema 向量化，简单查询准确率达到 95%+。另外我还做了系统性能优化，实现了相似问题缓存、异步任务队列，把整体响应速度提升了 40%。"</p>
                 </div>
 
                 <h4>关键技术点</h4>
@@ -5444,7 +5480,8 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                 <div class="example-box">
                     <p>"再往前是在银行做实时数据处理平台，这是个核心业务系统，承载全行的交易计算、风控监测、监管报送等业务。</p>
                     <p>这个平台每天要处理 5000 多万笔交易流水，数据量 2TB+，要求是秒级响应。我们用 Flink 做实时计算，消费 Kafka 的交易数据，做实时指标计算、异常检测等，结果写到 Redis 和 Oracle 供业务系统查询。</p>
-                    <p>同时我们还构建了基于 Hudi 的实时数据湖，Flink 把数据实时入湖到 HDFS，支持流批一体查询。"</p>
+                    <p>同时我们还构建了基于 Hudi 的实时数据湖，Flink 把数据实时入湖到 HDFS，支持流批一体查询。</p>
+                    <p><strong>我在这个项目里主要负责：</strong>一是 Flink 实时计算任务的开发和优化，管理 TB 级状态数据，解决了大状态下的 Checkpoint 超时问题，把处理延迟从 5 秒优化到 2 秒以内；二是基于 Hudi 的实时数据湖构建，实现了秒级数据入湖和流批一体查询；三是系统稳定性保障，通过状态后端优化、反压监控等手段，保证了 7x24 小时稳定运行，Checkpoint 成功率 99%+。"</p>
                 </div>
 
                 <h4>关键技术点</h4>
