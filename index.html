@@ -2279,15 +2279,15 @@
             <div class="collapsible-content">
                 <div class="highlight-box">
                     <h4>项目背景</h4>
-                    <p>面向军工企业内网环境的通用智能体平台，基于 Google Agent2Agent Protocol (A2A) 协议，用户通过自然语言对话提出需求，决策智能体拆解任务并调度专业智能体协作完成，支持 PPT 生成、文档处理、代码执行、会议纪要等复杂任务，整个执行过程透明可视化。</p>
+                    <p>面向军工企业内网环境的通用智能体平台，基于 <span class="term" data-pronunciation="谷歌">Google<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="艾吉特到艾吉特">Agent2Agent<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="普罗托考尔">Protocol<span class="pronun-icon">🔊</span></span> (<span class="term" data-pronunciation="A-2-A">A2A<span class="pronun-icon">🔊</span></span>) 协议，用户通过自然语言对话提出需求，决策智能体拆解任务并调度专业智能体协作完成，支持 PPT 生成、文档处理、代码执行、会议纪要等复杂任务，整个执行过程透明可视化。</p>
                     
                     <h4>技术栈</h4>
                     <ul>
-                        <li><strong>大模型</strong>：Qwen2.5/Qwen3、DeepSeek-V2/V3、ChatGLM3/4</li>
-                        <li><strong>推理框架</strong>：vLLM、Triton Inference Server</li>
-                        <li><strong>硬件环境</strong>：华为昇腾 910B（8卡 × 64GB）</li>
-                        <li><strong>后端</strong>：Spring Boot、Dubbo、MyBatis-Flex</li>
-                        <li><strong>前端</strong>：Vue3、WebSocket、SSE</li>
+                        <li><strong>大模型</strong>：<span class="term" data-pronunciation="Q问2.5">Qwen2.5<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="Q问3">Qwen3<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="地破席克-V2">DeepSeek-V2<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="地破席克-V3">V3<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="查特G-L-M-3">ChatGLM3<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="查特G-L-M-4">4<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>推理框架</strong>：<span class="term" data-pronunciation="v-艾偶-艾偶-艾姆">vLLM<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="特瑞顿">Triton<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="因菲伦斯">Inference<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="萨维">Server<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>硬件环境</strong>：华为昇腾 <span class="term" data-pronunciation="910-B">910B<span class="pronun-icon">🔊</span></span>（8卡 × 64<span class="term" data-pronunciation="G-B">GB<span class="pronun-icon">🔊</span></span>）</li>
+                        <li><strong>后端</strong>：<span class="term" data-pronunciation="斯普林布特">Spring Boot<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="杜博">Dubbo<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="麦百蒂斯-弗莱克斯">MyBatis-Flex<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>前端</strong>：<span class="term" data-pronunciation="弗朱-3">Vue3<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="韦布-梭克特">WebSocket<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="S-S-E">SSE<span class="pronun-icon">🔊</span></span></li>
                         <li><strong>基础设施</strong>：<span class="term explain" data-pronunciation="K8斯" data-explain="Kubernetes，容器编排平台，云原生基础设施。
 
 ✦ 核心功能：
@@ -2389,11 +2389,11 @@
                     
                     <h4>核心工作</h4>
                     <ol>
-                        <li>基于 Google A2A 协议实现多智能体协作框架</li>
-                        <li>大模型本地化部署与 vLLM 推理优化（INT8 量化、FlashAttention2）</li>
-                        <li>昇腾 910B 显卡适配（CANN 算子库、算子优化、显存管理）</li>
-                        <li>Triton 统一推理平台构建（集成 vLLM + TensorRT）</li>
-                        <li>容器化执行环境（Docker 沙箱）与可视化展示</li>
+                        <li>基于 <span class="term" data-pronunciation="谷歌">Google<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="A-2-A">A2A<span class="pronun-icon">🔊</span></span> 协议实现多智能体协作框架</li>
+                        <li>大模型本地化部署与 <span class="term" data-pronunciation="v-艾偶-艾偶-艾姆">vLLM<span class="pronun-icon">🔊</span></span> 推理优化（<span class="term" data-pronunciation="印特-8">INT8<span class="pronun-icon">🔊</span></span> 量化、<span class="term" data-pronunciation="弗拉什阿腾神-2">FlashAttention2<span class="pronun-icon">🔊</span></span>）</li>
+                        <li>昇腾 <span class="term" data-pronunciation="910-B">910B<span class="pronun-icon">🔊</span></span> 显卡适配（<span class="term" data-pronunciation="C-A-N-N">CANN<span class="pronun-icon">🔊</span></span> 算子库、算子优化、显存管理）</li>
+                        <li><span class="term" data-pronunciation="特瑞顿">Triton<span class="pronun-icon">🔊</span></span> 统一推理平台构建（集成 <span class="term" data-pronunciation="v-艾偶-艾偶-艾姆">vLLM<span class="pronun-icon">🔊</span></span> + <span class="term" data-pronunciation="腾色阿踢">TensorRT<span class="pronun-icon">🔊</span></span>）</li>
+                        <li>容器化执行环境（<span class="term" data-pronunciation="多克">Docker<span class="pronun-icon">🔊</span></span> 沙箱）与可视化展示</li>
                     </ol>
                     
                     <h4>性能指标</h4>
@@ -2402,8 +2402,8 @@
 
                 <div class="example-box">
                     <h4>应对面试官追问：为什么不用 GPT-4？</h4>
-                    <p>"我们项目是给军工企业做的，部署在完全隔离的内网环境，出于数据安全考虑不能连接外网，所以无法使用 GPT-4、Claude 等云服务。</p>
-                    <p>我们选择了 Qwen3、DeepSeek-V3 等开源大模型进行本地化部署。这些模型可以完全离线运行，模型权重下载后部署在本地服务器（华为昇腾 910B GPU）上。虽然整体能力略低于 GPT-4，但中文能力很强，而且可以针对具体业务场景进行微调和优化，数据完全掌控在客户手中，符合军工企业的安全要求。"</p>
+                    <p>"我们项目是给军工企业做的，部署在完全隔离的内网环境，出于数据安全考虑不能连接外网，所以无法使用 <span class="term" data-pronunciation="G-P-T-4">GPT-4<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="克劳德">Claude<span class="pronun-icon">🔊</span></span> 等云服务。</p>
+                    <p>我们选择了 <span class="term" data-pronunciation="Q问3">Qwen3<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="地破席克-V3">DeepSeek-V3<span class="pronun-icon">🔊</span></span> 等开源大模型进行本地化部署。这些模型可以完全离线运行，模型权重下载后部署在本地服务器（华为昇腾 <span class="term" data-pronunciation="910-B">910B<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="G-P-U">GPU<span class="pronun-icon">🔊</span></span>）上。虽然整体能力略低于 GPT-4，但中文能力很强，而且可以针对具体业务场景进行微调和优化，数据完全掌控在客户手中，符合军工企业的安全要求。"</p>
                 </div>
             </div>
 
@@ -2415,11 +2415,11 @@
                     
                     <h4>技术栈</h4>
                     <ul>
-                        <li><strong>大模型</strong>：Qwen2.5-14B、Qwen2.5-Coder-7B</li>
-                        <li><strong>向量化</strong>：BGE-M3（1024维）、gte-Qwen2-7B（重排序）</li>
-                        <li><strong>向量数据库</strong>：Milvus（HNSW索引）</li>
-                        <li><strong>推理框架</strong>：vLLM</li>
-                        <li><strong>数据库</strong>：MySQL、PostgreSQL、Oracle、ClickHouse</li>
+                            <li><strong>大模型</strong>：<span class="term" data-pronunciation="Q问2.5-14B">Qwen2.5-14B<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="Q问2.5-扣的-7B">Qwen2.5-Coder-7B<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>向量化</strong>：<span class="term" data-pronunciation="B-G-E M-3">BGE-M3<span class="pronun-icon">🔊</span></span>（1024维）、<span class="term" data-pronunciation="GTE-Q问2-7B">gte-Qwen2-7B<span class="pronun-icon">🔊</span></span>（重排序）</li>
+                        <li><strong>向量数据库</strong>：<span class="term" data-pronunciation="米尔河斯">Milvus<span class="pronun-icon">🔊</span></span>（<span class="term" data-pronunciation="H-N-S-W">HNSW<span class="pronun-icon">🔊</span></span>索引）</li>
+                        <li><strong>推理框架</strong>：<span class="term" data-pronunciation="v-艾偶-艾偶-艾姆">vLLM<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>数据库</strong>：<span class="term" data-pronunciation="麦思Q偶">MySQL<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="剖斯特-格瑞-SQL">PostgreSQL<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="欧若扣">Oracle<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="克里克豪斯">ClickHouse<span class="pronun-icon">🔊</span></span></li>
                         <li><strong>后端</strong>：<span class="term explain" data-pronunciation="斯普灵布特" data-explain="简化Spring开发的快速开发框架。
 
 ✦ 核心优势：
@@ -2591,19 +2591,19 @@
 • 实时数据采集（交易流水）
 • 日志收集
 • 事件驱动架构">Kafka<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span></li>
-                        <li><strong>数据湖</strong>：Hudi（COW/MOR）、HDFS</li>
-                        <li><strong>数据同步</strong>：Flink CDC（Oracle、DB2、MySQL）</li>
-                        <li><strong>存储</strong>：RocksDB、Redis、Oracle、HBase</li>
-                        <li><strong>监控</strong>：Prometheus、Grafana、Logging-operator</li>
+                        <li><strong>数据湖</strong>：<span class="term" data-pronunciation="胡迪">Hudi<span class="pronun-icon">🔊</span></span>（<span class="term" data-pronunciation="C-O-W">COW<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="M-O-R">MOR<span class="pronun-icon">🔊</span></span>）、<span class="term" data-pronunciation="H-D-F-S">HDFS<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>数据同步</strong>：<span class="term" data-pronunciation="弗林克 C-D-C">Flink CDC<span class="pronun-icon">🔊</span></span>（<span class="term" data-pronunciation="欧若扣">Oracle<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="D-B-2">DB2<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="麦思Q偶">MySQL<span class="pronun-icon">🔊</span></span>）</li>
+                        <li><strong>存储</strong>：<span class="term" data-pronunciation="罗克斯-D-B">RocksDB<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="瑞迪斯">Redis<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="欧若扣">Oracle<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="H-贝斯">HBase<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>监控</strong>：<span class="term" data-pronunciation="普罗米修斯">Prometheus<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="格拉芬娜">Grafana<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="洛格-奥普雷特">Logging-operator<span class="pronun-icon">🔊</span></span></li>
                     </ul>
                     
                     <h4>核心工作</h4>
                     <ol>
-                        <li>Flink 实时计算开发：管理 TB 级状态数据，RocksDB 增量 Checkpoint</li>
+                        <li><span class="term" data-pronunciation="弗林克">Flink<span class="pronun-icon">🔊</span></span> 实时计算开发：管理 <span class="term" data-pronunciation="T-B">TB<span class="pronun-icon">🔊</span></span> 级状态数据，<span class="term" data-pronunciation="罗克斯-D-B">RocksDB<span class="pronun-icon">🔊</span></span> 增量 <span class="term" data-pronunciation="切克波因特">Checkpoint<span class="pronun-icon">🔊</span></span></li>
                         <li>性能优化：Kafka 分区扩容（64→256）、Flink 并行度调优（32→128）、Checkpoint 优化（20min→5min）</li>
-                        <li>实时数据湖架构：Flink 实时入湖到 HDFS，支持流批一体查询</li>
+                        <li>实时数据湖架构：<span class="term" data-pronunciation="弗林克">Flink<span class="pronun-icon">🔊</span></span> 实时入湖到 <span class="term" data-pronunciation="H-D-F-S">HDFS<span class="pronun-icon">🔊</span></span>，支持流批一体查询</li>
                         <li><span class="term" data-pronunciation="夫林克 C-D-C">Flink CDC<span class="pronun-icon">🔊</span></span> 全量+增量数据同步：<span class="term" data-pronunciation="斯key马">Schema<span class="pronun-icon">🔊</span></span> 自动演进、断点续传</li>
-                        <li>K8s 部署与可观测性建设：动态扩缩容、故障自愈、监控告警</li>
+                        <li><span class="term" data-pronunciation="K8斯">K8s<span class="pronun-icon">🔊</span></span> 部署与可观测性建设：动态扩缩容、故障自愈、监控告警</li>
                     </ol>
                     
                     <h4>优化效果</h4>
@@ -2615,22 +2615,22 @@
             <div class="collapsible-content">
                 <div class="highlight-box">
                     <h4>项目背景</h4>
-                    <p>自研的纯 Java 云原生大数据集群管理平台，覆盖 Hadoop 生态的组件部署/管理/监控/自动化运维，支持多集群管理与国产化、多架构兼容（x86/ARM/国产OS），可观测与告警完善；亦支持裸机部署。</p>
+                    <p>自研的纯 <span class="term" data-pronunciation="家哇">Java<span class="pronun-icon">🔊</span></span> 云原生大数据集群管理平台，覆盖 <span class="term" data-pronunciation="哈杜普">Hadoop<span class="pronun-icon">🔊</span></span> 生态的组件部署/管理/监控/自动化运维，支持多集群管理与国产化、多架构兼容（<span class="term" data-pronunciation="x86">x86<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="ARM">ARM<span class="pronun-icon">🔊</span></span>/国产<span class="term" data-pronunciation="O-S">OS<span class="pronun-icon">🔊</span></span>），可观测与告警完善；亦支持裸机部署。</p>
                     
                     <h4>技术栈</h4>
                     <ul>
-                        <li><strong>后端</strong>：Java、Spring Boot</li>
-                        <li><strong>容器编排</strong>：K8s、Docker</li>
-                        <li><strong>大数据组件</strong>：Hadoop、HDFS、Yarn、Hive、Spark、Ranger、Kerberos</li>
-                        <li><strong>监控</strong>：Prometheus、Grafana</li>
-                        <li><strong>国产化</strong>：达梦数据库、飞腾 CPU、ARM 架构</li>
+                        <li><strong>后端</strong>：<span class="term" data-pronunciation="家哇">Java<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="斯普林布特">Spring Boot<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>容器编排</strong>：<span class="term" data-pronunciation="K8斯">K8s<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="多克">Docker<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>大数据组件</strong>：<span class="term" data-pronunciation="哈杜普">Hadoop<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="H-D-F-S">HDFS<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="亚恩">Yarn<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="哈伊夫">Hive<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="斯帕克">Spark<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="伦吉">Ranger<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="柯柏洛斯">Kerberos<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>监控</strong>：<span class="term" data-pronunciation="普罗米修斯">Prometheus<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="格拉芬娜">Grafana<span class="pronun-icon">🔊</span></span></li>
+                        <li><strong>国产化</strong>：达梦数据库、飞腾 <span class="term" data-pronunciation="C-P-U">CPU<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="ARM">ARM<span class="pronun-icon">🔊</span></span> 架构</li>
                     </ul>
                     
                     <h4>核心工作</h4>
                     <ol>
-                        <li>组件一键化管理：Kibana、Kyuubi、Tez、Zeppelin、Phoenix、Doris、StarRocks、Kafka Eagle、Logstash、JuiceFS 等</li>
-                        <li>K8s 编排：按角色生成 ConfigMap/Secret/Service/PVC/Deployment/StatefulSet</li>
-                        <li>安全治理：Ranger/KMS 策略下发、Kerberos Keytab 分发、达梦数据库适配</li>
+                        <li>组件一键化管理：<span class="term" data-pronunciation="基巴娜">Kibana<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="Q优比">Kyuubi<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="泰兹">Tez<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="齐柏林">Zeppelin<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="菲尼克斯">Phoenix<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="多瑞斯">Doris<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="斯达罗克斯">StarRocks<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="卡夫卡-伊戈">Kafka Eagle<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="洛格斯塔什">Logstash<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="朱斯-F-S">JuiceFS<span class="pronun-icon">🔊</span></span> 等</li>
+                        <li><span class="term" data-pronunciation="K8斯">K8s<span class="pronun-icon">🔊</span></span> 编排：按角色生成 <span class="term" data-pronunciation="配置图">ConfigMap<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="西克瑞特">Secret<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="萨维斯">Service<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="P-V-C">PVC<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="德普罗伊门特">Deployment<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="斯特顿福塞特">StatefulSet<span class="pronun-icon">🔊</span></span></li>
+                        <li>安全治理：<span class="term" data-pronunciation="伦吉">Ranger<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="K-M-S">KMS<span class="pronun-icon">🔊</span></span> 策略下发、<span class="term" data-pronunciation="柯柏洛斯">Kerberos<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="key-塔布">Keytab<span class="pronun-icon">🔊</span></span> 分发、达梦数据库适配</li>
                         <li>实时日志与运维：SSE 实时日志推送，安装/启动过程可视化，操作审计记录</li>
                     </ol>
                 </div>
