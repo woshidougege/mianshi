@@ -1080,31 +1080,32 @@
         li {
             margin: 6px 0;
             position: relative;
-            padding-right: 35px;
         }
         
         /* 复制按钮样式 */
         .copy-btn {
             position: absolute;
-            right: 0;
-            top: 2px;
+            right: 15px;
+            top: 10px;
             background: #667eea;
             color: white;
             border: none;
-            padding: 6px 8px;
-            border-radius: 4px;
+            padding: 8px 12px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
-            opacity: 0.7;
+            font-size: 16px;
+            opacity: 0.8;
             transition: all 0.2s;
             font-weight: 600;
             line-height: 1;
+            z-index: 10;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
         
         .copy-btn:hover {
             opacity: 1;
             transform: scale(1.1);
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
         
         .copy-btn:active {
@@ -1115,15 +1116,14 @@
             background: #10b981;
         }
         
-        /* 个人优势区域的复制按钮 */
-        .highlight-box {
+        /* 工作经历和项目经历的复制按钮 */
+        .collapsible-content {
             position: relative;
-            padding-right: 45px;
         }
         
-        .highlight-box .copy-btn {
-            top: 15px;
-            right: 15px;
+        /* 个人优势区域容器 */
+        .advantages-section {
+            position: relative;
         }
 
         code {
@@ -1478,22 +1478,11 @@
             }
             
             /* 移动端复制按钮优化 */
-            li {
-                padding-right: 40px;
-            }
-            
             .copy-btn {
-                font-size: 12px;
-                padding: 5px 7px;
-            }
-            
-            .highlight-box {
-                padding-right: 40px;
-            }
-            
-            .highlight-box .copy-btn {
-                top: 10px;
+                font-size: 14px;
+                padding: 6px 10px;
                 right: 10px;
+                top: 5px;
             }
         }
 
@@ -1840,6 +1829,7 @@
 
             <h3>个人优势</h3>
             
+            <div class="advantages-section">
             <div class="highlight-box">
                 <h4>1. <span class="term" data-pronunciation="诶爱">AI<span class="pronun-icon">🔊</span></span> 智能体开发能力</h4>
                 <p>熟练掌握 <span class="term" data-pronunciation="诶兔诶">A2A<span class="pronun-icon">🔊</span></span> 协议实现多智能体协作，开源大模型本地化部署与 <span class="term" data-pronunciation="撇破母特">Prompt<span class="pronun-icon">🔊</span></span> 工程优化，集成 <span class="term" data-pronunciation="Q问">Qwen<span class="pronun-icon">🔊</span></span>2/Qwen2.5/Qwen3、<span class="term" data-pronunciation="地破席克">DeepSeek<span class="pronun-icon">🔊</span></span>-V2/V3、<span class="term" data-pronunciation="洽特-G-L-M">ChatGLM<span class="pronun-icon">🔊</span></span>3/4 等开源模型。具备 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="Q-劳拉">QLoRA<span class="pronun-icon">🔊</span></span> 等参数高效微调技术经验，熟悉向量检索（<span class="term" data-pronunciation="拉格">RAG<span class="pronun-icon">🔊</span></span>）、语音识别、多模态处理的端到端开发与私有化部署，紧跟大模型技术演进，有多次模型版本升级与迁移经验。</p>
@@ -1948,6 +1938,7 @@
             <div class="highlight-box">
                 <h4>7. 前端技术能力（AI 加持）</h4>
                 <p>可独立完成 <span class="term" data-pronunciation="V由">Vue<span class="pronun-icon">🔊</span></span>2/Vue3、<span class="term" data-pronunciation="瑞爱克特">React<span class="pronun-icon">🔊</span></span>、<span class="term" data-pronunciation="耐克斯特点J-S">Next.js<span class="pronun-icon">🔊</span></span> 开发，掌握路由、状态管理、SSE 与 WebSocket、组件封装、<span class="term" data-pronunciation="泰普斯克瑞特">TypeScript<span class="pronun-icon">🔊</span></span>、工程化发布（<span class="term" data-pronunciation="V特">Vite<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="外柏派克">Webpack<span class="pronun-icon">🔊</span></span>）、UI 体系（<span class="term" data-pronunciation="太偶win的">Tailwind<span class="pronun-icon">🔊</span></span>、Ant Design、Element、shadcn/ui）。</p>
+            </div>
             </div>
 
             <hr>
@@ -8360,34 +8351,43 @@ response = agent.run("昨晚订单支付为啥失败了？")</pre>
             });
         });
 
-        // 复制按钮功能
+        // 复制按钮功能 - 整段复制
         document.addEventListener('DOMContentLoaded', function() {
-            // 为工作经历、项目经历的li和个人优势的highlight-box添加复制按钮
-            const resumeSections = document.querySelectorAll('.collapsible-content > ol > li, .collapsible-content > div > ol > li');
-            const highlightBoxes = document.querySelectorAll('.highlight-box');
-            // 项目经历中的技术栈ul列表
-            const techStackItems = document.querySelectorAll('.collapsible-content ul > li');
+            // 清理文本中的特殊符号
+            function cleanText(text) {
+                return text
+                    .replace(/🔊/g, '')  // 去掉谐音图标
+                    .replace(/❓/g, '')  // 去掉解释图标
+                    .replace(/📋/g, '')  // 去掉复制图标
+                    .replace(/✓/g, '')   // 去掉成功图标
+                    .replace(/[ \t]+/g, ' ') // 多个空格合并为一个（保留换行）
+                    .replace(/\n\s*\n\s*\n/g, '\n\n') // 多个换行合并为两个
+                    .trim();
+            }
             
             // 创建复制功能
-            function addCopyButton(element) {
+            function addCopyButton(element, label) {
                 // 创建复制按钮
                 const copyBtn = document.createElement('button');
                 copyBtn.className = 'copy-btn';
                 copyBtn.innerHTML = '📋';
-                copyBtn.title = '点击复制';
+                copyBtn.title = '复制' + label;
                 
                 // 点击复制
                 copyBtn.addEventListener('click', function(e) {
-                    e.stopPropagation(); // 防止触发其他事件
+                    e.stopPropagation(); // 防止触发折叠
                     
                     // 临时隐藏复制按钮以避免复制按钮文本
                     copyBtn.style.display = 'none';
                     
-                    // 获取元素的纯文本内容（去除HTML标签）
-                    const textToCopy = element.innerText.trim();
+                    // 获取元素的纯文本内容
+                    let textToCopy = element.innerText;
                     
                     // 恢复按钮显示
                     copyBtn.style.display = '';
+                    
+                    // 清理特殊符号
+                    textToCopy = cleanText(textToCopy);
                     
                     // 复制到剪贴板
                     navigator.clipboard.writeText(textToCopy).then(function() {
@@ -8433,19 +8433,42 @@ response = agent.run("昨晚订单支付为啥失败了？")</pre>
                 element.appendChild(copyBtn);
             }
             
-            // 为工作经历和项目经历的核心工作添加复制按钮
-            resumeSections.forEach(function(li) {
-                addCopyButton(li);
-            });
+            // 1. 为个人优势添加复制按钮（复制全部7个优势）
+            const advantagesSection = document.querySelector('.advantages-section');
+            if (advantagesSection) {
+                addCopyButton(advantagesSection, '全部个人优势');
+            }
             
-            // 为项目经历的技术栈列表添加复制按钮
-            techStackItems.forEach(function(li) {
-                addCopyButton(li);
-            });
+            // 2. 为工作经历和项目经历添加复制按钮
+            let isInWorkSection = false;
+            let isInProjectSection = false;
             
-            // 为个人优势和项目背景添加复制按钮
-            highlightBoxes.forEach(function(box) {
-                addCopyButton(box);
+            // 遍历所有h3标题，判断当前在哪个区域
+            const allElements = document.querySelectorAll('h3, .collapsible');
+            allElements.forEach(function(element) {
+                if (element.tagName === 'H3') {
+                    // 判断进入哪个区域
+                    if (element.textContent.includes('工作经历')) {
+                        isInWorkSection = true;
+                        isInProjectSection = false;
+                    } else if (element.textContent.includes('项目经历')) {
+                        isInWorkSection = false;
+                        isInProjectSection = true;
+                    } else {
+                        isInWorkSection = false;
+                        isInProjectSection = false;
+                    }
+                } else if (element.classList.contains('collapsible')) {
+                    // 为工作经历或项目经历的collapsible-content添加复制按钮
+                    const content = element.nextElementSibling;
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (isInWorkSection) {
+                            addCopyButton(content, '整个工作经历');
+                        } else if (isInProjectSection) {
+                            addCopyButton(content, '整个项目');
+                        }
+                    }
+                }
             });
         });
 
