@@ -1079,6 +1079,51 @@
 
         li {
             margin: 6px 0;
+            position: relative;
+            padding-right: 35px;
+        }
+        
+        /* 复制按钮样式 */
+        .copy-btn {
+            position: absolute;
+            right: 0;
+            top: 2px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            opacity: 0.7;
+            transition: all 0.2s;
+            font-weight: 600;
+            line-height: 1;
+        }
+        
+        .copy-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .copy-btn.copied {
+            background: #10b981;
+        }
+        
+        /* 个人优势区域的复制按钮 */
+        .highlight-box {
+            position: relative;
+            padding-right: 45px;
+        }
+        
+        .highlight-box .copy-btn {
+            top: 15px;
+            right: 15px;
         }
 
         code {
@@ -1430,6 +1475,25 @@
 
             .nav-tabs {
                 top: 55px;
+            }
+            
+            /* 移动端复制按钮优化 */
+            li {
+                padding-right: 40px;
+            }
+            
+            .copy-btn {
+                font-size: 12px;
+                padding: 5px 7px;
+            }
+            
+            .highlight-box {
+                padding-right: 40px;
+            }
+            
+            .highlight-box .copy-btn {
+                top: 10px;
+                right: 10px;
             }
         }
 
@@ -8293,6 +8357,95 @@ response = agent.run("昨晚订单支付为啥失败了？")</pre>
                     const content = this.nextElementSibling;
                     content.classList.toggle('active');
                 });
+            });
+        });
+
+        // 复制按钮功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为工作经历、项目经历的li和个人优势的highlight-box添加复制按钮
+            const resumeSections = document.querySelectorAll('.collapsible-content > ol > li, .collapsible-content > div > ol > li');
+            const highlightBoxes = document.querySelectorAll('.highlight-box');
+            // 项目经历中的技术栈ul列表
+            const techStackItems = document.querySelectorAll('.collapsible-content ul > li');
+            
+            // 创建复制功能
+            function addCopyButton(element) {
+                // 创建复制按钮
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'copy-btn';
+                copyBtn.innerHTML = '📋';
+                copyBtn.title = '点击复制';
+                
+                // 点击复制
+                copyBtn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // 防止触发其他事件
+                    
+                    // 临时隐藏复制按钮以避免复制按钮文本
+                    copyBtn.style.display = 'none';
+                    
+                    // 获取元素的纯文本内容（去除HTML标签）
+                    const textToCopy = element.innerText.trim();
+                    
+                    // 恢复按钮显示
+                    copyBtn.style.display = '';
+                    
+                    // 复制到剪贴板
+                    navigator.clipboard.writeText(textToCopy).then(function() {
+                        // 显示成功状态
+                        copyBtn.classList.add('copied');
+                        copyBtn.innerHTML = '✓';
+                        
+                        // 2秒后恢复
+                        setTimeout(function() {
+                            copyBtn.classList.remove('copied');
+                            copyBtn.innerHTML = '📋';
+                        }, 2000);
+                    }).catch(function(err) {
+                        // 兼容性处理：使用旧方法
+                        const textArea = document.createElement('textarea');
+                        textArea.value = textToCopy;
+                        textArea.style.position = 'fixed';
+                        textArea.style.left = '-9999px';
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        
+                        try {
+                            document.execCommand('copy');
+                            copyBtn.classList.add('copied');
+                            copyBtn.innerHTML = '✓';
+                            
+                            setTimeout(function() {
+                                copyBtn.classList.remove('copied');
+                                copyBtn.innerHTML = '📋';
+                            }, 2000);
+                        } catch (err) {
+                            console.error('复制失败:', err);
+                            copyBtn.innerHTML = '✗';
+                            setTimeout(function() {
+                                copyBtn.innerHTML = '📋';
+                            }, 2000);
+                        }
+                        
+                        document.body.removeChild(textArea);
+                    });
+                });
+                
+                element.appendChild(copyBtn);
+            }
+            
+            // 为工作经历和项目经历的核心工作添加复制按钮
+            resumeSections.forEach(function(li) {
+                addCopyButton(li);
+            });
+            
+            // 为项目经历的技术栈列表添加复制按钮
+            techStackItems.forEach(function(li) {
+                addCopyButton(li);
+            });
+            
+            // 为个人优势和项目背景添加复制按钮
+            highlightBoxes.forEach(function(box) {
+                addCopyButton(box);
             });
         });
 
