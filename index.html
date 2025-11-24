@@ -3611,6 +3611,260 @@ LoRA 更新：ΔW ≈ A × B
    └─ 延迟：< 500ms</pre>
                 </div>
 
+                <div class="example-box">
+                    <h4>⭐ 实操：如何用 LLaMA-Factory 微调模型（命令行版）</h4>
+                    
+                    <p><strong>先搞清楚：</strong></p>
+                    <ul>
+                        <li>LoRA/QLoRA <strong>不是软件</strong>，是一种算法/技术</li>
+                        <li>我们用 <strong>LLaMA-Factory</strong> 这个开源工具来实现 LoRA 微调</li>
+                        <li>LLaMA-Factory 支持<strong>纯命令行操作</strong>，适合内网/麒麟系统等无图形界面环境</li>
+                    </ul>
+
+                    <h5>步骤 1：安装 LLaMA-Factory（5分钟）</h5>
+                    <pre># 1. 克隆代码（内网环境可能需要从U盘拷贝）
+git clone https://github.com/hiyouga/LLaMA-Factory.git
+cd LLaMA-Factory
+
+# 2. 安装依赖（离线安装可用 pip download 先下载 whl 包）
+pip install -e ".[torch,metrics]" --no-cache-dir
+
+# 3. 验证安装
+llamafactory-cli version</pre>
+
+                    <h5>步骤 2：准备训练数据（10分钟）</h5>
+                    <p>创建一个 JSON 文件 <code>data/my_data.json</code>，格式如下：</p>
+                    <pre>[
+  {
+    "instruction": "查询所有用户信息",
+    "input": "",
+    "output": "SELECT * FROM users"
+  },
+  {
+    "instruction": "查询北京的用户数量",
+    "input": "",
+    "output": "SELECT COUNT(*) FROM users WHERE city='北京'"
+  },
+  {
+    "instruction": "查询最近7天的订单",
+    "input": "",
+    "output": "SELECT * FROM orders WHERE create_time >= DATE_SUB(NOW(), INTERVAL 7 DAY)"
+  }
+]</pre>
+                    <p>💡 <strong>数据格式：</strong>每条数据包含 instruction（问题）、input（额外输入，可为空）、output（答案）</p>
+
+                    <h5>步骤 3：创建训练配置文件（YAML）</h5>
+                    <p>创建 <code>configs/my_lora_config.yaml</code>：</p>
+                    <pre>### 模型路径
+model_name_or_path: /data/models/Qwen2.5-7B-Instruct
+
+### 训练方法
+stage: sft
+finetuning_type: lora
+
+### LoRA 参数
+lora_rank: 8
+lora_alpha: 16
+lora_dropout: 0.1
+lora_target: q_proj,v_proj
+
+### 数据集
+dataset: my_data
+template: qwen
+
+### 训练参数
+per_device_train_batch_size: 4
+learning_rate: 1.0e-4
+num_train_epochs: 3
+
+### 输出目录
+output_dir: ./output/qwen-text2sql-lora
+logging_steps: 10
+save_steps: 500</pre>
+
+                    <h5>步骤 4：命令行启动训练</h5>
+                    <pre># 单卡训练（3090/A800）
+llamafactory-cli train configs/my_lora_config.yaml
+
+# 或者用完整命令（不用配置文件）
+llamafactory-cli train \
+    --model_name_or_path /data/models/Qwen2.5-7B-Instruct \
+    --stage sft \
+    --finetuning_type lora \
+    --lora_rank 8 \
+    --lora_alpha 16 \
+    --dataset my_data \
+    --per_device_train_batch_size 4 \
+    --learning_rate 1e-4 \
+    --num_train_epochs 3 \
+    --output_dir ./output/qwen-text2sql-lora</pre>
+
+                    <h5>步骤 5：训练过程（终端输出）</h5>
+                    <pre>训练日志：
+[INFO] Loading checkpoint: /data/models/Qwen2.5-7B-Instruct
+[INFO] Model loaded: 7.04B params, 13.8GB memory
+[INFO] Initializing LoRA adapter (rank=8, alpha=16)
+[INFO] Trainable params: 2.36M (0.03% of total)
+[INFO] Starting training...
+
+Epoch 1/3:
+  Step 100/600 | loss: 0.523 | lr: 1.0e-4 | speed: 3.2 samples/s
+  Step 200/600 | loss: 0.412 | lr: 8.0e-5 | speed: 3.1 samples/s
+  Step 600/600 | loss: 0.321 | Saving checkpoint...
+
+Epoch 2/3:
+  Step 1200/1200 | loss: 0.215 | Saving checkpoint...
+
+Epoch 3/3:
+  Step 1800/1800 | loss: 0.183 | Final checkpoint saved.
+
+[INFO] Training completed in 7h 42min
+[INFO] LoRA weights saved to: output/qwen-text2sql-lora/
+[INFO] Files:
+  ├─ adapter_model.bin (8.2MB)  ← LoRA 权重
+  ├─ adapter_config.json (421B)  ← LoRA 配置
+  └─ training_log.txt            ← 训练日志</pre>
+
+                    <h5>步骤 6：测试微调后的模型</h5>
+                    <pre># 方法1：命令行交互式测试
+llamafactory-cli chat \
+  --model_name_or_path /data/models/Qwen2.5-7B-Instruct \
+  --adapter_name_or_path output/qwen-text2sql-lora \
+  --template qwen
+
+# 输入测试：查询北京的用户数量
+# 输出：SELECT COUNT(*) FROM users WHERE city='北京'
+
+# 方法2：批量评估
+llamafactory-cli eval \
+  --model_name_or_path /data/models/Qwen2.5-7B-Instruct \
+  --adapter_name_or_path output/qwen-text2sql-lora \
+  --dataset my_data_test \
+  --output_file eval_results.json</pre>
+
+                    <h5>步骤 7：部署到生产环境（vLLM）</h5>
+                    <pre># ⭐ 关键：vLLM 同时加载多个 LoRA
+python -m vllm.entrypoints.openai.api_server \
+  --model /data/models/Qwen2.5-7B-Instruct \
+  --served-model-name qwen-7b \
+  --host 0.0.0.0 \
+  --port 8000 \
+  --enable-lora \
+  --max-lora-rank 16 \
+  --lora-modules \
+      text2sql=/path/to/lora/text2sql \
+      translate=/path/to/lora/translate \
+      summary=/path/to/lora/summary
+
+# API 请求时指定用哪个 LoRA
+curl http://localhost:8000/v1/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "qwen-7b",
+    "prompt": "查询所有订单",
+    "lora_name": "text2sql"  ← 指定 LoRA
+  }'</pre>
+                </div>
+
+                <div class="warning-box">
+                    <h4>也可以用纯代码（HuggingFace PEFT）</h4>
+                    <p>如果你会 Python，也可以不用 LLaMA-Factory，直接写代码：</p>
+                    <pre># 安装库
+pip install transformers peft datasets
+
+# 训练脚本 train_lora.py
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import LoraConfig, get_peft_model, TaskType
+
+# 1. 加载基座模型
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
+tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
+
+# 2. 配置 LoRA
+lora_config = LoraConfig(
+    task_type=TaskType.CAUSAL_LM,
+    r=8,              # rank
+    lora_alpha=16,
+    lora_dropout=0.1,
+    target_modules=["q_proj", "v_proj"]  # 只在 Attention 层加 LoRA
+)
+
+# 3. 创建 LoRA 模型
+model = get_peft_model(model, lora_config)
+model.print_trainable_parameters()
+# 输出：trainable params: 2M || all params: 7B || trainable%: 0.03%
+
+# 4. 训练（省略数据加载和训练循环）
+# ... 训练代码 ...
+
+# 5. 保存 LoRA 权重
+model.save_pretrained("./output/qwen-lora")
+
+# 6. 推理
+from peft import PeftModel
+base_model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
+model = PeftModel.from_pretrained(base_model, "./output/qwen-lora")
+# 现在 model 就是微调后的模型</pre>
+                </div>
+
+                <div class="answer-box">
+                    <h4>⭐ 面试时怎么说（实战版）</h4>
+                    <p>"我们用 <strong>LLaMA-Factory</strong> 做 LoRA 微调，因为是内网环境（麒麟系统），所以用的是<strong>纯命令行</strong>操作。</p>
+                    
+                    <p><strong>具体流程：</strong></p>
+                    <ol>
+                        <li><strong>数据准备</strong>：收集 2000+ 条企业运维文档和 SQL 查询对，构建成 JSON 格式（instruction-output 对）</li>
+                        <li><strong>配置训练</strong>：写一个 YAML 配置文件，指定模型路径、LoRA 参数（rank=8, alpha=16）、训练参数（batch_size=4, lr=1e-4, epochs=3）</li>
+                        <li><strong>启动训练</strong>：用 <code>llamafactory-cli train</code> 命令启动，单卡 3090，大约 8 小时训完</li>
+                        <li><strong>生成文件</strong>：训练完成后生成 <strong>8MB 的 LoRA 权重文件</strong>（adapter_model.bin）和配置文件</li>
+                    </ol>
+                    
+                    <p><strong>部署时的关键点：</strong></p>
+                    <p>LoRA 权重（8MB）<strong>不是完整模型</strong>，它是一个适配器。推理时需要同时加载基座模型（14GB）和 LoRA 权重（8MB）。</p>
+                    
+                    <p>我们用 vLLM 的 <code>--enable-lora</code> 参数来加载，最大的优势是<strong>可以同时挂载多个 LoRA</strong>。比如我们有 text2sql、翻译、摘要三个任务，只需要一个 14GB 的 Qwen2.5-7B 基座 + 三个 8MB 的 LoRA，总共也就 14GB 多一点。如果用完整微调，就得 42GB。</p>
+                    
+                    <p>API 请求时通过 <code>lora_name</code> 参数指定用哪个 LoRA，非常灵活，不需要重启服务。"</p>
+                </div>
+                
+                <div class="tech-box">
+                    <h4>⭐ 关键细节（避免暴露）</h4>
+                    <table>
+                        <tr>
+                            <th>容易被问到的细节</th>
+                            <th>正确答案</th>
+                        </tr>
+                        <tr>
+                            <td><strong>8MB 是完整模型吗？</strong></td>
+                            <td>不是，是 LoRA <strong>适配器</strong>。推理需要：基座模型（14GB）+ LoRA（8MB）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>能同时加载多个 LoRA 吗？</strong></td>
+                            <td>能，vLLM 支持。一个基座 + 多个 LoRA，显存只增加几十 MB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>怎么切换不同的 LoRA？</strong></td>
+                            <td>API 请求时用 <code>lora_name</code> 参数指定，动态切换，不用重启</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LoRA 文件包含什么？</strong></td>
+                            <td>adapter_model.bin（权重）+ adapter_config.json（配置）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>为什么只有 8MB？</strong></td>
+                            <td>只训练 0.03% 的参数（200万/70亿），低秩矩阵 A×B</td>
+                        </tr>
+                        <tr>
+                            <td><strong>训练用什么硬件？</strong></td>
+                            <td>单卡 3090（24GB 显存），不需要 A100</td>
+                        </tr>
+                        <tr>
+                            <td><strong>麒麟系统怎么装依赖？</strong></td>
+                            <td>离线安装：先 <code>pip download</code> 下载 whl 包，拷贝到内网机器，再 <code>pip install *.whl</code></td>
+                        </tr>
+                    </table>
+                </div>
+
                 <div class="warning-box">
                     <h4>常见追问</h4>
                     <p><strong>Q：为什么不用全量微调？</strong></p>
