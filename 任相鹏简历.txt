@@ -1,0 +1,179 @@
+
+
+
+
+
+
+
+任相鹏
+男 | 年龄：28岁 |   17610243355 | 635887935@qq.com
+8年工作经验 | 求职意向：数据开发 | 期望薪资：26-30K | 期望城市：北京
+
+
+个人优势
+1、AI 智能体开发能力 ：熟练掌握 A2A 协议实现多智能体协作 ，开源大模型本地化部署与 Prompt 工程优化 ，集成 Qwen2/Qwen2.5/Qwen3、DeepSeek-V2/V3、ChatGLM3/4 等开源模型 ，具备 LoRA/QLoRA 等参数高效微调技术经验，熟悉向量检索（RAG）、语音识别、多模态处理的端到端开发与私有化部署 ，紧跟大模型技术演进，有多次模型版本升级与迁移经验。
+2、Java 业务与工程能力 ：Spring Boot 生态与 Dubbo 分布式框架熟练 ，MyBatis-Flex、MapStruct 工程化实践 ，具备开源组件与平台后端的二开与性能优化能力。
+3、大数据开发与优化能力 ：Flink on K8s 与 Yarn、Spark 作业开发 ，FlinkSQL、Checkpoint、Savepoint 管理 ，HDFS 与 Ka fka 性能与稳定性调优。
+4、集群与运维能力 ：K8s 与 裸机部署 的 Hadoop 生态独立交付 ，x86、ARM、飞腾 兼容 ，掌握 HA、Kerberos、NFS+PVC、I ngress ，快速排障与文档化。
+5、组件集成与适配能力 ：Kibana、Kyuubi、Tez、Zeppelin、Phoenix、Doris、StarRocks、Kafka Eagle、Logstash、Ran ger(KMS)、JuiceFS 等接入与一键化管理 ，Hive 与 Ranger 的达梦适配、ClickHouse 的飞腾适配源码级改造。
+6、平台工程化能力 ：Jenkins CI/CD 与 Docker 镜像规范化 ，统一接口与版本控制 ，SSE 与 WebSocket 实时日志链路 ，Prom etheus+Grafana 可观测性建设。
+7、前端技术能力（AI 加持） ：可独立完成 Vue2/Vue3、React、Next.js 开发 ，掌握 路由、状态管理、SSE 与 WebSocket、组件封装、TypeScript、工程化发布（Vite/Webpack）、UI 体系（Tailwind、Ant Design、Element、shadcn/ui）。
+
+工作经历
+北京中兵数字科技集团有限公司	AI开发工程师/全栈工程师	2024.09-2025.11
+1. 负责军工企业内网环境下的智能问答与数据分析平台架构设计与核心开发，基于 RAG（检索增强生成）技术实现文档智能问答、Text2SQL 自然语言查询、多模态数据分析等核心功能，采用开源大模型本地化部署方案，满足数据安全和内网隔离要求，支持多租户、权限管控、审计日志等企业级特性。
+2. 负责大模型私有化部署、微调与推理优化，本地部署 Qwen2.5/Qwen3、DeepSeek-V2/V3 等开源大模型（2024.09 初期采用 Qwen2.5-14B，2025.05 升级至 Qwen3-14B），使用 LoRA/QLoRA 技术对 Qwen2.5-7B 进行领域微调（基于企业运维文档 2000+ 条），通过 LLaMA-Factory 框架命令行操作完成训练（适配麒麟系统），微调后 Text2SQL 准确率提升 12%（68%→80%）。推理层使用 vLLM 推理框架和 FlashAttention2 加速技术，配合模型量化（INT8/INT4）、多 LoRA 动态加载和批处理优化，显著提升推理吞吐量，首字延迟控制在 500ms 以内，满足生产环境实时交互需求。
+3. 负责向量检索引擎的设计与优化，本地部署 BGE-M3 多语言向量模型和 gte-Qwen2-7B 重排序模型，基于 Milvus 向量数据库实现毫秒级语义检索，通过混合检索（向量+BM25）、二阶段重排序、Query 改写等技术显著提升召回效果，支持百万级文档的实时检索。
+4. 设计并实现 Text2SQL 智能查询引擎，使用 Qwen2.5-Coder-7B 模型本地部署，通过 Schema 向量化 + Few-shot 示例 + Chain-of-Thought Prompt 工程实现自然语言到 SQL 的自动转换，支持 MySQL、PostgreSQL、Oracle、ClickHouse 等多种数据库，集成语法校验和安全沙箱机制（禁止危险操作、自动添加 LIMIT），满足企业生产环境使用需求。
+5. 负责 AI 智能体平台 SuperAgent 的架构设计与开发，基于 Google A2A 协议实现多智能体协作框架，集成 Qwen2.5、DeepSeek-V2、ChatGLM3 等开源大模型，支持 PPT 生成、文档处理、代码执行等复杂任务的智能化处理，通过容器化环境（Docker）实现任务执行过程的隔离与可视化。
+6. 负责系统性能优化与工程化建设，实现相似问题缓存（余弦相似度 > 0.95 直接返回）、异步任务队列（Kafka）、流式输出（WebSocket/SSE）、限流降级（Sentinel）等高并发优化方案，构建基于 Triton Inference Server 的统一推理平台（集成 vLLM 引擎处理 LLM、TensorRT 处理向量模型），实现模型负载均衡与动态扩缩容，有效降低推理成本，系统响应延迟控制在 3 秒以内。
+北京科杰科技有限公司	大数据开发工程师	2021.12-2024.08
+1. 负责某中央银行核心业务系统的实时数据处理平台开发，承载全行交易系统、风控系统、监管报送等业务，日均处理交易流水 5000 万+ 笔、数据量 2TB+，通过 Flink 实时计算 + Hudi 数据湖架构实现流批一体化数据管理，为监管报送、实时风控、反洗钱监测等业务提供秒级数据支撑。
+2. 负责 Flink 作业性能优化，解决 Kafka 消费延迟和反压问题，通过 Kafka 分区优化（扩展至 256 分区）、算子链优化、异步 IO、Checkpoint 调优等手段，显著提升吞吐量并降低处理延迟，Checkpoint 稳定性大幅提升。
+3. 负责基于 Hudi 的实时数据湖架构设计与开发，实现 Flink 消费 Kafka 数据实时入湖到 HDFS，支持 CDC 捕获上游数据库变更，通过 COW/MOR 表和 Compaction 机制优化存储和查询性能，实现流批一体查询和分钟级增量数据更新。
+4. 负责 Flink CDC 全量+增量数据同步开发，实时同步 Oracle、DB2、MySQL 等核心业务库数据到数据湖，支持 Schema 自动演进和断点续传，管理 TB 级状态数据，通过 RocksDB 增量 Checkpoint 保证大状态场景下的稳定性和容错恢复。
+5. 负责 Flink Native K8s 部署与可观测性建设，实现作业动态扩缩容和故障自愈，搭建 Prometheus + Grafana 监控体系和 Logging-operator 日志收集。
+6. 参与后端系统开发工作，熟练运用 Java 技术栈（Spring Boot、Dubbo、MyBatis-Plus），为实时计算平台提供作业管理、监控告警、血缘分析等功能。
+北京友友天宇系统技术有限公司	数据开发	2016.12-2021.11
+1. 负责互联网舆情大数据分析平台的架构设计与核心开发，7x24小时实时采集论坛、微博、新闻等公开数据，通过 NLP 技术进行情感分析、敏感词识别、热点挖掘，为政府部门和企业提供舆情预警、品牌监测、危机公关等决策支持。
+2. 负责实时流式计算架构的设计与优化，前期基于 Storm 构建实时处理流水线（2016-2018），后期主导技术升级迁移到 Flink（2018-2021），实现数据清洗、敏感词过滤、情感分析、地域分析、关键词提取等 NLP 处理，支持动态扩容和故障恢复。
+3. 负责数据采集与存储架构设计，使用 Flume 实时监控文件变化、Kafka 分类分发数据流，MySQL 存储 7 天热点数据供实时展示，HBase 存储历史数据支持离线分析，通过 HBase RowKey 优化设计提升查询性能 3 倍。
+4. 负责离线数据分析与报表开发，使用 Hive + Spark SQL 进行各省负面信息、行业热点、品牌热度等多维度统计分析，通过 Sqoop 定时同步分析结果到 MySQL，支持 Web 报表展示和预警通知（邮件、短信、弹窗）。
+5. 负责基于开源 HDP 的大数据基础平台 KDP 的二次开发与维护（2020-2021），完成 x86/ARM 架构适配、国产数据库（达梦）元数据存储适配，利用 Spring Boot + Dubbo 开发后端业务系统，实现 Spark 作业的可视化界面管理。
+
+项目经历
+SuperAgent 通用智能体平台	AI开发工程师	2025.04-至今
+1.项目描述：
+·面向军工企业内网环境的通用智能体平台，基于 Google Agent2Agent Protocol (A2A) 协议，采用开源大模型本地化部署方案，用户通过自然语言对话提出需求，决策智能体拆解任务并调度专业智能体协作完成，支持 PPT 生成、文档处理、代码执行、会议纪要等复杂任务，整个执行过程透明可视化，满足数据安全和内网隔离要求。
+2.项目重点功能：
+·智能任务分解：决策智能体基于本地部署的大模型（2025.04 初期采用 Qwen2.5-14B，2025.05 升级至 Qwen3-14B）进行意图识别和任务拆解，将复杂用户需求分解为可执行的子任务，模型升级后任务拆解准确性明显提升。
+·多智能体协作：PPT 生成智能体、文档处理智能体、代码执行智能体等专业智能体通过 A2A 协议协同工作，每个智能体使用针对性优化的开源模型（Qwen3-Coder-7B 用于代码生成、ChatGLM4-9B 用于对话、DeepSeek-V3-Lite 用于复杂推理）。
+·容器化执行环境：提供 Docker 容器环境，智能体可在其中执行代码运行、命令执行等任务，通过命名空间隔离和资源限制保证安全性，支持任务执行过程的实时可视化展示。
+·语音交互：使用开源 FunASR 模型本地部署实现实时语音识别，WebSocket 实时流式转写，支持连续语音输入和多种音频格式，语音合成使用 PaddleSpeech 提供自然的人机交互体验。
+·资源统计与监控：设计完整的资源消耗统计系统，支持 Token 计数、GPU 使用率监控、并发请求管理、任务执行时长统计等功能，SSE 实时推送系统状态和任务进度。
+·过程可视化：智能体执行过程实时可视化展示，包括模型推理、代码执行、中间步骤的透明化呈现。
+3.技术要点：
+·A2A 协议实现：基于 Google A2A 标准协议，实现智能体间的标准化通信和任务协调机制。
+·微服务架构：每个智能体独立部署，支持水平扩展和故障隔离，通过 Consul 服务发现和 Nginx 负载均衡实现高可用。
+·实时通信：WebSocket 实现语音流式识别和实时转写，SSE 推送任务状态、执行进度等实时消息。
+·模型微调与推理优化：
+  - 专业智能体微调：使用 LoRA 对 Qwen3-Coder-7B 进行代码生成任务微调，提升代码智能体的生成质量和领域适配性。
+  - vLLM 推理框架：支持 PagedAttention、Continuous Batching，显著提升推理吞吐量。
+  - 模型量化：INT8 量化降低显存占用，推理速度明显提升。
+  - 批处理优化：动态批处理（batch size 8-32），有效提升 GPU 利用率。
+·向量检索：本地部署 BGE-M3 向量模型和 gte-Qwen2-7B 重排序模型，支持文档检索增强生成 (RAG) 和知识库问答。
+·多模型调度：根据任务类型智能选择模型（对话用 Qwen3-14B、代码用 Qwen3-Coder-7B、复杂推理用 DeepSeek-V3-Lite），模型热切换和资源复用，降低显存占用。
+·模型版本升级：主导 Qwen2.5 → Qwen3 升级迁移（2025.05），包括模型权重转换、Prompt 模板适配、推理参数调优，升级后任务准确性和推理速度均有明显提升。
+·代码生成与执行：使用 Qwen3-Coder-7B 模型本地部署，支持代码生成、调试和智能编程辅助，Docker 容器沙箱执行保证安全性。
+·语音识别：本地部署 FunASR Paraformer 模型进行录音文件识别和实时语音转写，支持多种音频格式和方言识别。
+·微调框架：LLaMA-Factory 框架，支持命令行操作完成模型微调和推理优化。
+·技术栈：Python、Java、FastAPI、Spring Boot、A2A Protocol、Qwen3、Qwen2.5、DeepSeek-V3、ChatGLM4、vLLM、LoRA、PEFT、LLaMA-Factory、BGE-M3、FunASR、WebSocket、SSE、Docker、K8s、Redis、PostgreSQL、Triton。
+企业智能问答与数据分析平台	AI开发工程师	2024.09-2025.11
+1.项目描述：
+·面向军工企业内网环境的智能问答与数据分析平台，基于 RAG（检索增强生成）技术，采用开源大模型本地化部署方案，整合企业内部文档、数据库、业务系统等多源数据，提供自然语言问答、智能数据分析、报表生成、SQL 自动生成等能力，支持多租户、权限管控、审计日志等企业级特性，满足数据安全和内网隔离要求。
+2.项目重点功能：
+·智能文档问答：支持 PDF、Word、Excel、Markdown 等多格式文档解析，基于本地部署的 BGE-M3 向量模型实现精准知识问答，支持引用溯源和答案可信度评分。
+·Text2SQL 智能查询：用户通过自然语言描述查询需求，使用本地部署的 Qwen2.5-Coder-7B 模型自动生成 SQL 并执行，支持 MySQL、PostgreSQL、Oracle、ClickHouse 等多种数据库，提供可视化图表展示和报表导出。
+·多模态数据分析：本地部署 CogVLM-Chat 多模态模型，支持图表识别、数据可视化建议、趋势分析等智能化数据分析能力。
+·知识库管理：支持知识库创建、文档上传、自动切片、向量化索引、知识更新与版本管理，提供知识图谱可视化。
+·对话式交互：WebSocket 实时流式对话，SSE 推送生成进度，支持多轮对话上下文管理、意图识别、澄清反问等交互能力。
+·权限与审计：多租户隔离、RBAC 权限控制、数据脱敏、操作审计日志、敏感问题拦截与合规检查。
+3.技术要点：
+·RAG 架构（内网部署）：文档解析（Unstructured、PDFPlumber）→ 智能切片（按语义分段，overlap 50 token）→ 向量化（BGE-M3 本地部署）→ 向量存储（Milvus/Elasticsearch）→ 混合检索（向量+BM25）→ 重排序（gte-Qwen2-7B 本地部署）→ LLM 生成答案（2024.09-2025.04 使用 Qwen2.5-14B，2025.05 升级至 Qwen3-14B）。
+·Text2SQL 实现与模型微调：Schema 向量化 + Few-shot 示例 + Chain-of-Thought Prompt 工程，使用 Qwen2.5-Coder-7B 本地部署生成 SQL（2025.05 升级至 Qwen3-Coder-7B）。基于 LoRA 技术使用企业运维文档（2000+ 条 SQL 示例）微调 Qwen2.5-7B，通过 LLaMA-Factory 命令行操作完成训练，微调后 Text2SQL 准确率从 68% 提升至 80%。执行前进行语法校验和安全沙箱校验（禁止 DROP/DELETE/TRUNCATE），支持多表关联和复杂聚合查询。
+·大模型私有化部署与演进：
+  - Qwen2.5-14B/Qwen3-14B：主对话模型，负责通用问答和任务理解（2025.05 升级）。
+  - Qwen2.5-Coder-7B/Qwen3-Coder-7B：代码生成和 SQL 生成专用模型（2025.05 升级）。
+  - DeepSeek-V2-Lite/V3-Lite：备用模型，负载均衡和故障切换（2025.06 升级）。
+  - CogVLM-Chat：多模态理解，图表和图像分析。
+·多模型调度与优化：根据任务类型智能选择模型，模型热切换和资源复用（显存池化），缓存高频问题，有效降低计算成本。
+·向量检索优化：query 改写增强召回（同义词扩展、问题补全），多路召回（向量+关键词+知识图谱），二阶段重排序（粗排+精排），TopK 动态调整（3-10条）。
+·推理性能优化：
+  - vLLM 推理框架：PagedAttention + Continuous Batching，显著提升推理吞吐量。
+  - 模型量化：INT8 量化，显存占用和推理速度明显优化。
+  - 向量索引优化：HNSW 算法，支持百万级文档毫秒级检索。
+  - 缓存机制：相似问题缓存（余弦相似度 > 0.95 直接返回）。
+  - 流式输出：SSE/WebSocket 流式推理，首字延迟控制在 500ms 以内。
+·技术栈：Python、FastAPI、Spring Boot、Qwen3、Qwen2.5、DeepSeek-V3、CogVLM、vLLM、BGE-M3、gte-Qwen2-7B、Milvus、Elasticsearch、PostgreSQL、Redis、Kafka、Docker、K8s、Triton。
+某中央银行-实时数据湖与大规模流式计算平台	大数据开发工程师	2021.12-2024.08
+1.项目描述：
+·某中央银行核心业务系统的实时数据处理平台，承载全行交易系统、风控系统、监管报送等核心业务的实时数据计算，日均处理交易流水 5000 万+ 笔、数据量 2TB+，通过 Flink 实时计算 + Hudi 数据湖架构实现流批一体化数据管理，为监管报送、实时风控、反洗钱监测等业务提供秒级数据支撑。
+2.项目重点功能：
+·实时交易计算：实时消费 Kafka 中的核心交易流水，进行交易金额汇总、客户交易频次统计、异常交易检测等实时指标计算，结果写入 Redis/Oracle 供业务系统实时查询，响应延迟 < 5s。
+·实时数据湖：基于 Hudi 构建流批一体数据湖，Flink 实时消费 Kafka 数据增量入湖到 HDFS，支持 CDC（Change Data Capture）捕获上游数据库变更，提供分钟级增量数据更新和历史数据回溯能力。
+·大状态管理：管理 TB 级状态数据（客户资产、交易历史、风险评分等），采用 RocksDB 增量 Checkpoint，配合 Checkpoint 调优（间隔 5min、最小间隔 2min、超时 15min），保证大状态场景下的稳定性和容错恢复能力。
+·多源数据集成：实时同步 Oracle、DB2、MySQL 等多个核心业务库的增量数据到数据湖，通过 Flink CDC 实现全库实时同步，支持 Schema 变更自动感知和历史数据快照。
+·流批一体查询：数据湖同步元数据到 Hive Metastore，支持 Hive、Spark、Presto 等引擎对实时数据和历史数据的统一查询，实现实时报表和离线分析的融合。
+·监控与容灾：Flink 作业实时监控（反压、延迟、吞吐），告警推送（企微/邮件），支持 Savepoint 定时备份和快速故障恢复。
+3.技术要点：
+·性能优化实践：
+  - Kafka 分区优化：核心 Topic 扩展到 256 分区，Flink 并行度调整至 128，显著提升整体吞吐量。
+  - 反压处理：通过算子链优化、异步 IO、窗口聚合提前聚合等手段，解决 Kafka 消费延迟和反压问题，处理延迟大幅降低。
+  - Checkpoint 优化：RocksDB 增量 Checkpoint + HDFS 高可用存储，Checkpoint 时间和成功率明显优化。
+  - 资源调优：TaskManager 内存调优（堆内 8GB + 堆外 4GB + RocksDB 缓存 2GB），CPU 核心数 8 核，支持大规模数据处理。
+·Hudi 数据湖架构：
+  - Copy-On-Write 表存储实时增量数据，提供分钟级数据更新，支持 Hive/Spark/Presto 直接查询。
+  - Merge-On-Read 表处理 CDC 数据，通过 Compaction 合并小文件，提升查询性能。
+  - 数据分区策略：按日期 + Hash 二级分区，避免小文件问题，有效控制单表文件数量。
+  - 元数据同步：Hudi DeltaStreamer 实时同步元数据到 Hive Metastore，支持增量数据快速可见。
+·Flink CDC 数据同步：
+  - 全量 + 增量同步：Oracle/DB2/MySQL 数据库的实时 CDC 同步，支持 Binlog/LogMiner 增量捕获。
+  - Schema 演进：自动感知上游表结构变更（新增字段、字段类型变更），动态调整下游数据湖 Schema。
+  - 断点续传：基于 Checkpoint 机制，支持任务失败后从断点位置恢复，保证数据不丢失、不重复。
+·Flink Native K8s 部署：
+  - K8s 集群资源隔离（NameSpace + ResourceQuota），支持作业动态扩缩容和故障自愈。
+  - Checkpoint/Savepoint 存储到外部 HDFS，跨 K8s 集群迁移和灾备恢复。
+  - 镜像分层优化：基础镜像（JDK + Flink）+ 业务镜像（用户 JAR），缩短镜像构建和部署时间。
+·可观测性建设：
+  - Prometheus + Grafana 监控 Flink 作业指标（吞吐量、延迟、反压、Checkpoint 时长），设置告警规则。
+  - Logging-operator 收集 Flink 日志到 ES，支持多维度日志查询（作业名、时间范围、日志级别、关键词）。
+  - 作业血缘分析：解析 FlinkSQL 生成数据血缘图，展示数据流转路径和依赖关系。
+·技术栈：Flink、Kafka、Hudi、K8s、HDFS、Hive、Oracle、DB2、Flink CDC、RocksDB、Prometheus、Grafana、ES、Logging-operator。
+自研纯Java大数据基础平台	大数据平台开发工程师	2021.01-2021.11
+1.项目描述：
+·自研的纯 Java 云原生大数据集群管理平台，覆盖 Hadoop 生态的组件部署/管理/监控/自动化运维，支持多集群管理与国产化、多架构兼容（x86/ARM/国产OS），可观测与告警完善；亦支持裸机部署。
+2.项目重点功能：
+·组件一键化管理：Kibana、Kyuubi、Tez、Zeppelin、Phoenix、Doris、StarRocks、Kafka Eagle、Logstash、JuiceFS 等的安装、配置模板、启停、监控与日志。
+·多集群管理：支持多集群接入、隔离与统一管理。
+·实时日志与运维：SSE 实时日志推送，安装/启动过程可视化，操作审计记录。
+·安全与合规：Kerberos 全链路接入；Ranger/KMS 与 Hive Metastore 达梦适配；密钥与证书统一管理。
+·云原生交付：K8s 中通过 Service/Ingress/NodePort 打通组件网络；HDFS 使用 NFS 的 PVC/PV 持久化。
+3.技术要点：
+·模块职责：api（管理端REST API与Web控制台）、worker（工作节点，执行服务安装/启停/配置等任务）、kubernetes（K8s编排，处理YAML部署、Service创建、ConfigMap管理等）、plugins（可热插拔插件模块，包含SSH插件、主机校验插件、系统信息收集插件等）。
+·K8s 编排：按角色生成 ConfigMap/Secret/Service/PVC/Deployment/StatefulSet，支持端口绑定与服务DNS发现。
+·安全治理：Ranger/KMS 策略下发与插件启用、Kerberos Keytab 分发；国产化数据库（达梦）与飞腾架构适配。
+·工程化：Jenkins CI/CD、Docker 镜像分层规范、统一接口与版本控制、Prometheus+Grafana 可观测、SSE 实时日志链路。
+·技术栈：Java、Spring Boot、K8s、Hadoop、HDFS、Yarn、Hive、Spark、Ranger、Kerberos、Prometheus、Grafana。
+Ambari大数据基础平台	大数据开发工程师	2020.01-2020.12
+1.项目描述：
+·基于开源 HDP 深度定制的企业级 Hadoop 集群管理平台，提供大数据集群的可视化安装、监控运维、组件管理等核心功能，针对国产化环境进行全面适配改造，支持多架构部署和新一代大数据组件集成。
+2.项目重点功能：
+·ARM 架构适配：完成 x86 到 ARM（飞腾）架构的全栈移植，包括 JVM 调优和组件编译优化。
+·国产数据库适配：改造 Hive Metastore 支持达梦数据库，解决字符集和 SQL 方言兼容性问题。
+·高版本组件集成：在原有 HDP 基础上集成 Flink 1.15+、Kudu、Alluxio、MinIO 等新一代组件。
+·国产操作系统兼容：适配麒麟 V10、中标麒麟等国产 OS，解决依赖库和系统调用兼容问题。
+3.技术要点：
+·跨架构编译：针对 ARM 架构重新编译 Hadoop 生态组件，优化 JNI 调用和内存管理。
+·数据库方言适配：修改 Hive SchemaTools，支持达梦数据库的 DDL 语法和数据类型映射。
+·组件版本升级：集成 Flink 1.15+、Kudu、Alluxio、MinIO 等新一代组件。
+·技术栈：HDP 3.x、Python、Java、C++、Shell、ARM 汇编优化。
+舆情大数据分析系统	大数据开发工程师	2016.12-2020.01
+1.项目描述：
+·互联网舆情监控分析平台，7x24小时实时采集论坛、微博、新闻等互联网公开数据，通过 NLP 技术进行情感分析、敏感词识别、热点挖掘，为政府部门和企业提供舆情预警、品牌监测、危机公关等决策支持，支持按时间、地域、行业等维度的深度分析和可视化展示。
+2.项目重点功能：
+·数据采集与处理：爬虫技术采集互联网公开数据，Flume 实时监控文件变化，Kafka 分类分发数据流，支持每日千万级数据采集和实时处理。
+·流式计算架构升级：前期基于 Storm 构建实时处理流水线（2016-2018），后期主导技术升级迁移到 Flink（2018-2020），实现数据清洗、敏感词过滤、情感分析、地域分析、关键词提取等 NLP 处理，系统延迟从分钟级降低至秒级，处理能力提升 5 倍。
+·分层存储优化：MySQL 存储 7 天热点数据供实时展示，HBase 存储历史数据支持离线分析，通过 HBase RowKey 优化设计（地域+时间戳反转）提升查询性能 3 倍，支持亿级数据秒级查询。
+·多维统计分析：Hive + Spark SQL 进行各省负面信息、行业热点、品牌热度等多维度统计分析，支持自定义维度组合查询和趋势预测。
+·实时预警系统：重要舆情通过邮件、短信、弹窗等方式实时推送，支持自定义预警规则（关键词、情感值阈值、传播速度），预警响应时间 < 30s。
+3.技术要点：
+·流式计算技术演进：
+  - 2016-2018：基于 Storm 实现实时流处理，自定义 Bolt 实现 NLP 算法，支持动态扩容和故障恢复。
+  - 2018-2020：主导 Storm 到 Flink 的技术升级，利用 Flink 的 Exactly-Once 语义保证数据准确性，使用 Flink CEP 实现复杂事件检测，系统稳定性从 99.5% 提升至 99.9%。
+·存储架构：MySQL + HBase 冷热数据分离，HBase RowKey 设计优化（Reverse Timestamp + Region 分区），支持千万级并发查询。
+·数据同步：使用 Flink CDC 实时同步 Kafka 数据到 HBase，使用 Spark SQL 定时同步 Hive 分析结果到 MySQL，支持 Web 报表展示。
+·NLP 算法集成：集成 jieba 分词、SnowNLP 情感分析、TextRank 关键词提取，支持自定义词库和敏感词库动态更新。
+·技术栈：Flink、Storm、Kafka、Hive、Spark SQL、HBase、MySQL、Flink CDC、Elasticsearch。
+
+教育经历
+济南大学	本科	计算机科学与技术	2013-2017
