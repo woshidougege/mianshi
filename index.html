@@ -1895,7 +1895,7 @@
                 <ol>
                     <li>负责军工企业内网环境下的智能问答与数据分析平台架构设计与核心开发，基于 <span class="term" data-pronunciation="拉格">RAG<span class="pronun-icon">🔊</span></span>（检索增强生成）技术实现文档智能问答、<span class="term" data-pronunciation="特克斯特兔思Q偶">Text2SQL<span class="pronun-icon">🔊</span></span> 自然语言查询、多模态数据分析等核心功能，采用开源大模型本地化部署方案，满足数据安全和内网隔离要求，支持多租户、权限管控、审计日志等企业级特性。</li>
                     
-                    <li>负责大模型私有化部署与推理优化，本地部署 Qwen2.5/Qwen3、DeepSeek-V2/V3 等开源大模型（2024.09 初期采用 Qwen2.5-14B，2025.05 升级至 Qwen3-14B），使用 <span class="term" data-pronunciation="v-艾偶-艾偶-艾姆">vLLM<span class="pronun-icon">🔊</span></span> 推理框架和 <span class="term" data-pronunciation="夫拉虚腾神2">FlashAttention2<span class="pronun-icon">🔊</span></span> 加速技术，配合模型量化（<span class="term" data-pronunciation="印特8/印特4">INT8/INT4<span class="pronun-icon">🔊</span></span>）和批处理优化，显著提升推理吞吐量，首字延迟控制在 500ms 以内，满足生产环境实时交互需求。</li>
+                    <li>负责大模型私有化部署、微调与推理优化，本地部署 Qwen2.5/Qwen3、DeepSeek-V2/V3 等开源大模型（2024.09 初期采用 Qwen2.5-14B，2025.05 升级至 Qwen3-14B），使用 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="Q-劳拉">QLoRA<span class="pronun-icon">🔊</span></span> 技术对 <span class="term" data-pronunciation="Q问2.5-7B">Qwen2.5-7B<span class="pronun-icon">🔊</span></span> 进行领域微调（基于企业运维文档 2000+ 条），通过 <span class="term" data-pronunciation="喇嘛-法克特瑞">LLaMA-Factory<span class="pronun-icon">🔊</span></span> 框架命令行操作完成训练（适配麒麟系统），微调后 <span class="term" data-pronunciation="特克斯特兔思Q偶">Text2SQL<span class="pronun-icon">🔊</span></span> 准确率提升 12%（68%→80%）。推理层使用 <span class="term" data-pronunciation="v-艾偶-艾偶-艾姆">vLLM<span class="pronun-icon">🔊</span></span> 推理框架和 <span class="term" data-pronunciation="夫拉虚腾神2">FlashAttention2<span class="pronun-icon">🔊</span></span> 加速技术，配合模型量化（<span class="term" data-pronunciation="印特8/印特4">INT8/INT4<span class="pronun-icon">🔊</span></span>）、多 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 动态加载和批处理优化，显著提升推理吞吐量，首字延迟控制在 500ms 以内，满足生产环境实时交互需求。</li>
                     
                     <li>负责向量检索引擎的设计与优化，本地部署 <span class="term" data-pronunciation="B-G-E-M3">BGE-M3<span class="pronun-icon">🔊</span></span> 多语言向量模型和 <span class="term" data-pronunciation="鸡踢伊-Q问2-7B">gte-Qwen2-7B<span class="pronun-icon">🔊</span></span> 重排序模型，基于 <span class="term" data-pronunciation="米偶乌斯">Milvus<span class="pronun-icon">🔊</span></span> 向量数据库实现毫秒级语义检索，通过混合检索（向量+<span class="term" data-pronunciation="B-M-25">BM25<span class="pronun-icon">🔊</span></span>）、二阶段重排序、Query 改写等技术显著提升召回效果，支持百万级文档的实时检索。</li>
                     
@@ -3508,7 +3508,7 @@
             <div class="collapsible-content">
                 <div class="tech-box">
                     <h4>LoRA 是什么</h4>
-                    <p><strong>LoRA（Low-Rank Adaptation）</strong> = <strong>低秩适配</strong></p>
+                    <p><strong><span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span>（<span class="term" data-pronunciation="楼-让克 阿达普忒神">Low-Rank Adaptation<span class="pronun-icon">🔊</span></span>）</strong> = <strong>低秩适配</strong></p>
                     <p>一种高效的大模型微调技术，<strong>不修改原模型参数</strong>，只训练少量额外的"适配器"参数，就能让模型适应特定任务。</p>
                     
                     <h4>核心原理（简单理解）</h4>
@@ -3523,8 +3523,8 @@ LoRA：只训练 200万 参数（约 0.3%）
                 <div class="answer-box">
                     <h4>面试这么说</h4>
                     <p>"我们用 LoRA 对 <span class="term" data-pronunciation="Q问2.5-7B">Qwen2.5-7B<span class="pronun-icon">🔊</span></span> 进行了领域微调，让它更好地适应我们的业务场景。</p>
-                    <p>具体来说，LoRA 不动原模型的 70 亿参数，只在每一层 Attention 上加一个小的低秩矩阵（秩设置为 8），只训练这些新加的参数。整个微调过程只需要训练约 200 万参数，相比全量微调节省了 80% 以上的显存和时间。</p>
-                    <p>我们收集了 2000+ 条企业内部的运维文档和 SQL 查询对，训练了 3 个 epoch，Text2SQL 的准确率从 68% 提升到了 80%。训练完后，LoRA 权重只有 8MB，部署时可以动态加载，非常灵活。"</p>
+                    <p>具体来说，<span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 不动原模型的 70 亿参数，只在每一层 <span class="term explain" data-pronunciation="阿腾神" data-explain="Attention，注意力机制，Transformer的核心。让模型知道哪些词重要，重点关注它们。">Attention<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> 上加一个小的低秩矩阵（秩设置为 8），只训练这些新加的参数。整个微调过程只需要训练约 200 万参数，相比全量微调节省了 80% 以上的显存和时间。</p>
+                    <p>我们收集了 2000+ 条企业内部的运维文档和 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span> 查询对，训练了 3 个 <span class="term explain" data-pronunciation="依坡克" data-explain="Epoch，训练轮次。把所有数据过一遍叫1个epoch，3个epoch就是把数据完整看3遍。">epoch<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>，<span class="term" data-pronunciation="特克斯特兔思Q偶">Text2SQL<span class="pronun-icon">🔊</span></span> 的准确率从 68% 提升到了 80%。训练完后，<span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 权重只有 8MB，部署时可以动态加载，非常灵活。"</p>
                 </div>
 
                 <div class="example-box">
@@ -3593,12 +3593,12 @@ LoRA 更新：ΔW ≈ A × B
 
 2. 模型加载：
    ├─ 基座模型：Qwen2.5-7B
-   └─ 配置 LoRA：rank=8, alpha=16, dropout=0.1
+   └─ 配置 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span>：<span class="term explain" data-pronunciation="让克" data-explain="Rank，秩，矩阵的维度。rank=8表示用8维的矩阵。越大效果越好但越慢。">rank<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>=8, <span class="term explain" data-pronunciation="阿尔法" data-explain="Alpha，缩放系数。控制LoRA影响力的强度。一般是rank的2倍。">alpha<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>=16, <span class="term explain" data-pronunciation="抓剖奥特" data-explain="Dropout，丢弃率。训练时随机丢弃一些神经元，防止过拟合。0.1表示丢弃10%。">dropout<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>=0.1
 
 3. 训练：
-   ├─ 框架：LLaMA-Factory / HuggingFace PEFT
+   ├─ 框架：<span class="term" data-pronunciation="喇嘛-法克特瑞">LLaMA-Factory<span class="pronun-icon">🔊</span></span> / <span class="term explain" data-pronunciation="哈根菲斯 培福特" data-explain="HuggingFace PEFT。HuggingFace是AI模型平台，PEFT是参数高效微调库，包含LoRA等方法。">HuggingFace PEFT<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>
    ├─ 硬件：单卡 3090（24GB）
-   ├─ 参数：batch_size=4, lr=1e-4, epochs=3
+   ├─ 参数：<span class="term explain" data-pronunciation="八吃-塞斯" data-explain="Batch Size，批次大小。一次训练用几条数据。batch_size=4表示每次喂4条数据给模型。">batch_size<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>=4, <span class="term explain" data-pronunciation="兰宁-瑞特" data-explain="Learning Rate，学习率。控制模型更新的步长。1e-4=0.0001，很小的数，防止学太快不稳定。">lr<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>=1e-4, <span class="term explain" data-pronunciation="依坡克斯" data-explain="Epochs，训练轮次（复数）。epochs=3表示把所有数据看3遍。">epochs<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>=3
    └─ 时间：8小时
 
 4. 评估：
@@ -3616,8 +3616,8 @@ LoRA 更新：ΔW ≈ A × B
                     
                     <p><strong>先搞清楚：</strong></p>
                     <ul>
-                        <li>LoRA/QLoRA <strong>不是软件</strong>，是一种算法/技术</li>
-                        <li>我们用 <strong>LLaMA-Factory</strong> 这个开源工具来实现 LoRA 微调</li>
+                        <li><span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span>/<span class="term" data-pronunciation="Q-劳拉">QLoRA<span class="pronun-icon">🔊</span></span> <strong>不是软件</strong>，是一种算法/技术</li>
+                        <li>我们用 <strong><span class="term" data-pronunciation="喇嘛-法克特瑞">LLaMA-Factory<span class="pronun-icon">🔊</span></span></strong> 这个开源工具来实现 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 微调</li>
                         <li>LLaMA-Factory 支持<strong>纯命令行操作</strong>，适合内网/麒麟系统等无图形界面环境</li>
                     </ul>
 
@@ -3633,7 +3633,7 @@ pip install -e ".[torch,metrics]" --no-cache-dir
 llamafactory-cli version</pre>
 
                     <h5>步骤 2：准备训练数据（10分钟）</h5>
-                    <p>创建一个 JSON 文件 <code>data/my_data.json</code>，格式如下：</p>
+                    <p>创建一个 <span class="term explain" data-pronunciation="接森" data-explain="JSON，数据格式。全称JavaScript Object Notation。一种文本格式，用来存储和传输数据，人类可读。">JSON<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> 文件 <code>data/my_data.json</code>，格式如下：</p>
                     <pre>[
   {
     "instruction": "查询所有用户信息",
@@ -3651,9 +3651,9 @@ llamafactory-cli version</pre>
     "output": "SELECT * FROM orders WHERE create_time >= DATE_SUB(NOW(), INTERVAL 7 DAY)"
   }
 ]</pre>
-                    <p>💡 <strong>数据格式：</strong>每条数据包含 instruction（问题）、input（额外输入，可为空）、output（答案）</p>
+                    <p>💡 <strong>数据格式：</strong>每条数据包含 <span class="term" data-pronunciation="因斯抓克神">instruction<span class="pronun-icon">🔊</span></span>（问题）、<span class="term" data-pronunciation="因普特">input<span class="pronun-icon">🔊</span></span>（额外输入，可为空）、<span class="term" data-pronunciation="奥特普特">output<span class="pronun-icon">🔊</span></span>（答案）</p>
 
-                    <h5>步骤 3：创建训练配置文件（YAML）</h5>
+                    <h5>步骤 3：创建训练配置文件（<span class="term explain" data-pronunciation="雅摸" data-explain="YAML，配置文件格式。全称YAML Ain't Markup Language。用缩进表示层级，比JSON更易读。">YAML<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>）</h5>
                     <p>创建 <code>configs/my_lora_config.yaml</code>：</p>
                     <pre>### 模型路径
 model_name_or_path: /data/models/Qwen2.5-7B-Instruct
@@ -3701,14 +3701,14 @@ llamafactory-cli train \
 
                     <h5>步骤 5：训练过程（终端输出）</h5>
                     <pre>训练日志：
-[INFO] Loading checkpoint: /data/models/Qwen2.5-7B-Instruct
+[INFO] Loading <span class="term explain" data-pronunciation="切克波因特" data-explain="Checkpoint，检查点。模型训练过程中保存的快照。可以从这里恢复训练或直接使用。">checkpoint<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>: /data/models/Qwen2.5-7B-Instruct
 [INFO] Model loaded: 7.04B params, 13.8GB memory
-[INFO] Initializing LoRA adapter (rank=8, alpha=16)
+[INFO] Initializing <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> <span class="term explain" data-pronunciation="额大普特" data-explain="Adapter，适配器。LoRA的权重文件就叫适配器，是一个小模块，不改动原模型。">adapter<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> (rank=8, alpha=16)
 [INFO] Trainable params: 2.36M (0.03% of total)
 [INFO] Starting training...
 
-Epoch 1/3:
-  Step 100/600 | loss: 0.523 | lr: 1.0e-4 | speed: 3.2 samples/s
+<span class="term" data-pronunciation="依坡克">Epoch<span class="pronun-icon">🔊</span></span> 1/3:
+  <span class="term" data-pronunciation="斯忒普">Step<span class="pronun-icon">🔊</span></span> 100/600 | <span class="term explain" data-pronunciation="劳斯" data-explain="Loss，损失值。表示模型预测和真实答案的差距。越小越好，说明模型越准确。">loss<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>: 0.523 | lr: 1.0e-4 | speed: 3.2 samples/s
   Step 200/600 | loss: 0.412 | lr: 8.0e-5 | speed: 3.1 samples/s
   Step 600/600 | loss: 0.321 | Saving checkpoint...
 
@@ -3721,8 +3721,8 @@ Epoch 3/3:
 [INFO] Training completed in 7h 42min
 [INFO] LoRA weights saved to: output/qwen-text2sql-lora/
 [INFO] Files:
-  ├─ adapter_model.bin (8.2MB)  ← LoRA 权重
-  ├─ adapter_config.json (421B)  ← LoRA 配置
+  ├─ <span class="term explain" data-pronunciation="额大普特-猫斗-点-斌" data-explain="adapter_model.bin，适配器模型二进制文件。这就是训练出来的LoRA权重，只有8MB！">adapter_model.bin<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> (8.2MB)  ← <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 权重
+  ├─ <span class="term" data-pronunciation="额大普特-抗费格-点-接森">adapter_config.json<span class="pronun-icon">🔊</span></span> (421B)  ← <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 配置
   └─ training_log.txt            ← 训练日志</pre>
 
                     <h5>步骤 6：测试微调后的模型</h5>
@@ -3756,8 +3756,8 @@ python -m vllm.entrypoints.openai.api_server \
       translate=/path/to/lora/translate \
       summary=/path/to/lora/summary
 
-# API 请求时指定用哪个 LoRA
-curl http://localhost:8000/v1/completions \
+# <span class="term explain" data-pronunciation="诶批艾" data-explain="API，应用程序接口。Application Programming Interface。程序之间互相调用的接口。">API<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> 请求时指定用哪个 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span>
+<span class="term explain" data-pronunciation="克儿" data-explain="curl，命令行工具。用来发送HTTP请求，测试API。Linux/Mac常用。">curl<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> http://localhost:8000/v1/completions \
   -H "Content-Type: application/json" \
   -d '{
     "model": "qwen-7b",
@@ -3768,43 +3768,43 @@ curl http://localhost:8000/v1/completions \
 
                 <div class="warning-box">
                     <h4>也可以用纯代码（HuggingFace PEFT）</h4>
-                    <p>如果你会 Python，也可以不用 LLaMA-Factory，直接写代码：</p>
+                    <p>如果你会 <span class="term" data-pronunciation="派森">Python<span class="pronun-icon">🔊</span></span>，也可以不用 <span class="term" data-pronunciation="喇嘛-法克特瑞">LLaMA-Factory<span class="pronun-icon">🔊</span></span>，直接写代码：</p>
                     <pre># 安装库
-pip install transformers peft datasets
+<span class="term explain" data-pronunciation="批破" data-explain="pip，Python包管理工具。Pip Installs Packages。用来安装Python的第三方库。">pip<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> install <span class="term" data-pronunciation="传斯否么斯">transformers<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="批夫特">peft<span class="pronun-icon">🔊</span></span> <span class="term" data-pronunciation="得他赛此">datasets<span class="pronun-icon">🔊</span></span>
 
 # 训练脚本 train_lora.py
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import LoraConfig, get_peft_model, TaskType
 
 # 1. 加载基座模型
-model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
-tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
+<span class="term" data-pronunciation="猫斗">model<span class="pronun-icon">🔊</span></span> = <span class="term explain" data-pronunciation="凹透-猫斗-否-扣喏-艾偶-艾姆" data-explain="AutoModelForCausalLM，HuggingFace类。自动加载适合生成任务的预训练语言模型。Causal LM指因果语言模型（生成式）。">AutoModelForCausalLM<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
+<span class="term explain" data-pronunciation="偷肯奈则" data-explain="Tokenizer，分词器。把文本切分成模型能理解的token（词或字）。每个模型有自己的分词器。">tokenizer<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> = <span class="term" data-pronunciation="凹透-偷肯奈则">AutoTokenizer<span class="pronun-icon">🔊</span></span>.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
 
-# 2. 配置 LoRA
-lora_config = LoraConfig(
-    task_type=TaskType.CAUSAL_LM,
-    r=8,              # rank
+# 2. 配置 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span>
+lora_config = <span class="term" data-pronunciation="劳拉-抗费格">LoraConfig<span class="pronun-icon">🔊</span></span>(
+    task_type=<span class="term" data-pronunciation="塔斯克-太破">TaskType<span class="pronun-icon">🔊</span></span>.CAUSAL_LM,
+    r=8,              # <span class="term" data-pronunciation="软克">rank<span class="pronun-icon">🔊</span></span>
     lora_alpha=16,
     lora_dropout=0.1,
-    target_modules=["q_proj", "v_proj"]  # 只在 Attention 层加 LoRA
+    target_modules=["q_proj", "v_proj"]  # 只在 <span class="term" data-pronunciation="额腾神">Attention<span class="pronun-icon">🔊</span></span> 层加 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span>
 )
 
-# 3. 创建 LoRA 模型
-model = get_peft_model(model, lora_config)
-model.print_trainable_parameters()
-# 输出：trainable params: 2M || all params: 7B || trainable%: 0.03%
+# 3. 创建 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 模型
+<span class="term" data-pronunciation="猫斗">model<span class="pronun-icon">🔊</span></span> = get_peft_model(<span class="term" data-pronunciation="猫斗">model<span class="pronun-icon">🔊</span></span>, lora_config)
+<span class="term" data-pronunciation="猫斗">model<span class="pronun-icon">🔊</span></span>.print_trainable_parameters()
+# 输出：<span class="term explain" data-pronunciation="拽纳布偶" data-explain="trainable，可训练的。trainable params指模型中需要训练的参数数量。">trainable<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> params: 2M || all params: 7B || trainable%: 0.03%
 
 # 4. 训练（省略数据加载和训练循环）
 # ... 训练代码 ...
 
-# 5. 保存 LoRA 权重
-model.save_pretrained("./output/qwen-lora")
+# 5. 保存 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 权重
+<span class="term" data-pronunciation="猫斗">model<span class="pronun-icon">🔊</span></span>.save_pretrained("./output/qwen-lora")
 
 # 6. 推理
-from peft import PeftModel
-base_model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
-model = PeftModel.from_pretrained(base_model, "./output/qwen-lora")
-# 现在 model 就是微调后的模型</pre>
+from peft import <span class="term explain" data-pronunciation="批夫特-猫斗" data-explain="PeftModel，PEFT库的模型类。用于加载和使用PEFT微调后的模型（如LoRA）。">PeftModel<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>
+base_model = <span class="term" data-pronunciation="凹透-猫斗-否-扣喏-艾偶-艾姆">AutoModelForCausalLM<span class="pronun-icon">🔊</span></span>.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
+<span class="term" data-pronunciation="猫斗">model<span class="pronun-icon">🔊</span></span> = <span class="term" data-pronunciation="批夫特-猫斗">PeftModel<span class="pronun-icon">🔊</span></span>.from_pretrained(base_model, "./output/qwen-lora")
+# 现在 <span class="term" data-pronunciation="猫斗">model<span class="pronun-icon">🔊</span></span> 就是微调后的模型</pre>
                 </div>
 
                 <div class="answer-box">
@@ -3848,7 +3848,7 @@ model = PeftModel.from_pretrained(base_model, "./output/qwen-lora")
                         </tr>
                         <tr>
                             <td><strong>LoRA 文件包含什么？</strong></td>
-                            <td>adapter_model.bin（权重）+ adapter_config.json（配置）</td>
+                            <td><span class="term" data-pronunciation="额大普特-猫斗-点-斌">adapter_model.bin<span class="pronun-icon">🔊</span></span>（权重）+ <span class="term" data-pronunciation="额大普特-抗费格-点-接森">adapter_config.json<span class="pronun-icon">🔊</span></span>（配置）</td>
                         </tr>
                         <tr>
                             <td><strong>为什么只有 8MB？</strong></td>
@@ -3860,7 +3860,7 @@ model = PeftModel.from_pretrained(base_model, "./output/qwen-lora")
                         </tr>
                         <tr>
                             <td><strong>麒麟系统怎么装依赖？</strong></td>
-                            <td>离线安装：先 <code>pip download</code> 下载 whl 包，拷贝到内网机器，再 <code>pip install *.whl</code></td>
+                            <td>离线安装：先 <code><span class="term" data-pronunciation="批破 荡楼的">pip download<span class="pronun-icon">🔊</span></span></code> 下载 <span class="term explain" data-pronunciation="维偶" data-explain="whl，wheel的缩写。Python的二进制包格式，安装更快，不需要编译。">whl<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span> 包，拷贝到内网机器，再 <code><span class="term" data-pronunciation="批破 引斯偷">pip install<span class="pronun-icon">🔊</span></span> *.whl</code></td>
                         </tr>
                     </table>
                 </div>
@@ -3870,19 +3870,19 @@ model = PeftModel.from_pretrained(base_model, "./output/qwen-lora")
                     <p><strong>Q：为什么不用全量微调？</strong></p>
                     <p>A：全量微调需要 80GB+ 显存（A100），训练时间长（7天），成本高。LoRA 只需 16GB（3090 就能跑），8小时完成，效果也接近全量微调。在资源有限的情况下，LoRA 是最佳选择。</p>
                     
-                    <p><strong>Q：LoRA 的 rank 怎么选？</strong></p>
-                    <p>A：rank 越大效果越好但成本越高。一般 4-16 之间。我们项目中用的是 8，在效果和成本之间平衡。实践中可以先从 8 开始，如果效果不够再增大到 16。</p>
+                    <p><strong>Q：<span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 的 <span class="term" data-pronunciation="软克">rank<span class="pronun-icon">🔊</span></span> 怎么选？</strong></p>
+                    <p>A：<span class="term" data-pronunciation="软克">rank<span class="pronun-icon">🔊</span></span> 越大效果越好但成本越高。一般 4-16 之间。我们项目中用的是 8，在效果和成本之间平衡。实践中可以先从 8 开始，如果效果不够再增大到 16。</p>
                     
                     <p><strong>Q：训练数据从哪来？</strong></p>
-                    <p>A：主要来源于企业内部积累的运维文档和 SQL 查询记录。我们收集了用户的历史查询日志，筛选出高频的 2000+ 条，经过数据清洗和格式化，构建成 (问题, SQL) 对用于微调。</p>
+                    <p>A：主要来源于企业内部积累的运维文档和 <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span> 查询记录。我们收集了用户的历史查询日志，筛选出高频的 2000+ 条，经过数据清洗和格式化，构建成 (问题, <span class="term" data-pronunciation="思Q偶">SQL<span class="pronun-icon">🔊</span></span>) 对用于微调。</p>
                     
                     <p><strong>Q：怎么评估微调效果？</strong></p>
-                    <p>A：划分 20% 数据作为验证集，用准确率作为指标。同时在真实业务场景中 A/B 测试，对比微调前后的用户满意度。我们的 Text2SQL 准确率从 68% 提升到 80%，用户反馈也明显改善。</p>
+                    <p>A：划分 20% 数据作为验证集，用准确率作为指标。同时在真实业务场景中 <span class="term explain" data-pronunciation="诶-B" data-explain="A/B测试，对比试验。把用户分成两组，一组用旧版本A，一组用新版本B，看哪个效果好。">A/B 测试<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>，对比微调前后的用户满意度。我们的 <span class="term" data-pronunciation="特克斯特兔思Q偶">Text2SQL<span class="pronun-icon">🔊</span></span> 准确率从 68% 提升到 80%，用户反馈也明显改善。</p>
                 </div>
 
                 <div class="tech-box">
-                    <h4>相关技术：PEFT（Parameter-Efficient Fine-Tuning）</h4>
-                    <p><strong>PEFT</strong> = 参数高效微调，HuggingFace 推出的微调库，包含多种微调方法。</p>
+                    <h4>相关技术：<span class="term" data-pronunciation="批夫特">PEFT<span class="pronun-icon">🔊</span></span>（<span class="term" data-pronunciation="帕拉米特-以飞神特 犯-秋宁">Parameter-Efficient Fine-Tuning<span class="pronun-icon">🔊</span></span>）</h4>
+                    <p><strong><span class="term" data-pronunciation="批夫特">PEFT<span class="pronun-icon">🔊</span></span></strong> = 参数高效微调，<span class="term" data-pronunciation="哈ging飞斯">HuggingFace<span class="pronun-icon">🔊</span></span> 推出的微调库，包含多种微调方法。</p>
                 </div>
 
                 <div class="example-box">
@@ -3905,7 +3905,7 @@ model = PeftModel.from_pretrained(base_model, "./output/qwen-lora")
                             <td>资源充足，追求极致效果</td>
                         </tr>
                         <tr>
-                            <td><strong>LoRA</strong></td>
+                            <td><strong><span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span></strong></td>
                             <td>低秩矩阵适配</td>
                             <td>0.1%-1%</td>
                             <td>16GB</td>
@@ -3913,15 +3913,15 @@ model = PeftModel.from_pretrained(base_model, "./output/qwen-lora")
                             <td>⭐ 最常用，平衡效果和成本</td>
                         </tr>
                         <tr>
-                            <td><strong>QLoRA</strong></td>
-                            <td>LoRA + 4bit量化</td>
+                            <td><strong><span class="term" data-pronunciation="Q-劳拉">QLoRA<span class="pronun-icon">🔊</span></span></strong></td>
+                            <td><span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> + <span class="term explain" data-pronunciation="佛-比特" data-explain="4bit，4位量化。把模型参数从16位（半精度）压缩到4位，显存占用减少75%，速度更快但略微损失精度。">4bit<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>量化</td>
                             <td>0.1%-1%</td>
                             <td>6GB</td>
                             <td>⭐⭐⭐⭐</td>
                             <td>显存极度受限（单卡3060）</td>
                         </tr>
                         <tr>
-                            <td><strong>Prefix Tuning</strong></td>
+                            <td><strong><span class="term" data-pronunciation="普瑞费克斯 秋宁">Prefix Tuning<span class="pronun-icon">🔊</span></span></strong></td>
                             <td>在输入前加可训练前缀</td>
                             <td>0.01%-0.1%</td>
                             <td>12GB</td>
@@ -3929,15 +3929,15 @@ model = PeftModel.from_pretrained(base_model, "./output/qwen-lora")
                             <td>任务简单，快速验证</td>
                         </tr>
                         <tr>
-                            <td><strong>P-Tuning v2</strong></td>
+                            <td><strong><span class="term" data-pronunciation="批-秋宁 V-2">P-Tuning v2<span class="pronun-icon">🔊</span></span></strong></td>
                             <td>每层加可训练前缀</td>
                             <td>0.1%-0.5%</td>
                             <td>14GB</td>
                             <td>⭐⭐⭐⭐</td>
-                            <td>理解类任务（分类、NER）</td>
+                            <td>理解类任务（分类、<span class="term explain" data-pronunciation="N-E-R" data-explain="NER，Named Entity Recognition，命名实体识别。从文本中识别出人名、地名、机构名等实体。">NER<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>）</td>
                         </tr>
                         <tr>
-                            <td><strong>Adapter</strong></td>
+                            <td><strong><span class="term" data-pronunciation="额大普特">Adapter<span class="pronun-icon">🔊</span></span></strong></td>
                             <td>每层插入小型神经网络</td>
                             <td>0.5%-2%</td>
                             <td>18GB</td>
@@ -3951,15 +3951,15 @@ model = PeftModel.from_pretrained(base_model, "./output/qwen-lora")
                     <h4>面试回答模板：除了 LoRA 还有其他微调方法吗？</h4>
                     <p>"有的，主流的参数高效微调方法还有以下几种：</p>
                     
-                    <p><strong>1. QLoRA</strong>（我们也用过）：在 LoRA 基础上加了 4-bit 量化，显存占用更少。比如 7B 模型，LoRA 需要 16GB，QLoRA 只要 6GB，单卡 3060 就能跑。效果和 LoRA 基本一样，但推理速度会稍慢一点。</p>
+                    <p><strong>1. <span class="term" data-pronunciation="Q-劳拉">QLoRA<span class="pronun-icon">🔊</span></span></strong>（我们也用过）：在 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 基础上加了 <span class="term" data-pronunciation="佛-比特">4-bit<span class="pronun-icon">🔊</span></span> 量化，显存占用更少。比如 7B 模型，<span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 需要 16GB，<span class="term" data-pronunciation="Q-劳拉">QLoRA<span class="pronun-icon">🔊</span></span> 只要 6GB，单卡 3060 就能跑。效果和 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 基本一样，但推理速度会稍慢一点。</p>
                     
-                    <p><strong>2. Prefix Tuning</strong>：不动模型参数，只在输入序列前面加一段可训练的'虚拟 token'（前缀），让模型通过前缀来适应新任务。训练参数更少（0.01%），但效果略差，适合快速验证场景。</p>
+                    <p><strong>2. <span class="term" data-pronunciation="普瑞费克斯 秋宁">Prefix Tuning<span class="pronun-icon">🔊</span></span></strong>：不动模型参数，只在输入序列前面加一段可训练的'虚拟 <span class="term explain" data-pronunciation="偷肯" data-explain="token，词元。文本的最小单位，可能是一个字、一个词或一个字符。模型处理文本时先切成token。">token<span class="pronun-icon">🔊</span><span class="explain-icon">❓</span></span>'（前缀），让模型通过前缀来适应新任务。训练参数更少（0.01%），但效果略差，适合快速验证场景。</p>
                     
-                    <p><strong>3. P-Tuning v2</strong>：Prefix Tuning 的增强版，不只在输入前加前缀，而是在 Transformer 的每一层都加。效果接近 LoRA，在理解类任务（文本分类、命名实体识别）上表现很好。</p>
+                    <p><strong>3. <span class="term" data-pronunciation="批-秋宁 V-2">P-Tuning v2<span class="pronun-icon">🔊</span></span></strong>：<span class="term" data-pronunciation="普瑞费克斯 秋宁">Prefix Tuning<span class="pronun-icon">🔊</span></span> 的增强版，不只在输入前加前缀，而是在 <span class="term" data-pronunciation="传斯否么">Transformer<span class="pronun-icon">🔊</span></span> 的每一层都加。效果接近 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span>，在理解类任务（文本分类、命名实体识别）上表现很好。</p>
                     
-                    <p><strong>4. Adapter</strong>：在 Transformer 的每一层插入一个小型神经网络（Adapter 层），训练时只更新这些层。参数量比 LoRA 多一点（0.5%-2%），好处是可以并行训练多个 Adapter，适合多任务场景。</p>
+                    <p><strong>4. <span class="term" data-pronunciation="额大普特">Adapter<span class="pronun-icon">🔊</span></span></strong>：在 <span class="term" data-pronunciation="传斯否么">Transformer<span class="pronun-icon">🔊</span></span> 的每一层插入一个小型神经网络（<span class="term" data-pronunciation="额大普特">Adapter<span class="pronun-icon">🔊</span></span> 层），训练时只更新这些层。参数量比 <span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span> 多一点（0.5%-2%），好处是可以并行训练多个 <span class="term" data-pronunciation="额大普特">Adapter<span class="pronun-icon">🔊</span></span>，适合多任务场景。</p>
                     
-                    <p>我们项目中主要用 <strong>LoRA</strong>，因为它在效果和成本之间平衡最好。在资源特别紧张时，也会用 <strong>QLoRA</strong>。选择哪种方法主要看三个因素：<strong>显存预算、任务复杂度、训练时间要求</strong>。"</p>
+                    <p>我们项目中主要用 <strong><span class="term" data-pronunciation="劳拉">LoRA<span class="pronun-icon">🔊</span></span></strong>，因为它在效果和成本之间平衡最好。在资源特别紧张时，也会用 <strong><span class="term" data-pronunciation="Q-劳拉">QLoRA<span class="pronun-icon">🔊</span></span></strong>。选择哪种方法主要看三个因素：<strong>显存预算、任务复杂度、训练时间要求</strong>。"</p>
                 </div>
 
                 <div class="tech-box">
