@@ -1767,14 +1767,13 @@
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="switchTab(0)">📋 个人简历</button>
             <button class="nav-tab" onclick="switchTab(1)">💼 项目介绍</button>
-            <button class="nav-tab" onclick="switchTab(2)">🔥 智能运维（AIOps）</button>
-            <button class="nav-tab" onclick="switchTab(3)">🤖 AI技术详解</button>
-            <button class="nav-tab" onclick="switchTab(4)">💾 大数据技术</button>
-            <button class="nav-tab" onclick="switchTab(5)">☕ Java后端</button>
-            <button class="nav-tab" onclick="switchTab(6)">🎨 前端基础</button>
-            <button class="nav-tab" onclick="switchTab(7)">🐍 Python基础</button>
-            <button class="nav-tab" onclick="switchTab(8)">🎯 应对策略</button>
-            <button class="nav-tab" onclick="switchTab(9)">🛡️ 面试专项应对（聊城国企）</button>
+            <button class="nav-tab" onclick="switchTab(2)">🤖 AI技术详解</button>
+            <button class="nav-tab" onclick="switchTab(3)">💾 大数据技术</button>
+            <button class="nav-tab" onclick="switchTab(4)">☕ Java后端</button>
+            <button class="nav-tab" onclick="switchTab(5)">🎨 前端基础</button>
+            <button class="nav-tab" onclick="switchTab(6)">🐍 Python基础</button>
+            <button class="nav-tab" onclick="switchTab(7)">🎯 应对策略</button>
+            <button class="nav-tab" onclick="switchTab(8)">🛡️ 面试专项应对（聊城国企）</button>
         </div>
 
         <!-- 内容区域将在后续步骤中添加 -->
@@ -7523,109 +7522,13 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                 </div>
             </div>
 
-            <p class="highlight-box"><strong>💡 提示：</strong>智能运维（AIOps）内容已独立为一个Tab，请点击顶部导航栏的<strong>🔥智能运维（AIOps）</strong>查看！</p>
+            
         </div>
         </div>
 
-        <!-- 智能运维（AIOps）专用 Tab -->
-        <div class="content" id="content9">
-            <h2>🔥 智能运维（AIOps）：AI驱动的自动化故障诊断与自愈平台</h2>
+        
             
-            <p class="warning-box"><strong>核心定位：</strong>这是聊城国企智能运维项目的专项准备材料，完全聚焦AI技术应用，从0到1搭建、技术选型、性能指标、面试话术全覆盖。</p>
             
-            <div class="highlight-box">
-                <h4>🎯 开场话术（基于你的技能背景）</h4>
-                <p>"<strong>智能运维（AIOps）本质上是把AI能力应用到运维场景。</strong>基于我的Python开发和AI技术背景，如果让我搭建一套智能运维系统，我会分三个核心模块来实现：</p>
-                <ol>
-                    <li><strong>异常检测模块</strong>：用Python训练<span class="explain" data-explain="LSTM（Long Short-Term Memory，长短期记忆网络）：一种特殊的RNN神经网络，能记住长期依赖关系。用于时序数据预测（如股票价格、服务器CPU趋势）。相比传统算法，LSTM能自动学习周期性规律（每天10点流量高峰），预测未来5-30分钟的指标走势，准确率可达90%+">LSTM<span class="explain-icon">❓</span></span>时序预测模型，提前5-10分钟预警CPU/内存等指标异常</li>
-                    <li><strong>日志智能分析</strong>：用<span class="explain" data-explain="LangChain：开源的AI应用开发框架（Python库），专门用于构建大模型应用。核心功能：①串联多个AI调用（Chain链式调用）②连接外部数据源（向量库、API）③构建Agent智能体（自动决策调用哪个工具）。比如：用户提问→检索知识库→LLM生成答案→执行Python代码，这整个流程就是一个LangChain应用">LangChain<span class="explain-icon">❓</span></span> + 本地大模型（Qwen2.5-14B）做日志解析和根因分析，比传统grep快100倍</li>
-                    <li><strong>自动化修复</strong>：基于<span class="explain" data-explain="RAG（Retrieval-Augmented Generation，检索增强生成）：大模型的一种应用模式。原理：①先从知识库检索相关文档（比如历史故障案例）②把检索结果+用户问题一起喂给大模型③大模型基于真实资料生成答案。优点：减少幻觉、答案有依据、可引用来源。比传统纯LLM生成准确率提升30%+">RAG<span class="explain-icon">❓</span></span>检索历史故障案例，用大模型生成Python修复脚本，通过<span class="explain" data-explain="Ansible：红帽开源的自动化运维工具。特点：①无需agent，SSH即可远程执行②用YAML编写Playbook（剧本），定义操作步骤③幂等性（执行多次结果一样）④批量操作（一次管理1000+台服务器）。常用场景：批量部署应用、修改配置、重启服务、巡检脚本">Ansible<span class="explain-icon">❓</span></span>自动执行</li>
-                </ol>
-                <p>这套方案能实现：<strong>故障发现从人工15分钟降到AI自动30秒，修复时间从2小时降到10分钟以内</strong>。"</p>
-            </div>
-
-                <div class="warning-box">
-                    <h4>⚠️ 关键点：强调AI，不是传统运维</h4>
-                    <ul>
-                        <li>❌ <strong>错误</strong>：说"配置Prometheus告警规则"（这是传统运维）</li>
-                        <li>✅ <strong>正确</strong>：说"训练LSTM模型预测指标趋势，动态调整告警阈值"</li>
-                        <li>❌ <strong>错误</strong>：说"写shell脚本自动重启服务"</li>
-                        <li>✅ <strong>正确</strong>：说"大模型分析日志后生成修复Playbook，Agent自动执行"</li>
-                    </ul>
-                </div>
-
-                <div class="answer-box">
-                    <h4>全场景覆盖（不只是网络/数据库/中间件）</h4>
-                    <table>
-                        <tr>
-                            <th width="15%">故障类型</th>
-                            <th width="25%">AI检测方法</th>
-                            <th width="30%">AI定位技术</th>
-                            <th width="30%">AI自愈方案</th>
-                        </tr>
-                        <tr>
-                            <td><strong>网络异常</strong></td>
-                            <td>LSTM时序预测丢包率/延迟突变</td>
-                            <td>图神经网络分析网络拓扑，定位故障节点</td>
-                            <td>强化学习策略自动切换路由</td>
-                        </tr>
-                        <tr>
-                            <td><strong>数据库慢查询</strong></td>
-                            <td>IsolationForest检测执行时间异常</td>
-                            <td>Text2SQL分析+BERT提取慢SQL特征</td>
-                            <td>大模型生成索引优化建议，自动执行ALTER</td>
-                        </tr>
-                        <tr>
-                            <td><strong>应用服务异常</strong></td>
-                            <td>3-Sigma检测响应时间/错误率突增</td>
-                            <td>调用链Trace分析+因果推断定位瓶颈</td>
-                            <td>自动扩容/重启Pod（K8s HPA）</td>
-                        </tr>
-                        <tr>
-                            <td><strong>中间件故障</strong></td>
-                            <td>NLP分析错误日志（OOM/连接超时）</td>
-                            <td>Drain算法提取日志模板+向量相似度匹配历史案例</td>
-                            <td>RAG检索修复方案+LLM生成执行脚本</td>
-                        </tr>
-                        <tr>
-                            <td><strong>容器/K8s异常</strong></td>
-                            <td>监控Pod OOMKilled/CrashLoop事件流</td>
-                            <td>分析容器日志+资源配额，找资源不足原因</td>
-                            <td>自动调整limits/requests，驱逐低优先级Pod</td>
-                        </tr>
-                        <tr>
-                            <td><strong>存储空间告警</strong></td>
-                            <td>线性回归预测磁盘满的时间点</td>
-                            <td>du命令+文件增长趋势分析，定位大文件来源</td>
-                            <td>自动清理日志/临时文件，或触发扩容工单</td>
-                        </tr>
-                        <tr>
-                            <td><strong>安全异常行为</strong></td>
-                            <td>异常检测模型识别异常登录/SQL注入</td>
-                            <td>关联日志+威胁情报，判断攻击类型</td>
-                            <td>自动封禁IP/账号，触发安全事件工单</td>
-                        </tr>
-                        <tr>
-                            <td><strong>配置变更故障</strong></td>
-                            <td>时间窗口关联：故障前5分钟的配置变更</td>
-                            <td>Git diff对比配置差异，找问题配置项</td>
-                            <td>自动回滚配置到上一版本</td>
-                        </tr>
-                        <tr>
-                            <td><strong>依赖服务雪崩</strong></td>
-                            <td>检测多个服务同时出现超时/错误</td>
-                            <td>知识图谱推理：从依赖关系找上游根因服务</td>
-                            <td>熔断降级，切换备用服务</td>
-                        </tr>
-                        <tr>
-                            <td><strong>业务指标异常</strong></td>
-                            <td>Prophet检测订单量/支付成功率异常下跌</td>
-                            <td>关联应用日志+数据库+外部依赖，找业务瓶颈</td>
-                            <td>大模型生成业务影响报告+修复建议</td>
-                        </tr>
-                    </table>
-                </div>
-
                 <div class="answer-box">
                     <h4>技术架构（分层回答）</h4>
                     <ol>
@@ -8142,7 +8045,6 @@ response = agent.run("昨晚订单支付为啥失败了？")</pre>
                         <li>MTTR 提升：<strong>2 小时 → 10 分钟</strong>（降低 92%）</li>
                     </ul>
                 </div>
-        </div>
     </div>
 
     <button class="back-to-top" onclick="scrollToTop()">↑</button>
@@ -8169,70 +8071,58 @@ response = agent.run("昨晚订单支付为啥失败了？")</pre>
         </div>
         
         <div class="quick-nav-section">
-            <h4>🔥 智能运维（AIOps）</h4>
-            <ul class="quick-nav-items">
-                <li><a href="#" onclick="navigateTo(2, 0)" class="important">核心业务理解</a></li>
-                <li><a href="#" onclick="navigateTo(2, 0)" class="important">全场景覆盖</a></li>
-                <li><a href="#" onclick="navigateTo(2, 0)" class="important">从0到1快速搭建</a></li>
-                <li><a href="#" onclick="navigateTo(2, 0)">技术选型理由</a></li>
-                <li><a href="#" onclick="navigateTo(2, 0)">大模型应用</a></li>
-                <li><a href="#" onclick="navigateTo(2, 0)">面试万能话术</a></li>
-            </ul>
-        </div>
-        
-        <div class="quick-nav-section">
             <h4>AI 大模型技术</h4>
             <ul class="quick-nav-items">
-                <li><a href="#" onclick="navigateTo(3, 0)" class="important">华为昇腾 910B</a></li>
-                <li><a href="#" onclick="navigateTo(3, 1)" class="important">RAG + 向量化</a></li>
-                <li><a href="#" onclick="navigateTo(3, 2)">Text2SQL</a></li>
-                <li><a href="#" onclick="navigateTo(3, 3)">vLLM 推理引擎</a></li>
-                <li><a href="#" onclick="navigateTo(3, 4)">Triton 推理服务器</a></li>
-                <li><a href="#" onclick="navigateTo(3, 5)">向量检索与重排序</a></li>
-                <li><a href="#" onclick="navigateTo(3, 6)">大模型系列</a></li>
-                <li><a href="#" onclick="navigateTo(3, 7)">模型优化技术</a></li>
+                <li><a href="#" onclick="navigateTo(2, 0)" class="important">华为昇腾 910B</a></li>
+                <li><a href="#" onclick="navigateTo(2, 1)" class="important">RAG + 向量化</a></li>
+                <li><a href="#" onclick="navigateTo(2, 2)">Text2SQL</a></li>
+                <li><a href="#" onclick="navigateTo(2, 3)">vLLM 推理引擎</a></li>
+                <li><a href="#" onclick="navigateTo(2, 4)">Triton 推理服务器</a></li>
+                <li><a href="#" onclick="navigateTo(2, 5)">向量检索与重排序</a></li>
+                <li><a href="#" onclick="navigateTo(2, 6)">大模型系列</a></li>
+                <li><a href="#" onclick="navigateTo(2, 7)">模型优化技术</a></li>
             </ul>
         </div>
         
         <div class="quick-nav-section">
             <h4>大数据技术</h4>
             <ul class="quick-nav-items">
-                <li><a href="#" onclick="navigateTo(4, 0)" class="important">Flink 实时计算</a></li>
-                <li><a href="#" onclick="navigateTo(4, 1)">Kafka 消息队列</a></li>
-                <li><a href="#" onclick="navigateTo(4, 2)">Hudi 数据湖</a></li>
-                <li><a href="#" onclick="navigateTo(4, 3)">Flink CDC</a></li>
-                <li><a href="#" onclick="navigateTo(4, 4)" class="important">反压（Backpressure）</a></li>
-                <li><a href="#" onclick="navigateTo(4, 5)">K8s 容器编排</a></li>
-                <li><a href="#" onclick="navigateTo(4, 6)">Java 技术栈</a></li>
-                <li><a href="#" onclick="navigateTo(4, 7)">数据库</a></li>
+                <li><a href="#" onclick="navigateTo(3, 0)" class="important">Flink 实时计算</a></li>
+                <li><a href="#" onclick="navigateTo(3, 1)">Kafka 消息队列</a></li>
+                <li><a href="#" onclick="navigateTo(3, 2)">Hudi 数据湖</a></li>
+                <li><a href="#" onclick="navigateTo(3, 3)">Flink CDC</a></li>
+                <li><a href="#" onclick="navigateTo(3, 4)" class="important">反压（Backpressure）</a></li>
+                <li><a href="#" onclick="navigateTo(3, 5)">K8s 容器编排</a></li>
+                <li><a href="#" onclick="navigateTo(3, 6)">Java 技术栈</a></li>
+                <li><a href="#" onclick="navigateTo(3, 7)">数据库</a></li>
             </ul>
         </div>
         
         <div class="quick-nav-section">
             <h4>面试应对策略</h4>
             <ul class="quick-nav-items">
-                <li><a href="#" onclick="navigateTo(8, 0)" class="important">银行业务场景</a></li>
-                <li><a href="#" onclick="navigateTo(8, 1)" class="important">大数据量处理</a></li>
-                <li><a href="#" onclick="navigateTo(8, 2)" class="important">AI 技术应对</a></li>
-                <li><a href="#" onclick="navigateTo(8, 3)">国产化适配</a></li>
-                <li><a href="#" onclick="navigateTo(8, 4)">昇腾 910B 适配</a></li>
-                <li><a href="#" onclick="navigateTo(8, 5)">技术选型原因</a></li>
-                <li><a href="#" onclick="navigateTo(8, 6)">项目难点问题</a></li>
-                <li><a href="#" onclick="navigateTo(8, 7)">跨部门协作</a></li>
-                <li><a href="#" onclick="navigateTo(8, 8)">通用面试技巧</a></li>
+                <li><a href="#" onclick="navigateTo(7, 0)" class="important">银行业务场景</a></li>
+                <li><a href="#" onclick="navigateTo(7, 1)" class="important">大数据量处理</a></li>
+                <li><a href="#" onclick="navigateTo(7, 2)" class="important">AI 技术应对</a></li>
+                <li><a href="#" onclick="navigateTo(7, 3)">国产化适配</a></li>
+                <li><a href="#" onclick="navigateTo(7, 4)">昇腾 910B 适配</a></li>
+                <li><a href="#" onclick="navigateTo(7, 5)">技术选型原因</a></li>
+                <li><a href="#" onclick="navigateTo(7, 6)">项目难点问题</a></li>
+                <li><a href="#" onclick="navigateTo(7, 7)">跨部门协作</a></li>
+                <li><a href="#" onclick="navigateTo(7, 8)">通用面试技巧</a></li>
             </ul>
         </div>
         
         <div class="quick-nav-section">
             <h4>面试专项应对（聊城国企）</h4>
             <ul class="quick-nav-items">
-                <li><a href="#" onclick="navigateTo(9, 0)" class="important">开场陈述模板</a></li>
-                <li><a href="#" onclick="navigateTo(9, 1)">LangChain/Dify 工作流</a></li>
-                <li><a href="#" onclick="navigateTo(9, 2)">多智能体协作</a></li>
-                <li><a href="#" onclick="navigateTo(9, 3)" class="important">RAG 全流程</a></li>
-                <li><a href="#" onclick="navigateTo(9, 4)">知识库构建</a></li>
-                <li><a href="#" onclick="navigateTo(9, 5)">Agent 调度与监控</a></li>
-                <li><a href="#" onclick="navigateTo(9, 6)">部署与性能</a></li>
+                <li><a href="#" onclick="navigateTo(8, 0)" class="important">开场陈述模板</a></li>
+                <li><a href="#" onclick="navigateTo(8, 1)">LangChain/Dify 工作流</a></li>
+                <li><a href="#" onclick="navigateTo(8, 2)">多智能体协作</a></li>
+                <li><a href="#" onclick="navigateTo(8, 3)" class="important">RAG 全流程</a></li>
+                <li><a href="#" onclick="navigateTo(8, 4)">知识库构建</a></li>
+                <li><a href="#" onclick="navigateTo(8, 5)">Agent 调度与监控</a></li>
+                <li><a href="#" onclick="navigateTo(8, 6)">部署与性能</a></li>
             </ul>
         </div>
     </div>
@@ -8252,14 +8142,13 @@ response = agent.run("昨晚订单支付为啥失败了？")</pre>
             const tabToContentMap = [
                 'content0',  // 0: 个人简历
                 'content6',  // 1: 项目介绍
-                'content9',  // 2: 智能运维
-                'content1',  // 3: AI技术详解
-                'content2',  // 4: 大数据技术
-                'content3',  // 5: Java后端
-                'content4',  // 6: 前端基础
-                'content5',  // 7: Python基础
-                'content7',  // 8: 应对策略
-                'content8'   // 9: 面试专项应对
+                'content1',  // 2: AI技术详解
+                'content2',  // 3: 大数据技术
+                'content3',  // 4: Java后端
+                'content4',  // 5: 前端基础
+                'content5',  // 6: Python基础
+                'content7',  // 7: 应对策略
+                'content8'   // 8: 面试专项应对
             ];
             
             // 切换到对应标签页
@@ -8295,14 +8184,13 @@ response = agent.run("昨晚订单支付为啥失败了？")</pre>
             const tabToContentMap = [
                 'content0',  // 0: 个人简历
                 'content6',  // 1: 项目介绍
-                'content9',  // 2: 智能运维
-                'content1',  // 3: AI技术详解
-                'content2',  // 4: 大数据技术
-                'content3',  // 5: Java后端
-                'content4',  // 6: 前端基础
-                'content5',  // 7: Python基础
-                'content7',  // 8: 应对策略
-                'content8'   // 9: 面试专项应对
+                'content1',  // 2: AI技术详解
+                'content2',  // 3: 大数据技术
+                'content3',  // 4: Java后端
+                'content4',  // 5: 前端基础
+                'content5',  // 6: Python基础
+                'content7',  // 7: 应对策略
+                'content8'   // 8: 面试专项应对
             ];
             
             const tabs = document.querySelectorAll('.nav-tab');
