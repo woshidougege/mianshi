@@ -1773,7 +1773,6 @@
             <button class="nav-tab" onclick="switchTab(5)">🎨 前端基础</button>
             <button class="nav-tab" onclick="switchTab(6)">🐍 Python基础</button>
             <button class="nav-tab" onclick="switchTab(7)">🎯 应对策略</button>
-            <button class="nav-tab" onclick="switchTab(8)">🛡️ 面试专项应对（聊城国企）</button>
         </div>
 
         <!-- 内容区域将在后续步骤中添加 -->
@@ -7170,28 +7169,7 @@ print(v1 + v2)  # Vector(4, 6)</pre>
                 </div>
             </div>
         </div>
-        <!-- 面试专项应对（聊城国企） -->
-        <div class="content" id="content8">
-            <h2>🛡️ 面试专项应对（聊城国企）</h2>
-
-            <p class="warning-box"><strong>说明：</strong>仅聚焦 AI 岗位要求，答案以“原理清晰 + 适度细节”呈现；关键术语可点击查看提示，遇到深入追问也能接住。</p>
-
-            <div class="highlight-box">
-                <h4>速记卡片（面试前 2 分钟）</h4>
-                <ul>
-                    <li><strong>结构</strong>：背景 → 方案 → 结果（S-A-R），每点带数据或示例</li>
-                    <li><strong>参数</strong>：说范围不说精确值（TopK 20-30，切片 500-1000）</li>
-                    <li><strong>上线</strong>：API 网关 + 灰度/回滚/限流 + 监控告警</li>
-                    <li><strong>RAG</strong>：混合召回 + 重排序 + 引用来源</li>
-                    <li><strong>安全</strong>：脱敏/权限/审计/Prompt 注入防护</li>
-                    <li><strong>兜底</strong>：没实操 → 讲思路/取舍/风险控制 + 可观察性</li>
-                </ul>
-            </div>
-
-            <div class="highlight-box">
-                <h4>术语速查（点击术语弹出解释）</h4>
-                <p><strong>Agent/Workflow</strong>：
-                    <span class="explain" data-explain="LangChain 表达式语言，用于把 Prompt/模型/工具/解析器组合">LCEL<span class="explain-icon">❓</span></span> ·
+        
                     <span class="explain" data-explain="可组合单元：Sequence/Parallel/Lambda 等">Runnable<span class="explain-icon">❓</span></span> ·
                     <span class="explain" data-explain="把模型输出解析成结构化对象（JSON/枚举/Schema）">OutputParser<span class="explain-icon">❓</span></span> ·
                     <span class="explain" data-explain="模型按函数签名返回参数，由代码执行">Tool Calling<span class="explain-icon">❓</span></span> ·
@@ -8113,18 +8091,7 @@ response = agent.run("昨晚订单支付为啥失败了？")</pre>
             </ul>
         </div>
         
-        <div class="quick-nav-section">
-            <h4>面试专项应对（聊城国企）</h4>
-            <ul class="quick-nav-items">
-                <li><a href="#" onclick="navigateTo(8, 0)" class="important">开场陈述模板</a></li>
-                <li><a href="#" onclick="navigateTo(8, 1)">LangChain/Dify 工作流</a></li>
-                <li><a href="#" onclick="navigateTo(8, 2)">多智能体协作</a></li>
-                <li><a href="#" onclick="navigateTo(8, 3)" class="important">RAG 全流程</a></li>
-                <li><a href="#" onclick="navigateTo(8, 4)">知识库构建</a></li>
-                <li><a href="#" onclick="navigateTo(8, 5)">Agent 调度与监控</a></li>
-                <li><a href="#" onclick="navigateTo(8, 6)">部署与性能</a></li>
-            </ul>
-        </div>
+        
     </div>
 
     <script>
@@ -8147,8 +8114,7 @@ response = agent.run("昨晚订单支付为啥失败了？")</pre>
                 'content3',  // 4: Java后端
                 'content4',  // 5: 前端基础
                 'content5',  // 6: Python基础
-                'content7',  // 7: 应对策略
-                'content8'   // 8: 面试专项应对
+                'content7'   // 7: 应对策略
             ];
             
             // 切换到对应标签页
@@ -8189,8 +8155,7 @@ response = agent.run("昨晚订单支付为啥失败了？")</pre>
                 'content3',  // 4: Java后端
                 'content4',  // 5: 前端基础
                 'content5',  // 6: Python基础
-                'content7',  // 7: 应对策略
-                'content8'   // 8: 面试专项应对
+                'content7'   // 7: 应对策略
             ];
             
             const tabs = document.querySelectorAll('.nav-tab');
