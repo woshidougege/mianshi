@@ -2761,6 +2761,105 @@
                 <em>鼠标悬停或点击查看提示</em>
             </p>
 
+            <button class="collapsible">⭐ AI 框架面试题（常问核心：LangChain / Transformers / PyTorch / vLLM / Dify / Openclaw / LoRA）</button>
+            <div class="collapsible-content">
+                <div class="answer-box">
+                    <h4>1) Q：LangChain 是什么？解决什么问题？</h4>
+                    <p><strong>A（一句话能背）：</strong>“<span class="term" data-pronunciation="朗-钱">LangChain<span class="pronun-icon">🔊</span></span> 是<strong>大模型应用的编排框架</strong>，把 Prompt、模型、检索、工具调用、输出解析等组件化，解决‘<strong>如何把 LLM 变成可落地的业务系统</strong>’。”</p>
+                    <p><strong>通俗理解：</strong>模型只是“会说话的大脑”，但业务需要“<strong>能查资料、能调接口、能按流程办事</strong>”。LangChain 做的就是把这些<strong>零件</strong>拼成一条<strong>可维护的流水线</strong>（比如：用户提问 → 检索知识库 → 让模型基于资料回答 → 返回引用来源）。</p>
+                    <p><strong>工程落地怎么说：</strong>“我把 LangChain 当作编排层：<strong>模型</strong>用 Qwen/GPT，<strong>检索</strong>用向量库，<strong>工具</strong>用内部 API；重点是可观测、可控（超时/重试/降级/审计）。”</p>
+                </div>
+
+                <div class="answer-box">
+                    <h4>2) Q：LangChain 的 Chain、Tool、Agent、Memory 有什么区别？</h4>
+                    <p><strong>一句话区分：</strong>Chain 是固定流程，Tool 是能力接口，Agent 是会“自己做决定”的流程控制器，Memory 是上下文管理。</p>
+                    <ul>
+                        <li><strong>Chain（固定流程）</strong>：输入 →（检索/提示词/模型/解析）→ 输出。优点是可控、稳定；缺点是灵活性弱。</li>
+                        <li><strong>Tool（工具能力）</strong>：让模型“能做事”。本质是你写的函数/API（查数据库、查订单、调用工单系统、执行 SQL、跑脚本等）。</li>
+                        <li><strong>Agent（自主决策）</strong>：模型先“思考/规划”，再决定调用哪些 Tool、调用几次、按什么顺序。优点是灵活；风险是越权、幻觉、循环调用，所以要加<strong>白名单、限次、超时、审计</strong>。</li>
+                        <li><strong>Memory（上下文）</strong>：常见做法不是无限拼聊天记录，而是：<strong>短期上下文</strong>（最近 N 轮）+ <strong>摘要</strong>（把旧内容压缩）+ <strong>业务状态</strong>（用户ID/权限/会话变量）。</li>
+                    </ul>
+                    <p><strong>面试能加分的一句：</strong>“能不用 Agent 就不用 Agent，优先用 Chain；必须用 Agent 时做强约束与观测。”</p>
+                </div>
+
+                <div class="answer-box">
+                    <h4>3) Q：HuggingFace Transformers 主要做什么？</h4>
+                    <p><strong>A（一句话能背）：</strong>“<span class="term" data-pronunciation="穿斯佛莫斯">Transformers<span class="pronun-icon">🔊</span></span> 是开源大模型的通用工具库，用来<strong>加载模型/Tokenizer、训练微调、推理、以及权重处理</strong>。”</p>
+                    <p><strong>你真正要理解的是它的边界：</strong></p>
+                    <ul>
+                        <li><strong>它擅长</strong>：研究/训练/微调/离线推理、快速验证想法，生态全（模型、Tokenizer、配置、Trainer）。</li>
+                        <li><strong>它不擅长</strong>：高并发线上推理（延迟、吞吐、显存效率），因此线上常用 vLLM/TGI/Triton 等推理引擎/服务。</li>
+                    </ul>
+                </div>
+
+                <div class="answer-box">
+                    <h4>4) Q：PyTorch 在训练里起什么作用？训练最核心的三件事是什么？</h4>
+                    <p><strong>A（背诵版）：</strong>“<span class="term" data-pronunciation="派桃吃">PyTorch<span class="pronun-icon">🔊</span></span> 负责<strong>搭网络、自动求导、GPU 加速</strong>。训练核心三步：<strong>forward 算 loss</strong> → <strong>backward 算梯度</strong> → <strong>optimizer.step 更新参数</strong>。”</p>
+                    <p><strong>你要能讲清楚为什么工程上要加这些：</strong></p>
+                    <ul>
+                        <li><strong>混合精度</strong>：用 FP16/BF16 减显存、提吞吐；配合 loss scaling 防止梯度下溢。</li>
+                        <li><strong>梯度累积</strong>：显存不够时，用多次小 batch 模拟大 batch（等效更稳定）。</li>
+                        <li><strong>分布式</strong>：DDP（数据并行）最常见；更大模型/更省显存会用 ZeRO（分片优化器/梯度/参数）。</li>
+                        <li><strong>Checkpoint</strong>：断点续训 + 容错；训练中断不至于从头来。</li>
+                    </ul>
+                </div>
+
+                <div class="answer-box">
+                    <h4>5) Q：为什么推理不用 Transformers 直接跑，而会用 vLLM / Triton？</h4>
+                    <p><strong>A（背诵版）：</strong>“线上推理追求<strong>并发、延迟、显存效率</strong>，所以用推理引擎：<span class="term" data-pronunciation="v-艾哦艾姆">vLLM<span class="pronun-icon">🔊</span></span> 擅长<strong>KV Cache 管理 + 连续批处理</strong>；<span class="term" data-pronunciation="吹腾">Triton<span class="pronun-icon">🔊</span></span> 是<strong>推理服务框架</strong>，偏模型管理/路由/监控。”</p>
+                    <p><strong>通俗理解：</strong>大模型推理慢的核心瓶颈之一是“<strong>缓存（KV Cache）占显存</strong>”。并发越高、上下文越长，显存越容易爆。vLLM 的优化点就是让缓存更省、更好复用，从而撑住并发。</p>
+                    <p><strong>面试追问准备：</strong>常见指标说得出来就很加分：<strong>首字延迟（TTFT）</strong>、<strong>Tokens/s</strong>、<strong>并发连接数</strong>、<strong>显存占用</strong>、<strong>错误率</strong>。</p>
+                </div>
+
+                <div class="answer-box">
+                    <h4>6) Q：Dify 是什么？和 LangChain 有什么区别？</h4>
+                    <p><strong>A（背诵版）：</strong>“<span class="term" data-pronunciation="迪-飞">Dify<span class="pronun-icon">🔊</span></span> 偏<strong>产品化平台</strong>（可视化 Workflow/Agent + 运营能力）；LangChain 偏<strong>代码框架</strong>（更灵活更可定制）。”</p>
+                    <p><strong>怎么讲得更像真做过：</strong>“简单流程我用 Dify 配置，复杂能力（比如鉴权、访问内网系统、审计、灰度）下沉到自研 API，当成 Tool 给 Dify/LangChain 调。”</p>
+                </div>
+
+                <div class="answer-box">
+                    <h4>7) Q：Openclaw（OpenCLaw）是什么？它和 LangChain/Dify 的关系是什么？</h4>
+                    <p><strong>A（一句话能背）：</strong>“<span class="term" data-pronunciation="欧喷-扣劳">Openclaw<span class="pronun-icon">🔊</span></span> 是一个<strong>可自托管的 AI 自动化/Agent 框架</strong>，更强调<strong>连接渠道（Telegram/Slack 等）+ 工作流/插件 + 工具执行（系统/浏览器/API）</strong>，让 AI 不只回答，而是能按规则把事办完。”</p>
+                    <p><strong>通俗理解：</strong>LangChain 像“写代码拼乐高”的编排库；Dify 像“可视化搭流程”的产品平台；Openclaw 更像“<strong>把 AI 做成一个常驻的自动化执行器</strong>”，能接消息、调工具、跑任务，偏工程化自动化。</p>
+                    <p><strong>面试怎么说边界：</strong>“我会用 LangChain/Dify 做 LLM 应用编排；如果要做<strong>跨渠道触发 + 插件集成 + 自动执行</strong>（比如定时巡检、收消息触发工单、网页操作），会考虑 Openclaw 这类框架。”</p>
+                </div>
+
+                <div class="answer-box">
+                    <h4>8) Q：用 Openclaw/Agent 框架时，最大的风险点是什么？怎么控？</h4>
+                    <ul>
+                        <li><strong>越权与误操作</strong>：Tool 白名单、参数校验、强鉴权、最小权限、关键操作二次确认</li>
+                        <li><strong>提示词注入</strong>：外部内容（网页/文件）全部当“不可信输入”，做隔离与过滤；工具调用必须走结构化约束</li>
+                        <li><strong>循环/失控</strong>：限次、超时、预算（token/调用次数）、熔断降级、人工接管</li>
+                        <li><strong>审计与合规</strong>：全链路日志（谁触发、模型版本、调用了哪些工具、改了什么数据）</li>
+                    </ul>
+                </div>
+
+                <div class="answer-box">
+                    <h4>9) Q：LoRA（很多人会把发音听成“龙虾”）是什么？为什么它能用很少参数完成微调？</h4>
+                    <p><strong>A（一句话能背）：</strong>“<span class="term" data-pronunciation="漏-RA">LoRA<span class="pronun-icon">🔊</span></span> 是一种<strong>参数高效微调（PEFT）</strong>方法：不改大模型原始权重，只训练少量‘低秩’适配参数，让微调成本和显存大幅下降。”</p>
+                    <p><strong>通俗理解：</strong>大模型像一个很大的“底座”，LoRA 相当于在某些关键层（常见是 Attention 的投影矩阵）外挂一小块“补丁”。训练时只更新补丁参数，所以快、省、也更不容易把底座学坏。</p>
+                    <p><strong>为什么有效（讲得清楚就够）：</strong>很多任务的“改动”本质上是对原模型权重做一个<strong>低维度的方向调整</strong>，用低秩矩阵就能逼近这种改动，所以不需要全量更新。</p>
+                    <p><strong>工程落地怎么说：</strong>“数据不大、想快速让模型更懂业务术语/格式/风格，我会优先用 LoRA；训练完可以选择<strong>合并权重</strong>（方便部署）或保留 adapter（灵活切换多个任务）。”</p>
+                </div>
+
+                <div class="answer-box">
+                    <h4>10) Q：LoRA 和量化（INT8/4bit）有什么关系？会不会冲突？</h4>
+                    <p><strong>A：</strong>量化是<strong>让推理更省显存/更快</strong>（把权重从 FP16 压到 INT8/4bit）；LoRA 是<strong>让训练更省</strong>（只训练少量参数）。两者可以组合使用：常见做法是<strong>底座量化 + LoRA 训练</strong>（比如 4bit 量化底座，训练 LoRA adapter），训练成本更低。</p>
+                    <p><strong>注意点（面试够用）：</strong>“量化会带来精度损失，关键看任务容忍度；线上会做回归评测，必要时用更高精度或更大模型兜底。”</p>
+                </div>
+
+                <div class="answer-box">
+                    <h4>11) Q：AI 框架相关的线上“必答”工程点有哪些？</h4>
+                    <ul>
+                        <li><strong>可观测</strong>：请求链路、Tokens、耗时分布、错误率、重试、模型版本</li>
+                        <li><strong>安全</strong>：鉴权、限流、敏感信息脱敏、Prompt 注入/越权工具调用防护</li>
+                        <li><strong>质量</strong>：离线评测集 + 线上 A/B、RAG 召回命中率、答案引用可追溯</li>
+                        <li><strong>成本</strong>：缓存（Prompt/Embedding）、批处理、量化、模型分层（大小模型协同）</li>
+                    </ul>
+                    <p><strong>能落到一句话：</strong>“上线不是‘能回答’，而是‘<strong>能监控、能控风险、能稳定、能算成本</strong>’。”</p>
+                </div>
+            </div>
+
             <button class="collapsible">⭐ 华为昇腾 910B - 国产AI芯片（面试必问）</button>
             <div class="collapsible-content">
                 <div class="tech-box">
