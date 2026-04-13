@@ -6745,175 +6745,485 @@ print(v1 + v2)  # Vector(4, 6)</pre>
 
             <button class="collapsible">⭐ 项目三：某中央银行实时数据湖平台（大数据核心项目）</button>
             <div class="collapsible-content">
-                <h4>基础版（1分钟）</h4>
-                <div class="example-box">
-                    <p>"再往前是在银行做实时数据处理平台，这是个核心业务系统，承载全行的交易计算、风控监测、监管报送等业务。</p>
-                    <p>这个平台每天要处理 5000 多万笔交易流水，数据量 2TB+，要求是秒级响应。我们用 Flink 做实时计算，消费 Kafka 的交易数据，做实时指标计算、异常检测等，结果写到 Redis 和 Oracle 供业务系统查询。</p>
-                    <p>同时我们还构建了基于 Hudi 的实时数据湖，Flink 把数据实时入湖到 HDFS，支持流批一体查询。</p>
-                    <p><strong>我在这个项目里主要负责三块：</strong></p>
-                    <ul>
-                        <li><strong>Flink 实时计算任务的开发和优化</strong>：管理 TB 级状态数据，解决了大状态下的 Checkpoint 超时问题，把处理延迟从 5 秒优化到 2 秒以内</li>
-                        <li><strong>基于 Hudi 的实时数据湖构建</strong>：实现了秒级数据入湖和流批一体查询，支持监管报送、实时风控等业务</li>
-                        <li><strong>系统稳定性保障</strong>：通过状态后端优化、反压监控、Checkpoint调优等手段，保证了 7x24 小时稳定运行，Checkpoint 成功率 99%+</li>
-                    </ul>
-                    <p>"</p>
-                </div>
-
-                <h4>架构版（30-60秒，把技术闭环讲清楚）</h4>
-                <div class="example-box">
-                    <p>"这个项目我一般用两条链路来讲架构：</p>
-                    <p>第一条是实时链路：上游系统把数据写到 Kafka 做缓冲，然后 Flink 实时消费去做清洗、聚合和规则计算，结果写到 Redis 和 Oracle，保证业务系统能秒级查到结果。</p>
-                    <p>第二条是数据湖链路：Flink 同时把明细数据写到 Hudi，再落到 HDFS，后面用 Spark/Hive 做离线分析和监管报送。</p>
-                    <p>我在这里最核心的技术点就是 Flink 的状态和 Checkpoint：状态很大就用 RocksDB，Checkpoint 做好配置和优化，保证任务 7x24 稳定运行。"</p>
-                </div>
-
-                <button class="collapsible">📌 关键技术点</button>
+                <button class="collapsible">📖 项目介绍（1-2分钟）</button>
                 <div class="collapsible-content">
-                <div class="answer-box">
-                    <h4>1. Flink 实时计算</h4>
-                    <ul>
-                        <li>管理 TB 级状态数据（客户资产、交易历史、风险评分等）</li>
-                        <li>RocksDB 状态后端，支持增量 Checkpoint</li>
-                        <li>Checkpoint 配置：每 5 分钟一次，最小间隔 2 分钟，超时 15 分钟</li>
-                    </ul>
-
-                    <h4>2. 性能优化（面试重点）</h4>
-                    <ul>
-                        <li>Kafka 分区扩容：从 64 分区扩到 256 分区</li>
-                        <li>Flink 并行度：从 32 调到 128</li>
-                        <li>算子链优化、异步 IO、窗口聚合提前</li>
-                        <li>Checkpoint 优化：时间从 20 分钟降到 5 分钟</li>
-                        <li>资源调优：TaskManager 堆内 8GB + 堆外 4GB + RocksDB 缓存 2GB</li>
-                    </ul>
-                    <p><strong>优化效果：</strong>处理延迟从小时级降到秒级，Checkpoint 成功率从 70% 提升到 99%+</p>
-
-                    <h4>3. 实时数据湖</h4>
-                    <ul>
-                        <li><strong>Copy-On-Write 表</strong>：存实时增量数据，分钟级更新</li>
-                        <li><strong>Merge-On-Read 表</strong>：处理 CDC 数据，Compaction 合并小文件</li>
-                        <li><strong>分区策略</strong>：按日期 + Hash 二级分区，避免数据倾斜</li>
-                        <li><strong>元数据同步</strong>：Hudi 自动同步到 Hive Metastore</li>
-                    </ul>
-                </div>
+                    <div class="example-box">
+                        <div class="project-script">
+                            <p><span class="script-tag">项目背景</span>"这个项目是银行核心实时数据湖平台，主要承接交易计算、实时风控和监管报送。这个场景的难点不在于单个功能，而在于要同时满足三件事：高吞吐、低延迟、强稳定。业务侧要求秒级可查，监管侧要求口径一致、可追溯，系统必须 7x24 连续运行。</p>
+                            <p><span class="script-tag">核心链路</span>我一般把架构讲成两条链路。第一条是实时链路：上游交易系统写 Kafka 做削峰，Flink 实时消费后做清洗、聚合、规则计算，结果写 Redis 和 Oracle，给业务系统做秒级查询。第二条是数据湖链路：Flink 同步把明细写入 Hudi 并落 HDFS，离线侧用 Spark/Hive 跑监管报表和历史分析，形成“实时计算 + 离线分析”的流批一体闭环。</p>
+                            <div class="flow-box">
+                                <p><span class="script-tag">举例</span>比如交易对账和风控告警场景，实时结果会先写 Redis 给前台系统即时展示；同一份明细数据同时进入 Hudi，后面按监管口径聚合出月报、季报。这样业务实时可用，监管数据也有统一数据底座，不会出现两套口径打架。</p>
+                            </div>
+                            <p><span class="script-tag">我的职责</span>我主要负责三块核心工作：第一是 Flink 作业开发和稳定性治理，重点解决 TB 级状态管理、Checkpoint 超时和反压问题；第二是 Hudi 入湖链路建设，包括表类型选型、分区设计和小文件治理；第三是生产保障体系建设，补齐监控、告警、容错和故障恢复流程，保证高峰期不积压、异常时可快速恢复。</p>
+                            <p><span class="script-tag">结果口径</span>上线后的结果可以直接这么讲：处理时延稳定在秒级，Checkpoint 成功率长期 99%+；高峰期通过 Kafka 分区扩容、Flink 并行度调优和算子链优化，吞吐能力明显提升；最终把“实时计算 + 数据湖 + 稳定性工程”三件事真正做成了可长期运行的生产系统。"</p>
+                        </div>
+                    </div>
                 </div>
 
-                <button class="collapsible">💬 常见追问</button>
+                <button class="collapsible">🛠 技术补充（面试深问用）</button>
                 <div class="collapsible-content">
-                <div class="warning-box">
-                    <p><strong>Q：TB 级状态怎么管理的？</strong></p>
-                    <p>A：主要靠 RocksDB 增量 Checkpoint。RocksDB 是 LSM Tree 结构，每次 Checkpoint 只保存变化的数据（增量），不用全量保存，大大减少了 Checkpoint 时间和存储开销。</p>
-                    
-                    <p><strong>Q：遇到过什么故障？</strong></p>
-                    <p>A：印象深刻的是有一次 HDFS NameNode 主备切换，导致 Flink Checkpoint 失败，作业大量重启。我们排查后发现是 Checkpoint 超时时间设置得太短，后来把超时时间从 10 分钟调到 15 分钟，而且配置了 Checkpoint 失败容忍次数，允许连续失败 3 次，避免偶发故障导致作业频繁重启。"</p>
-                </div>
+                    <div class="highlight-box">
+                        <h4>项目三环境与技术总览</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>层级</th>
+                                    <th>核心技术</th>
+                                    <th>职责</th>
+                                    <th>选型原因</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>实时接入层</td>
+                                    <td>Kafka</td>
+                                    <td>承接交易流、削峰缓冲、顺序消费</td>
+                                    <td>高吞吐、可扩展、生态成熟</td>
+                                </tr>
+                                <tr>
+                                    <td>实时计算层</td>
+                                    <td>Flink + RocksDB</td>
+                                    <td>实时清洗、聚合、风控规则、状态计算</td>
+                                    <td>状态计算能力强，容错和一致性好</td>
+                                </tr>
+                                <tr>
+                                    <td>在线服务层</td>
+                                    <td>Redis + Oracle</td>
+                                    <td>实时结果缓存与业务查询</td>
+                                    <td>Redis低延迟，Oracle口径稳定</td>
+                                </tr>
+                                <tr>
+                                    <td>数据湖层</td>
+                                    <td>Hudi + HDFS</td>
+                                    <td>明细入湖、增量写入、历史可追溯</td>
+                                    <td>支持流批一体和增量处理</td>
+                                </tr>
+                                <tr>
+                                    <td>离线分析层</td>
+                                    <td>Spark/Hive</td>
+                                    <td>监管报表、历史统计、专题分析</td>
+                                    <td>批处理成熟，适合复杂聚合</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>实时链路怎么落地（可直接读）</h4>
+                        <p>"实时链路核心是 Kafka 到 Flink。Kafka 负责削峰和解耦，Flink 负责实时计算。我们的作业里既有明细清洗，也有窗口聚合和规则计算，结果分两路写：一路写 Redis 给前台秒级查询，一路写 Oracle 作为业务口径落库。这样做的好处是既保证查询快，也保证口径稳。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>TB级状态和Checkpoint怎么做（可直接读）</h4>
+                        <p>"这个项目最难的是大状态。我们用 RocksDB 状态后端，Checkpoint 采用增量模式，避免每次全量快照。参数上会控制 checkpoint 间隔、超时时间、最小间隔和失败容忍次数，避免偶发抖动直接把任务打挂。线上还会结合状态 TTL 做过期清理，防止状态无限膨胀。"</p>
+                        <p>"面试官追问时我会强调：我们不是只调一个参数，而是‘状态后端 + Checkpoint策略 + 监控告警’一起做，最终把成功率稳定在 99%+。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>数据湖链路怎么做（可直接读）</h4>
+                        <p>"入湖这块我们用 Hudi，核心是按场景选表类型：实时更新频繁的场景用 MOR，查询优先场景用 COW。分区策略不是只按日期，而是按日期加业务维度做组合，减少热点和倾斜。针对小文件问题，我们做异步 Compaction 和写入批量控制，保证后续 Hive/Spark 查询性能。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>性能优化怎么讲（可直接答）</h4>
+                        <p>"优化思路是先定位瓶颈再下手：Kafka 端看分区和积压，Flink 端看反压、算子耗时和状态大小。我们的主要动作是 Kafka 分区扩容、Flink 并行度提升、算子链优化和异步IO改造。改完后高峰积压明显下降，链路时延收敛到秒级。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>项目三实际指标（面试口径）</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>指标项</th>
+                                    <th>项目三口径</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>交易处理规模</td>
+                                    <td>日均 5000万+ 笔</td>
+                                    <td>峰值为均值数倍</td>
+                                </tr>
+                                <tr>
+                                    <td>实时处理时延</td>
+                                    <td>秒级稳定</td>
+                                    <td>含清洗、聚合、落结果</td>
+                                </tr>
+                                <tr>
+                                    <td>Checkpoint 成功率</td>
+                                    <td>99%+</td>
+                                    <td>大状态场景长期口径</td>
+                                </tr>
+                                <tr>
+                                    <td>数据湖入湖时效</td>
+                                    <td>分钟级可见</td>
+                                    <td>支持增量分析与监管</td>
+                                </tr>
+                                <tr>
+                                    <td>系统运行稳定性</td>
+                                    <td>7x24 持续运行</td>
+                                    <td>有完整告警与恢复机制</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>项目三遇到的大问题（可直接讲）</h4>
+                        <p><strong>问题一：TB级状态导致Checkpoint超时，任务频繁重启</strong><br>线上现象是高峰期 Checkpoint 经常超时，作业反复重启。根因是状态体量持续增大且早期参数偏保守。处理上我们切到 RocksDB 增量 Checkpoint，重调超时和间隔参数，并加状态 TTL 清理无效历史状态。改完后 Checkpoint 成功率明显提升，作业重启次数大幅下降。</p>
+                        <p><strong>问题二：高峰期Kafka积压，时延抖动明显</strong><br>线上现象是白天高峰时消费 lag 拉高，业务侧查询延迟变大。我们先扩 Kafka 分区，再提高 Flink 并行度，同时优化慢算子和异步 IO，最后配合反压监控做提前扩容。优化后高峰积压可控，时延曲线稳定很多。</p>
+                        <p><strong>问题三：Hudi小文件过多，离线查询变慢</strong><br>线上现象是入湖一段时间后，Hive/Spark 查询耗时变长。根因是高频小批次写入产生大量小文件。我们的处理是增加写入批量、按分区策略重整，同时做异步 Compaction。处理后查询性能恢复，离线任务时长明显缩短。</p>
+                    </div>
+                    </div>
                 </div>
             </div>
 
             <button class="collapsible">项目四：自研纯Java大数据平台</button>
             <div class="collapsible-content">
-                <h4>基础版（30秒）</h4>
-                <div class="example-box">
-                    <p>"我还参与过一个自研大数据平台的开发，它本质上是一个<strong>企业内部的“大数据组件管控平台”</strong>。目标是让运维和开发不用手工装一堆组件，而是通过平台一键把大数据组件装起来、管起来、用起来。</p>
-                    <p>平台是用纯 Java 做的，支持 K8s 容器化部署，也支持裸机部署。我们主要管理的是 Hadoop 生态的组件，比如 Hive、HBase 这类，也包含一些查询和可视化组件。</p>
-                    <p><strong>我主要负责三部分工作：</strong></p>
-                    <ul>
-                        <li><strong>组件集成开发</strong>：我负责集成了 Kibana、Kyuubi、Tez、Zeppelin、Phoenix、Doris 等 10+ 个大数据组件，编写了组件的安装脚本、配置模板和健康检查逻辑</li>
-                        <li><strong>安全认证体系建设</strong>：实现了 Kerberos 全链路接入和 Ranger 权限管理，保证所有组件的安全访问，支持细粒度权限控制</li>
-                        <li><strong>国产化适配</strong>：完成了达梦数据库（元数据存储）和飞腾 CPU（ARM 架构）的适配工作，解决了 SQL 方言兼容性和跨架构编译问题</li>
-                    </ul>
-                    <p>"</p>
-                </div>
-
-                <h4>技术架构版（30-60秒，体现你是技术人）</h4>
-                <div class="example-box">
-                    <p>"这个项目是个平台类项目，我讲架构的时候就讲三件事：</p>
-                    <p>第一，我们有一套 Java 后端做控制面，提供安装、升级、扩容、下线这些接口，同时做权限和审计。</p>
-                    <p>第二，真正执行层我们把组件做成统一规范：每个组件都有安装脚本、配置模板和健康检查。在 K8s 场景走 YAML/Helm，在裸机场景走脚本和 systemd。</p>
-                    <p>第三，过程要可视化：安装和运行的日志会实时推给前端，出了问题能快速定位，也能做失败回滚。</p>
-                    <p>我在这个项目的核心贡献是把 10+ 组件的差异收敛成统一规范，并把 Kerberos/Ranger 这些安全能力做成平台能力。"</p>
-                </div>
-
-                <button class="collapsible">📌 关键技术点</button>
+                <button class="collapsible">📖 项目介绍（1-2分钟）</button>
                 <div class="collapsible-content">
-                <div class="answer-box">
-                    <ul>
-                        <li><strong>组件一键化管理</strong>：Kibana、Kyuubi、Tez、Zeppelin、Phoenix、Doris、StarRocks 等组件的安装、配置、监控</li>
-                        <li><strong>K8s 编排</strong>：通过 ConfigMap/Service/PVC 管理组件配置和持久化</li>
-                        <li><strong>安全治理</strong>：Kerberos 全链路接入、Ranger 权限管理、达梦数据库适配</li>
-                        <li><strong>实时日志</strong>：SSE 推送安装和运行日志，过程可视化</li>
-                    </ul>
+                    <div class="example-box">
+                        <div class="project-script">
+                            <p><span class="script-tag">项目背景</span>"这个项目是一个自研的企业级大数据平台，核心目标是把原来靠人工安装、人工维护的大数据组件，做成平台化、标准化、可运维的能力。它本质是一个组件管控平台，不是单一业务系统。</p>
+                            <p><span class="script-tag">核心链路</span>整体架构分成控制面和执行面两层。控制面是 Java 后端，负责组件生命周期管理，比如安装、升级、扩容、下线、配置变更、权限审计；执行面负责真正落地执行，在 K8s 场景走 YAML/Helm 编排，在裸机场景走脚本和 systemd。执行过程中的日志、状态、错误码会实时回传前端，做到过程可视化和故障可追踪。</p>
+                            <div class="flow-box">
+                                <p><span class="script-tag">举例</span>比如上线一个新组件，不是手工登机器逐台操作，而是平台统一下发配置模板和安装任务，自动执行健康检查；如果某一步失败，会按步骤回滚并提示失败节点和错误原因，这样运维和研发都能快速定位问题。</p>
+                            </div>
+                            <p><span class="script-tag">我的职责</span>我主要负责三块工作：第一是 10+ 大数据组件的标准化接入，沉淀安装脚本、配置模板和健康检查规范；第二是安全体系建设，推进 Kerberos 全链路认证和 Ranger 细粒度权限；第三是国产化适配，包括达梦数据库和飞腾 ARM 架构兼容，解决 SQL 方言、依赖和编译差异问题。</p>
+                            <p><span class="script-tag">结果口径</span>项目上线后，组件交付效率明显提升，人工部署操作大幅减少；平台能力从“能装起来”升级成“可审计、可回滚、可扩展”；同时通过国产化适配，平台可以在国产 CPU 和国产数据库环境稳定运行，满足政企场景的合规和可控要求。"</p>
+                        </div>
+                    </div>
                 </div>
+
+                <button class="collapsible">🛠 技术补充（面试深问用）</button>
+                <div class="collapsible-content">
+                    <div class="highlight-box">
+                        <h4>项目四环境与技术总览</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>模块</th>
+                                    <th>核心技术</th>
+                                    <th>主要职责</th>
+                                    <th>选型原因</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>控制面</td>
+                                    <td>Java / Spring Boot / MySQL(或达梦)</td>
+                                    <td>组件生命周期、配置管理、权限审计</td>
+                                    <td>后端生态成熟，平台化能力强</td>
+                                </tr>
+                                <tr>
+                                    <td>执行面（K8s）</td>
+                                    <td>Helm / YAML / Operator思路</td>
+                                    <td>容器化安装、升级、扩缩容</td>
+                                    <td>标准化编排，便于自动化运维</td>
+                                </tr>
+                                <tr>
+                                    <td>执行面（裸机）</td>
+                                    <td>Shell / systemd / Ansible思路</td>
+                                    <td>脚本化部署与服务托管</td>
+                                    <td>兼容非容器环境，便于落地</td>
+                                </tr>
+                                <tr>
+                                    <td>安全治理</td>
+                                    <td>Kerberos + Ranger</td>
+                                    <td>认证鉴权、权限隔离、审计追踪</td>
+                                    <td>满足企业级安全合规要求</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>组件接入怎么做标准化（可直接读）</h4>
+                        <p>"我们不是一个组件一个写法，而是先定统一接入规范。每个组件必须提供四类能力：安装脚本、配置模板、健康检查、生命周期钩子。这样平台层只需要按统一协议编排，接入新组件时不会改动主流程逻辑。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>安全体系怎么落地（可直接读）</h4>
+                        <p>"安全上我们做了两层：认证层走 Kerberos，保证服务到服务、用户到服务身份可信；授权层走 Ranger，做库表、目录、组件级别权限控制。平台层会把用户操作和组件变更全部审计留痕，做到谁在什么时间做了什么改动都可追溯。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>国产化适配怎么讲（可直接答）</h4>
+                        <p>"国产化适配不是只换个环境。数据库侧要解决 SQL 方言和驱动差异，比如 MySQL 到达梦的 DDL/数据类型兼容；CPU 架构侧要解决 x86 到 ARM 的编译链和依赖库问题。我们最终做法是分层改造：DAO层抽象 + 方言适配 + CI分架构构建。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>项目四实际指标（面试口径）</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>指标项</th>
+                                    <th>项目四口径</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>接入组件规模</td>
+                                    <td>10+ 大数据组件</td>
+                                    <td>统一纳入平台生命周期管理</td>
+                                </tr>
+                                <tr>
+                                    <td>部署方式</td>
+                                    <td>K8s + 裸机双模式</td>
+                                    <td>兼容不同客户环境</td>
+                                </tr>
+                                <tr>
+                                    <td>平台化收益</td>
+                                    <td>部署效率显著提升</td>
+                                    <td>人工步骤明显减少</td>
+                                </tr>
+                                <tr>
+                                    <td>安全能力</td>
+                                    <td>Kerberos + Ranger全链路</td>
+                                    <td>支持审计追踪</td>
+                                </tr>
+                                <tr>
+                                    <td>国产化兼容</td>
+                                    <td>达梦 + 飞腾ARM</td>
+                                    <td>满足国产化落地要求</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>项目四遇到的大问题（可直接讲）</h4>
+                        <p><strong>问题一：组件差异太大，接入效率低</strong><br>早期每接一个组件都要改很多平台代码，维护成本很高。根因是缺少统一接入协议。后面我们抽象出安装、配置、检查、启停四类标准接口，组件只实现协议，平台按协议编排，接入效率明显提升。</p>
+                        <p><strong>问题二：安全链路复杂，权限容易错配</strong><br>在多组件联动场景下，认证和授权很容易出现断点。我们把 Kerberos 和 Ranger 做成平台能力，统一发放配置和策略，并加变更审计，解决了“能登录但没权限”或“权限过大”的问题。</p>
+                        <p><strong>问题三：国产化环境兼容问题多</strong><br>迁移到达梦和 ARM 后，出现 SQL 不兼容和依赖编译失败。我们通过方言兼容层、驱动适配和分架构构建流水线逐步收敛，最终把关键组件稳定跑通，满足交付要求。</p>
+                    </div>
                 </div>
             </div>
 
             <button class="collapsible">项目五：大数据基础平台（HDP二开）</button>
             <div class="collapsible-content">
-                <h4>基础版（30秒）</h4>
-                <div class="example-box">
-                    <p>"2020年做过一个基于 HDP 二次开发的项目，主要是国产化适配。HDP 是 Hortonworks 的 Hadoop 发行版，我们需要让它支持 ARM 架构（飞腾 CPU）和国产数据库（达梦）。</p>
-                    <p><strong>我主要负责两块工作：</strong></p>
-                    <ul>
-                        <li><strong>Hive Metastore 的达梦数据库适配</strong>（核心工作）：改造了 Hive 的元数据存储层，从 MySQL 迁移到达梦，涉及 DDL 语法改造（达梦不支持 MySQL 的某些语法）、数据类型映射（CLOB vs TEXT）、事务隔离级别调整等，最终保证了元数据的完整性和性能</li>
-                        <li><strong>ClickHouse 的飞腾（ARM）适配</strong>：编译了 ARM 版本的 ClickHouse，解决了 SIMD 指令集差异、依赖库缺失、编译工具链问题等，性能测试达到 x86 版本的 80%</li>
-                    </ul>
-                    <p>"</p>
-                </div>
-
-                <h4>技术闭环版（1分钟，回答“你到底怎么适配的”）</h4>
-                <div class="example-box">
-                    <p>"这个项目其实就是做国产化适配，我讲架构的时候就讲两类事情：</p>
-                    <p>第一类是数据库适配。比如 Hive Metastore 原来用 MySQL，我们要迁到达梦，不是简单换驱动就完事了，还要处理 DDL 语法差异、数据类型映射，还有事务和连接池这些细节，保证元数据能稳定读写。</p>
-                    <p>第二类是架构适配。比如 ClickHouse 在 x86 跑得很好，但上飞腾 ARM 之后会遇到编译工具链和指令集差异，我们就把依赖补齐、编译参数调整，再用性能测试验证，最后做到性能能接近 x86 的水平。"</p>
-                </div>
-
-                <button class="collapsible">📌 关键技术点</button>
+                <button class="collapsible">📖 项目介绍（1-2分钟）</button>
                 <div class="collapsible-content">
-                <div class="answer-box">
-                    <ul>
-                        <li><strong>ARM 架构适配</strong>：x86 到 ARM 的跨架构编译，JVM 调优</li>
-                        <li><strong>达梦数据库适配</strong>：Hive Metastore 支持达梦，解决 SQL 方言兼容</li>
-                        <li><strong>高版本组件集成</strong>：集成 Flink 1.15+、Kudu、Alluxio、MinIO</li>
-                        <li><strong>国产 OS 兼容</strong>：麒麟 V10、中标麒麟等国产操作系统适配</li>
-                    </ul>
+                    <div class="example-box">
+                        <div class="project-script">
+                            <p><span class="script-tag">项目背景</span>"这个项目是基于 HDP 做二次开发的大数据基础平台，核心目标是完成国产化适配，让原本偏 x86 + MySQL 生态的组件，能够稳定运行在 ARM 架构和国产数据库环境里。</p>
+                            <p><span class="script-tag">核心链路</span>整体上我们做的是‘兼容层 + 构建链路 + 验证链路’三件事。兼容层负责数据库和系统差异适配，构建链路负责跨架构编译与打包，验证链路负责功能和性能回归，确保改完不是“能启动”而是“可生产”。</p>
+                            <div class="flow-box">
+                                <p><span class="script-tag">举例</span>以 Hive Metastore 为例，不是只换 JDBC 驱动。我们要同时处理 DDL 语法差异、字段类型映射、事务和连接池参数差异，最后还要做元数据一致性校验，保证迁移后读写和历史数据都不出问题。</p>
+                            </div>
+                            <p><span class="script-tag">我的职责</span>我主要负责两块：第一是 Hive Metastore 到达梦数据库的适配改造；第二是 ClickHouse 在飞腾 ARM 环境的编译和运行适配，包括依赖库处理、编译参数调整和性能验证。</p>
+                            <p><span class="script-tag">结果口径</span>最终我们把关键组件在国产环境稳定跑通，解决了数据库方言兼容和跨架构构建这两类核心问题，平台具备了在国产 CPU + 国产数据库环境交付的能力。"</p>
+                        </div>
+                    </div>
                 </div>
+
+                <button class="collapsible">🛠 技术补充（面试深问用）</button>
+                <div class="collapsible-content">
+                    <div class="highlight-box">
+                        <h4>项目五环境与技术总览</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>改造方向</th>
+                                    <th>核心技术点</th>
+                                    <th>改造内容</th>
+                                    <th>结果</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>数据库适配</td>
+                                    <td>Hive Metastore + 达梦</td>
+                                    <td>DDL语法、数据类型、事务隔离、驱动配置</td>
+                                    <td>元数据稳定读写，功能一致</td>
+                                </tr>
+                                <tr>
+                                    <td>架构适配</td>
+                                    <td>ClickHouse + ARM(飞腾)</td>
+                                    <td>依赖补齐、编译参数、指令集差异处理</td>
+                                    <td>可稳定运行并满足性能要求</td>
+                                </tr>
+                                <tr>
+                                    <td>系统兼容</td>
+                                    <td>国产OS生态</td>
+                                    <td>启动脚本、服务管理、包依赖兼容</td>
+                                    <td>支持国产环境部署交付</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>达梦适配怎么做（可直接读）</h4>
+                        <p>"数据库适配最关键的是把 MySQL 语义迁到达梦语义。我们重点做了三件事：第一是 DDL 改造，比如自增、索引和关键字写法差异；第二是数据类型映射，比如 TEXT/CLOB、时间类型精度；第三是事务和连接池参数适配，避免并发场景下出现锁等待和超时。最后通过元数据一致性校验和核心查询回归，保证改造后可用。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>ARM适配怎么做（可直接读）</h4>
+                        <p>"ARM 适配重点不只是编译通过，而是运行稳定。我们先梳理依赖库在 ARM 下的可用版本，再调整编译参数和工具链，处理 SIMD 指令差异导致的构建问题。编译完成后做功能回归和压测，确认核心查询链路稳定，再进入交付环境。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>项目五实际指标（面试口径）</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>指标项</th>
+                                    <th>项目五口径</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>核心改造模块</td>
+                                    <td>Hive Metastore、ClickHouse</td>
+                                    <td>一个偏数据库层，一个偏架构层</td>
+                                </tr>
+                                <tr>
+                                    <td>数据库迁移效果</td>
+                                    <td>达梦环境稳定读写</td>
+                                    <td>通过回归验证核心元数据链路</td>
+                                </tr>
+                                <tr>
+                                    <td>ARM适配效果</td>
+                                    <td>完成跨架构构建与部署</td>
+                                    <td>满足国产化交付要求</td>
+                                </tr>
+                                <tr>
+                                    <td>性能口径</td>
+                                    <td>达到可用交付水平</td>
+                                    <td>关键链路经过压测验证</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>项目五遇到的大问题（可直接讲）</h4>
+                        <p><strong>问题一：DDL和SQL方言不兼容，迁移后元数据异常</strong><br>初期直接迁移会出现建表失败、索引异常等问题。我们逐条梳理差异 SQL，建立方言映射和兼容脚本，并做全量回归。最后元数据链路恢复稳定。</p>
+                        <p><strong>问题二：ARM环境依赖不完整，编译频繁失败</strong><br>核心问题是工具链和依赖版本在 ARM 下不一致。我们建立分架构依赖清单和构建脚本，按模块逐个收敛，最终打通构建链路。</p>
+                        <p><strong>问题三：迁移后性能波动，业务担心不可用</strong><br>适配后早期性能波动较大。我们通过参数调优、关键查询优化和压测回归逐步稳定，最终达到可上线的性能和稳定性要求。</p>
+                    </div>
                 </div>
             </div>
 
             <button class="collapsible">项目六：舆情大数据分析系统</button>
             <div class="collapsible-content">
-                <h4>基础版（30秒）</h4>
-                <div class="example-box">
-                    <p>"最早我做过一个互联网舆情大数据分析系统。简单说就是：我们帮客户<strong>实时盯全网在说什么</strong>，比如某个品牌/事件有没有负面舆情、热度怎么变化，出现风险能不能第一时间报警。</p>
-                    <p>数据来源是论坛、微博、新闻这些公开渠道，系统 7x24 小时采集，采集完之后做实时处理：清洗、分词、情感分析、敏感词识别、热点挖掘，最后把结果给到大屏和预警系统。</p>
-                    <p><strong>我主要负责实时流式计算部分，包括：</strong></p>
-                    <ul>
-                        <li><strong>Storm 实时处理架构开发</strong>（2016-2018）：负责基于 Storm 的实时处理架构开发，完成数据清洗、分词、情感分析等流程，支撑日均 3000 万+ 条数据处理</li>
-                        <li><strong>Storm → Flink 技术升级</strong>（2018）：我主导技术升级，带领团队从 Storm 迁移到 Flink，重构了整个实时处理链路。迁移后系统延迟从分钟级降到秒级，稳定性从 99.5% 提升到 99.9%，支撑日均 5000 万+ 条数据</li>
-                        <li><strong>HBase 存储优化</strong>：负责 HBase 表设计和查询优化，通过 RowKey 设计（地域 + 时间戳反转）避免热点问题，把查询性能提升了 3 倍</li>
-                    </ul>
-                    <p>"</p>
-                </div>
-
-                <h4>架构版（1分钟，把“实时+存储+分析”讲成体系）</h4>
-                <div class="example-box">
-                    <p>"这个项目我用一条链路就能讲清楚：</p>
-                    <p>数据先从各个网站采集过来，统一写到 Kafka 里做缓冲。</p>
-                    <p>然后用 Storm 或 Flink 做实时处理，像清洗、分词、情感分析、敏感词识别这些都在这一步做完。</p>
-                    <p>存储我们做了冷热分层：最近 7 天的热数据放 MySQL 方便大屏展示，历史数据放 HBase 方便长期查询。</p>
-                    <p>最后上层做热点聚合和预警，触发后用邮件、短信或者弹窗推送。"</p>
-                </div>
-
-                <button class="collapsible">📌 关键技术点</button>
+                <button class="collapsible">📖 项目介绍（1-2分钟）</button>
                 <div class="collapsible-content">
-                <div class="answer-box">
-                    <ul>
-                        <li><strong>技术升级</strong>：Storm → Flink 迁移，延迟降低、稳定性从 99.5% 提升到 99.9%</li>
-                        <li><strong>冷热分离</strong>：MySQL 存 7 天热数据，HBase 存历史数据</li>
-                        <li><strong>HBase 优化</strong>：RowKey 设计（地域 + 时间戳反转），查询性能提升 3 倍</li>
-                        <li><strong>NLP 处理</strong>：jieba 分词、SnowNLP 情感分析、TextRank 关键词提取</li>
-                        <li><strong>实时预警</strong>：邮件、短信、弹窗推送，响应时间 < 30秒</li>
-                    </ul>
+                    <div class="example-box">
+                        <div class="project-script">
+                            <p><span class="script-tag">项目背景</span>"这个项目是舆情大数据分析系统，目标是实时监测全网舆情变化，及时识别负面风险并预警。业务场景比较典型：数据来源杂、实时性要求高、而且热点事件会瞬时放大流量。</p>
+                            <p><span class="script-tag">核心链路</span>整体链路是“采集 -> 实时处理 -> 分层存储 -> 分析预警”。采集侧把论坛、新闻、微博等公开数据汇入消息队列；处理侧先做清洗、分词、情感分析、敏感词识别和热点聚合；存储侧做冷热分离，近期热数据给在线查询，历史数据进 HBase 做长期检索；上层再做可视化和告警推送。</p>
+                            <div class="flow-box">
+                                <p><span class="script-tag">举例</span>比如某突发事件在短时间内讨论量飙升，系统会先识别关键词和情感倾向，再聚合出热点趋势。如果负面比例和传播速度超过阈值，会自动触发预警，业务侧可在分钟级介入处理。</p>
+                            </div>
+                            <p><span class="script-tag">我的职责</span>我主要负责实时流计算链路和存储性能优化。前期负责 Storm 实时处理开发，后期主导 Storm 到 Flink 的迁移重构；同时负责 HBase 表结构和 RowKey 设计，解决热点写入和查询性能问题。</p>
+                            <p><span class="script-tag">结果口径</span>迁移后链路时延从分钟级降到秒级，系统稳定性由 99.5% 提升到 99.9%；在高峰场景下也能稳定处理大规模数据，热点舆情能更快被识别和预警。"</p>
+                        </div>
+                    </div>
                 </div>
+
+                <button class="collapsible">🛠 技术补充（面试深问用）</button>
+                <div class="collapsible-content">
+                    <div class="highlight-box">
+                        <h4>项目六环境与技术总览</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>层级</th>
+                                    <th>核心技术</th>
+                                    <th>主要职责</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>数据接入层</td>
+                                    <td>爬虫/采集服务 + Kafka</td>
+                                    <td>多源数据汇聚、削峰缓冲</td>
+                                    <td>应对突发流量</td>
+                                </tr>
+                                <tr>
+                                    <td>实时处理层</td>
+                                    <td>Storm（早期）/ Flink（升级）</td>
+                                    <td>清洗、分词、情感和热点计算</td>
+                                    <td>核心计算引擎</td>
+                                </tr>
+                                <tr>
+                                    <td>存储层</td>
+                                    <td>MySQL + HBase</td>
+                                    <td>冷热分层、在线查询和历史检索</td>
+                                    <td>兼顾时效和成本</td>
+                                </tr>
+                                <tr>
+                                    <td>应用层</td>
+                                    <td>大屏/告警系统</td>
+                                    <td>趋势展示、风险预警推送</td>
+                                    <td>支持邮件短信等通知</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>Storm迁移Flink怎么做（可直接读）</h4>
+                        <p>"迁移不是简单替换框架，而是重构计算链路。我们先把原有处理逻辑拆成标准算子，再按 Flink 的状态和窗口模型重写，同时补齐 Checkpoint 和失败恢复机制。上线策略是双链路并行验证，确认结果一致后逐步切流，避免一次性切换带来的风险。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>HBase优化怎么做（可直接读）</h4>
+                        <p>"HBase 主要问题是热点和查询慢。我们重点优化 RowKey：采用地域 + 时间戳反转 + 随机打散的设计，避免写入集中到单个 Region；同时按查询场景设计二级索引和预分区策略，提升范围查询效率。"</p>
+                    </div>
+
+                    <div class="answer-box">
+                        <h4>项目六实际指标（面试口径）</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>指标项</th>
+                                    <th>项目六口径</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>数据处理规模</td>
+                                    <td>日均 5000万+ 条（高峰更高）</td>
+                                    <td>多源舆情数据</td>
+                                </tr>
+                                <tr>
+                                    <td>链路时延</td>
+                                    <td>分钟级 -> 秒级</td>
+                                    <td>Storm迁移Flink后</td>
+                                </tr>
+                                <tr>
+                                    <td>系统稳定性</td>
+                                    <td>99.5% -> 99.9%</td>
+                                    <td>迁移后长期口径</td>
+                                </tr>
+                                <tr>
+                                    <td>查询性能</td>
+                                    <td>提升约 3 倍</td>
+                                    <td>HBase RowKey优化后</td>
+                                </tr>
+                                <tr>
+                                    <td>预警时效</td>
+                                    <td>分钟级触达</td>
+                                    <td>支持多渠道通知</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>项目六遇到的大问题（可直接讲）</h4>
+                        <p><strong>问题一：突发热点导致流量激增，链路出现积压</strong><br>线上现象是事件爆发时消息堆积明显。我们先在接入层做 Kafka 削峰，再在计算层做并行度扩容和慢算子优化，最后通过监控告警提前干预，积压问题得到控制。</p>
+                        <p><strong>问题二：Storm链路稳定性不足，故障恢复慢</strong><br>高负载下 Storm 容错和状态管理能力不足。我们评估后推动迁移到 Flink，补齐 Checkpoint 和统一恢复机制，迁移后稳定性和恢复效率都明显提升。</p>
+                        <p><strong>问题三：HBase热点写入导致查询抖动</strong><br>原始 RowKey 设计导致写入集中。我们重构 RowKey 并做预分区和冷热分层，写入热点下降，历史查询性能提升约 3 倍。</p>
+                    </div>
                 </div>
             </div>
 
